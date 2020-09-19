@@ -1,0 +1,8 @@
+
+.hidden {
+	display:none;
+}
+
+#error_text {
+	color: red;
+}

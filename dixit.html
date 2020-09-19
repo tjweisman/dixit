@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head>
+	<title>Dixit!</title>
+	<script src="socket.io/socket.io.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="dixit_game.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="dixit.css" />
+</head>
+
+<body>
+	<h1 id="title">Dixit</h1>
+	<div id="join_controls">
+		<form>
+			<label for="username">Username: </label>
+			<input type="text" name="username" id="username" required>
+
+			<label for="game">Room name: </label>
+			<input type="text" name="game" id="game" required>
+
+			<input type="submit" name="submit" value="Join game" id="submit">
+		</form>
+	</div>
+	<div id="error" class="module">
+		<span id="error_text"></span>
+	</div>
+	<div id="notify" class="module">
+		<span id="notify_text"></span>
+	</div>
+	<div id="gameboard" class="module hidden">
+		<h3 id="room_text"></h3>
+		<button type="button" id="start_game">Start game!</button>
+		<div id="hand">
+			<h2>Your hand:</h2>
+			<ul>
+			</ul>
+		</div>
+		<h3>Players:</h3>
+		<div id="players">
+			<ul>
+			</ul>
+		</div>
+	</div>
+	<div id="admin_controls" class="module">
+		<button type="button" id="show_all_users">Show list of all users</button>
+		<div id="all_users_list">
+			<table>
+			</table>
+		</div>
+		<button type="button" id="delete_all_users">Delete all users/rooms</button>
+	</div>
+</body>
+
+</html>
