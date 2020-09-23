@@ -32,10 +32,26 @@
 	<div id="gameboard" class="module hidden">
 		<h3 id="room_text"></h3>
 		<button type="button" id="start_game">Start game!</button>
+		<span id="turn_text" class="hidden"></span>
+		<div id="prompt" class="hidden">
+			<form>
+				<label for="prompt">Your prompt: </label>
+				<input type="text" name="prompt" id="prompt_inp">
+
+				<input type="submit" name="submit" value="Submit">
+			</form>
+		</div>
+		<div class="choose-secret hidden">
+			<span id="prompt_text"></span>
+			<p>Choose a card for this prompt below.</p>
+		</div>
 		<div id="hand">
 			<h2>Your hand:</h2>
 			<ul>
 			</ul>
+		</div>
+		<div class="choose-secret hidden">
+			<button type="button">Choose card</button>
 		</div>
 		<h3>Players:</h3>
 		<div id="players">
