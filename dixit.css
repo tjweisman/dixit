@@ -6,3 +6,27 @@
 #error_text {
 	color: red;
 }
+
+#hand a {
+	text-decoration: none;
+}
+
+#table a {
+	text-decoration: none;
+}
+
+a.active {
+	color: green;
+}
+
+a.inactive {
+	color: black;
+}
+
+.player {
+
+}
+
+.waiting-move {
+	color: red;
+}

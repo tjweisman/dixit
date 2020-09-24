@@ -42,9 +42,17 @@
 			</form>
 		</div>
 		<div class="choose-secret hidden">
+			<div>PROMPT:</div>
 			<span id="prompt_text"></span>
-			<p>Choose a card for this prompt below.</p>
 		</div>
+		<div id="table">
+			<div id="unrevealed-cards"><ul></ul></div>
+			<div id="revealed-cards" class="hidden"><ul></ul></div>
+			<div id="guess-card" class="hidden">
+				<button type="button">Guess card</button>
+			</div>
+		</div>
+		
 		<div id="hand">
 			<h2>Your hand:</h2>
 			<ul>
