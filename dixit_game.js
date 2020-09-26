@@ -1,6 +1,6 @@
 
-const SOCKETIO_URL = "https://dixit-for-bibas.herokuapp.com/";
-//const SOCKETIO_URL = "http://localhost:3000";
+//const SOCKETIO_URL = "https://dixit-for-bibas.herokuapp.com/";
+const SOCKETIO_URL = "http://localhost:3000";
 
 const connectionOptions = {
 		"force new connection": true,
@@ -55,7 +55,7 @@ function update_players() {
 			console.log(user);
 			user_class = "";
 			if(user.uid == uid) {
-				user_class = " local-uid";
+				user_class += " local-uid";
 			}
 			$("#players table").append("<tr class='player" + user_class + "'uid='" + user.uid + "'><td>"+user.name+"</td><td class='score'>" + user.score + "</td></tr>");
 		});
@@ -68,16 +68,23 @@ function update_player_scores() {
 	}
 }
 
-function update_hands(data) {
-	log("got hand update");
+function update_cards(data) {
+	log("got card update");
 	log(data.cards);
 
 	$("#hand ul li").remove();
+	
+	if(game_state == 'guess' || game_state == 'secret') {
+		$("#table .card-list li").remove();
+	}
+
 	data.cards.forEach(function(card) {
-		if(card.uid == uid) {
+		if(card.uid == uid && card.state == 'hand') {
 			console.log("card "+ card.uid);
 			$("#hand ul").append("<li cid=" + card.cid +"><a href='#' class='card-link'><img src='cards/"
 				+ card.filename+"' /></a></li>");
+		} else if (card.state == 'table') {
+			other_player_secret(card);
 		}
 	});
 
@@ -132,19 +139,14 @@ function player_element(p_uid) {
 	return $(".player[uid=" + p_uid + "]");
 }
 
-function setup_game(in_progress) {
+function setup_game() {
 	$("#room-text").text(game);
 	$("#gameboard").removeClass("hidden");
 	$("#join-controls").addClass("hidden");
 
-	if(!in_progress) {
-		game_state = "pregame";
-	} else {
-		$("#start_game").addClass("hidden");
-		notify("waiting for the current players to finish their round");
+	if(game_state != 'pregame') {
+		update_players();
 	}
-	
-
 }
 
 function card_listener(event, parent) {
@@ -356,15 +358,18 @@ function guess_card() {
 
 //remote player actions
 function other_player_secret(data) {
-	player_element(data.uid).removeClass("waiting-move");
-
-	$("#unrevealed-cards ul").append("<li class='facedown'><div>" + data.username + "</div></li>");
+	if(game_state == 'secret') {
+		$("#unrevealed-cards ul").append("<li class='facedown'><div>" + data.username + "</div></li>");
+		player_element(data.uid).removeClass("waiting-move");
+	}
 	log("player "+ data.uid + " played card " + data.cid);
 	played_cards.set(data.cid, {uid:data.uid, filename:data.filename});
 }
 
 function other_player_guess(data) {
-	player_element(data.uid).removeClass("waiting-move");
+	if(game_state == 'guess') {
+		player_element(data.uid).removeClass("waiting-move");
+	}	
 	player_guesses.set(data.uid, {cid:data.cid});
 }
 
@@ -377,7 +382,10 @@ function join_callback(res) {
 		game = res.game;
 		uid = res.uid;
 		gid = res.gid;
-		setup_game(res.in_progress);
+		game_state = res.state;
+		turn_index = res.turn_index;
+		current_turn = res.turn;
+		setup_game();
 	} else if(res["response"] == "error") {
 		if(res["error"] == "user_in_game") {
 			show_error("There is already a user with the name '"+
@@ -436,7 +444,7 @@ $(document).ready(function() {
 
 
 	socket.on("player join", update_players);
-	socket.on("user hands", update_hands);
+	socket.on("card update", update_cards);
 	socket.on("start game", game_started);
 
 	socket.on("reveal guess", end_turn);
