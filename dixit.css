@@ -1,26 +1,162 @@
 
+#game {
+	max-width: 1000px;
+	margin: auto;
+}
+h1 {
+	text-align: center;
+}
+
+.centered {
+	text-align: center;
+}
+.module {
+	margin:5px;
+	padding:10px;
+}
+
 .hidden {
-	display:none;
+	display: none;
+}
+
+#admin-controls {
+	margin-top: 20px;
+	background-color: #e0dcd1;
+}
+#admin-controls h4 {
+	margin:20px;
+}
+#admin-controls button {
+	margin: 10px;
+}
+
+.input-row {
+	display: table-row;
+}
+.input-row label {
+	display: table-cell;
+	padding-right: 10px;
+}
+.input-row input {
+	display: table-cell;
+}
+#join-controls input {
+	margin-top: 5px;
+}
+
+#gameboard {
+	margin:0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+.card-list ul {
+	padding-left: 0px;
+}
+
+.card-list a {
+	display: block;
+	text-align: center;
+}
+
+.card-list img {
+	width:100px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.card-list li {
+	list-style-type: none;
+	padding: 10px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.card-list li.facedown {
+	background-color: black;
+	color: white;
+	width:100px;
+	height:160px;
+	padding: 0px;
+	margin: 10px;
+	text-align: center;
+}
+
+.card-list li.facedown div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 160px;
+}
+
+#gameplay {
+	float:left;
+	width:765px;
+}
+
+#right-column {
+	display: inline-block;
+}
+
+#game-info {
+	background-color: #ddedec;
+	padding: 15px;
+	vertical-align: top;
+	width: 200px;
+}
+
+#players td {
+	min-width: 40px;
+}
+#players td.score {
+	text-align: right;
+}
+
+#cards-remaining {
+	margin-top: 10px;
+}
+
+.local-uid {
+	font-weight: bold;
+}
+
+.local-card {
+	background-color: #ff8880;
+}
+
+#card-viewer img {
+	width: 200px;
+	text-align: center;
+	margin-top: 10px;
+}
+
+.guess-info {
+	text-align: center;
+}
+
+.guess-info li {
+	display: block;
+	padding: 2px;
+}
+
+.guess-info ul {
+	padding: 0px;
+}
+
+.card-owner {
+	font-size: 110%;
+	text-decoration: underline;
+}
+.correct-uid {
+	font-weight: bold;
 }
 
 #error_text {
 	color: red;
 }
 
-#hand a {
-	text-decoration: none;
-}
-
-#table a {
-	text-decoration: none;
-}
-
-a.active {
-	color: green;
-}
-
-a.inactive {
-	color: black;
+li.active {
+	background-color: #9feda7;
 }
 
 .player {

@@ -1,5 +1,5 @@
 
-//const SOCKETIO_URL = "https://hulu-sync.herokuapp.com/";
+//const SOCKETIO_URL = "https://dixit-for-bibas.herokuapp.com/";
 const SOCKETIO_URL = "http://localhost:3000";
 
 const connectionOptions = {
@@ -16,9 +16,11 @@ var selected_card;
 var players;
 var current_turn;
 var game_state = "none";
-var played_cards = [];
+var played_cards;
+var local_card;
+var turn_index;
 
-
+var player_guesses;
 
 function update_player_table(table, data) {
 	$(table + " tr").remove();
@@ -46,12 +48,69 @@ function clear_notify() {
 
 function update_players() {
 	socket.emit("get users", gid, function(data) {
-		players = data;
-		$("#players ul li").remove();
+		$("#players tr").remove();
+		players = new Map();
 		data.forEach(function(user) {
-			$("#players ul").append("<li class='player' uid='" + user.uid + "'>"+user.name+"</li>");
+			players.set(user.uid, user);
+			console.log(user);
+			user_class = "";
+			if(user.uid == uid) {
+				user_class = " local-uid";
+			}
+			$("#players table").append("<tr class='player" + user_class + "'uid='" + user.uid + "'><td>"+user.name+"</td><td class='score'>" + user.score + "</td></tr>");
 		});
 	});
+}
+
+function update_player_scores() {
+	for (let [uid, player] of players) {
+		$("#players tr[uid=" + uid + "] td.score").text(player.score);
+	}
+}
+
+function update_hands(data) {
+	log("got hand update");
+	log(data.cards);
+
+	$("#hand ul li").remove();
+	data.cards.forEach(function(card) {
+		if(card.uid == uid) {
+			console.log("card "+ card.uid);
+			$("#hand ul").append("<li cid=" + card.cid +"><a href='#' class='card-link'><img src='cards/"
+				+ card.filename+"' /></a></li>");
+		}
+	});
+
+	$("#cards-remaining").text("Cards in deck: " + data.remaining);
+
+	register_card_listeners();
+}
+
+function reveal_guesses() {
+	for (let [cid, card] of played_cards) {
+		let card_name = players.get(card.uid).name;
+		card_elt = $("#revealed-cards li[cid='" + cid + "'] .card-owner");
+		card_elt.text(card_name);
+		if(card.uid == current_turn) {
+			card_elt.addClass("correct-uid");
+		}
+	}
+	for (let [uid, guess] of player_guesses) {
+		$("#revealed-cards li[cid=" + guess.cid + "] .guess-info ul").append(
+			"<li>" + players.get(uid).name + "</li>"
+			);
+	}
+}
+
+function clear_selection() {
+	selected_card = null;
+	$("#hand li").removeClass("active");
+	$("#table li").removeClass("active");
+	$("#hand li").addClass("inactive");
+	$("#table li").addClass("inactive");
+	$("#guess-card button").prop("disabled", true);
+	$(".choose-secret button").prop("disabled", true);
+	$(".prompt #submit").prop("disabled", true);
 }
 
 function set_players_waiting(except) {
@@ -60,38 +119,60 @@ function set_players_waiting(except) {
 }
 
 function remove_from_hand(cid) {
-	$("#hand a[cid=" + cid + "]").parent().remove();
+	$("#hand li[cid=" + cid + "]").remove();
 }
 
 function filename_by_cid(cid) {
-	return $("a.card-link[cid=" + cid + "]").text()
+	return $("li[cid=" + cid + "] img").attr("src");
 }
 
 function player_element(p_uid) {
 	return $(".player[uid=" + p_uid + "]");
 }
 
-function setup_game() {
-	$("#room_text").text("Playing in game: " + game);
+function setup_game(in_progress) {
+	$("#room-text").text(game);
 	$("#gameboard").removeClass("hidden");
-	$("#join_controls").addClass("hidden");
+	$("#join-controls").addClass("hidden");
 
-	game_state = "pregame";
+	if(!in_progress) {
+		game_state = "pregame";
+	} else {
+		$("#start_game").addClass("hidden");
+		notify("waiting for the current players to finish their round");
+	}
+	
 
 }
 
 function card_listener(event, parent) {
 	event.preventDefault();
-	if((game_state == "player_prompt" && uid == current_turn) ||
-		(game_state == "choose_secret" && uid != current_turn) ||
-		(game_state == "guesses" && uid != current_turn)) {
-		$(parent + " a").removeClass("active");
-		$(parent + " a").addClass("inactive");
+	if((game_state == "player_prompt" && uid == current_turn && parent == "#hand") ||
+		(game_state == "choose_secret" && uid != current_turn && parent == "#hand") ||
+		(game_state == "guesses" && uid != current_turn && parent == "#table")) {
 
-		selected_card = event.target.getAttribute("cid");
-		$(event.target).addClass("active");
-		$(event.target).removeClass("inactive");
+		let clicked_cid = Number($(event.target).parent().parent().attr("cid"));
+		
+		if(game_state == "guesses" && played_cards.get(clicked_cid).uid == uid) {
+			return;
+		}
+
+		$(parent + " li").removeClass("active");
+		$(parent + " li").addClass("inactive");
+
+		selected_card = clicked_cid;
+		log("selected card = " + selected_card);
+		$(event.target).parent().parent().addClass("active");
+		$(event.target).parent().parent().removeClass("inactive");
+
+		$("#guess-card button").prop("disabled", false);
+		$(".choose-secret button").prop("disabled", false);
+		$(".prompt #submit").prop("disabled", false);
 	}
+}
+
+function image_hover_listener(event) {
+	$("#card-viewer img").attr("src", $(event.target).attr("src"));
 }
 
 function register_card_listeners() {
@@ -101,74 +182,76 @@ function register_card_listeners() {
 	$("#table a").click(event => {
 		card_listener(event, "#table");
 	});
+
+	$("#hand img").hover(image_hover_listener);
+	$("#table img").hover(image_hover_listener);
 }
 
 
 //global game events
 
-function hand_update(data) {
-	console.log("got hand update");
-	console.log(data.cards);
-
-	$("#hand ul li").remove();
-	data.cards.forEach(function(card) {
-		if(card.uid == uid) {
-			console.log("card "+ card.uid);
-			$("#hand ul").append("<li><a href='#' class='card-link inactive' cid="+ card.cid + ">"+card.filename+"</a></li>");
-		}
-	});
-	register_card_listeners();
-}
-
 function game_started(data) {
+	turn_index = 0;
 	$("button#start_game").addClass("hidden");
+	log("game start message received");
 }
 
 function start_prompt_round(turn_data) {
-	selected_card = null;
-	console.log(turn_data);
+	log("begin new round. state: player_prompt");
+	log("turn_data:");
+	log(turn_data);
+	clear_selection();
 	game_state = "player_prompt";
 	$("#hand a").removeClass("active");
 	current_turn = turn_data.uid;
 	$(".player").removeClass("waiting-move");
 	player_element(current_turn).addClass("waiting-move");
 	if(uid == turn_data.uid) {
-		$("#prompt").removeClass("hidden");
+		$(".prompt").removeClass("hidden");
 	}
 	$("#turn_text").removeClass("hidden");
-	$("#turn_text").text("Current turn: " + turn_data.username);
+	$("#turn_text").text("Storyteller: " + players.get(turn_data.uid).name);
 }
 
 function start_secret_round(data) {
 	game_state = "choose_secret";
+	log("game state changed to choose_secret");
+	clear_selection();
 	set_players_waiting(current_turn);
+
+	$(".hint").removeClass("hidden");
+	$("#prompt_text").text(data.prompt);
+
 	if(uid != current_turn) {
-		$("#prompt_text").text(data.prompt);
 		$(".choose-secret").removeClass("hidden");
 	} else {
 		notify("Wait for the other players to choose their cards.");
 	}
-	played_cards = new Array();
-	played_cards.push({
-		uid:data.uid,
-		cid:data.cid,
-		filename:data.filename
-	});
-	$("#unrevealed-cards li").remove();
-	$("#unrevealed-cards").removeClass("hidden");
+	played_cards = new Map();
+	played_cards.set(data.cid, {uid:data.uid, filename:data.filename});
+	$("#revealed-cards li").remove();
 }
 
 function start_guess_round(data) {
 	game_state = "guesses";
-	selected_card = null;
+	log("game state changed to guesses");
+	clear_selection();
+	player_guesses = new Map();
 	set_players_waiting(current_turn);
+	sorted_cids = Array.from(played_cards.keys()).sort();
+	log("sorted cids:");
+	log(sorted_cids);
+	log(data.order);
 	data.order.forEach(index => {
-		$("#revealed-cards ul").append("<li><a href='#' class = 'inactive' cid=" + played_cards[index].cid + ">" + 
-			played_cards[index].filename + "</a></li>");
+		cid = sorted_cids[index];
+		log("inserting card " + cid);
+		$("#revealed-cards ul.card-list").append("<li cid=" + cid + "><a href='#'>" + 
+			"<img src='" + played_cards.get(cid).filename + "' /></a><div class='guess-info'>" +
+			"<span class='card-owner'></span><ul></ul></div></li>");
 	});
+	$("#revealed-cards li[cid=" + local_card + "]").addClass("local-card");
 	register_card_listeners();
-	$("#unrevealed-cards").addClass("hidden");
-	$("#revealed-cards").removeClass("hidden");
+	$("#unrevealed-cards li").remove();
 	if(uid == current_turn) {
 		$("#guess-card").addClass("hidden");
 	} else {
@@ -176,9 +259,53 @@ function start_guess_round(data) {
 	}
 }
 
+function end_turn() {
+	log("end of turn, computing new player scores");
+	let all_correct = true;
+	let all_incorrect = true;
+	let point_changes = new Map();
+	for (let [uid, player] of players) {
+		point_changes.set(uid, 0);
+	}
+	log("current turn player uid is " + current_turn);
+	for (let [uid, data] of player_guesses) {
+		opp_uid = played_cards.get(data.cid).uid;
+		log("player " + uid + " guessed card of player " + opp_uid);
+		if(opp_uid == current_turn) {
+			point_changes.set(uid, point_changes.get(uid) + 3);
+			all_incorrect = false;
+		} else {
+			players.get(opp_uid).score += 1;
+			all_correct = false;
+		}
+	}
+	point_changes.set(current_turn, 3);
+	for (let [uid, player] of players) {
+		if(!all_correct && !all_incorrect) {
+			player.score += point_changes.get(uid);
+		} else if(uid != current_turn){
+			player.score += 2;
+		}
+		log(player.username + " now has score " + player.score);
+	}
+
+	update_player_scores();
+
+	reveal_guesses();
+
+	socket.emit("score update", {
+		uid:uid,
+		score:players.get(uid).score
+	});
+}
+
 //local player actions
 function submit_prompt_card() {
-	//TODO: validate card choice
+	log("submitting prompt.");
+	log("selected card: " + selected_card);
+	if(selected_card == null) {
+		return;
+	}
 	socket.emit("prompt", {
 		prompt:$("#prompt_inp").val(),
 		uid:uid,
@@ -186,35 +313,41 @@ function submit_prompt_card() {
 		filename: filename_by_cid(selected_card),
 		cid:selected_card
 	}, function (data) {
-		$("#prompt").addClass("hidden");
+		$(".prompt").addClass("hidden");
 	});
 
 	remove_from_hand(selected_card);
 }
 
 function choose_secret_card() {
-	//TODO: get the image src attribute instead here and validate selected card.
-	socket.emit("choose secret", {
-		cid:selected_card,
-		filename: filename_by_cid(selected_card),
-		uid:uid,
-		turn:current_turn,
-		username:username,
-		gid:gid,
-		num_players:players.length
-	});
 
-	remove_from_hand(selected_card);
-	$(".choose-secret button").addClass("hidden");
+	if(selected_card != null) {
+		log("choosing secret card: " + selected_card);
+		socket.emit("choose secret", {
+			cid:selected_card,
+			filename: filename_by_cid(selected_card),
+			uid:uid,
+			turn:current_turn,
+			username:username,
+			gid:gid,
+			num_players:players.size
+		});
+
+		remove_from_hand(selected_card);
+		local_card = selected_card;
+		$(".choose-secret").addClass("hidden");
+	}
 }
 
 function guess_card() {
 	//TODO: validate selected card
+	turn_index += 1;
 	socket.emit("guess card", {
 		cid:selected_card,
 		uid:uid,
 		username:username,
-		gid:gid
+		gid:gid,
+		turn_index:turn_index
 	});
 	$("#guess-card").addClass("hidden");
 }
@@ -223,16 +356,14 @@ function guess_card() {
 function other_player_secret(data) {
 	player_element(data.uid).removeClass("waiting-move");
 
-	$("#unrevealed-cards ul").append("<li>(" + data.username + ")</li>");
-	played_cards.push({
-		uid:data.uid,
-		cid:data.cid,
-		filename:data.filename
-	});
+	$("#unrevealed-cards ul").append("<li class='facedown'><div>" + data.username + "</div></li>");
+	log("player "+ data.uid + " played card " + data.cid);
+	played_cards.set(data.cid, {uid:data.uid, filename:data.filename});
 }
 
 function other_player_guess(data) {
 	player_element(data.uid).removeClass("waiting-move");
+	player_guesses.set(data.uid, {cid:data.cid});
 }
 
 
@@ -240,23 +371,29 @@ function other_player_guess(data) {
 function join_callback(res) {
 	if(res["response"] == "success") {
 		clear_error();
-		username = res["username"];
-		game = res["game"];
-		uid = res["uid"];
-		gid = res["gid"];
-		setup_game();
+		username = res.username;
+		game = res.game;
+		uid = res.uid;
+		gid = res.gid;
+		setup_game(res.in_progress);
 	} else if(res["response"] == "error") {
 		if(res["error"] == "user_in_game") {
 			show_error("There is already a user with the name '"+
-				res["username"] + "' in the game '" + res["game"] + "'");
+				res["username"] + "' in the game '" + res["game"] + "'.");
+		} else if (res["error"] == "in_progress") {
+			show_error("This game is already in progress.");
 		} else {
 			show_error("There was a mysterious SQL error. Yell at Teddy to see if he'll fix it.");
 		}
 	}
 }
 
+function log(text) {
+	console.log(text);
+}
+
 $(document).ready(function() {
-	$("#join_controls form").submit(function(e) {
+	$("#join-controls form").submit(function(e) {
 		console.log("clicked submit");
 
 		e.preventDefault();
@@ -265,7 +402,7 @@ $(document).ready(function() {
 			"game":$("input#game").val()
 		},
 		join_callback);
-		console.log("Joined game.");
+		log("Sent join request.");
 	});
 
 	$("button#delete_all_users").click(function(e) {
@@ -282,7 +419,7 @@ $(document).ready(function() {
 		socket.emit("start game", gid);
 	});
 
-	$("#prompt form").submit(function (e) {
+	$(".prompt form").submit(function (e) {
 		e.preventDefault();
 		submit_prompt_card();
 	});
@@ -295,11 +432,12 @@ $(document).ready(function() {
 		guess_card();
 	});
 
-	
 
 	socket.on("player join", update_players);
-	socket.on("user hands", hand_update);
+	socket.on("user hands", update_hands);
 	socket.on("start game", game_started);
+
+	socket.on("reveal guess", end_turn);
 
 	socket.on("round prompt", start_prompt_round);
 	socket.on("round secret", start_secret_round);

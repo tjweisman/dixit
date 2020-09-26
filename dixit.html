@@ -11,69 +11,96 @@
 </head>
 
 <body>
-	<h1 id="title">Dixit</h1>
-	<div id="join_controls">
+	<div id="game">
+	<h1 id="title">DIXIT</h1>
+	<div id="join-controls">
 		<form>
-			<label for="username">Username: </label>
-			<input type="text" name="username" id="username" required>
+			<div class="input-row">
+				<label for="username">Username: </label>
+				<input type="text" name="username" id="username" required>
+			</div>
 
+			<div class="input-row">
 			<label for="game">Room name: </label>
 			<input type="text" name="game" id="game" required>
+			</div>
 
-			<input type="submit" name="submit" value="Join game" id="submit">
+			<div class="centered">
+				<input type="submit" name="submit" value="Join game" id="submit">
+			</div>
 		</form>
 	</div>
-	<div id="error" class="module">
-		<span id="error_text"></span>
-	</div>
-	<div id="notify" class="module">
-		<span id="notify_text"></span>
-	</div>
-	<div id="gameboard" class="module hidden">
-		<h3 id="room_text"></h3>
-		<button type="button" id="start_game">Start game!</button>
-		<span id="turn_text" class="hidden"></span>
-		<div id="prompt" class="hidden">
-			<form>
-				<label for="prompt">Your prompt: </label>
-				<input type="text" name="prompt" id="prompt_inp">
-
-				<input type="submit" name="submit" value="Submit">
-			</form>
+	<div id="gameboard" class="hidden">
+		<div class="centered">
+			<button type="button" id="start_game">Start game!</button>
 		</div>
-		<div class="choose-secret hidden">
-			<div>PROMPT:</div>
+		<div id="gameplay">
+		<h3 id="turn_text" class="hidden"></h3>
+		<div class="hint centered hidden">
+			<h3>Hint:</h3>
 			<span id="prompt_text"></span>
 		</div>
 		<div id="table">
-			<div id="unrevealed-cards"><ul></ul></div>
-			<div id="revealed-cards" class="hidden"><ul></ul></div>
-			<div id="guess-card" class="hidden">
+			<div class="card-list" id="unrevealed-cards"><ul></ul></div>
+			<div class="card-list" id="revealed-cards"><ul class="card-list"></ul></div>
+			<div id="guess-card" class="hidden centered">
 				<button type="button">Guess card</button>
 			</div>
 		</div>
+
+		<div class="prompt centered hidden">
+			<h4>Choose a card and pick a hint for it.</h4>
+		</div>
 		
-		<div id="hand">
-			<h2>Your hand:</h2>
+		<div class="card-list" id="hand">
 			<ul>
 			</ul>
 		</div>
-		<div class="choose-secret hidden">
+		<div class="prompt hidden">
+			<form>
+				<div class="centered">
+					<label for="prompt">Your hint: </label>
+					<input type="text" name="prompt" id="prompt_inp">
+				</div>
+
+				<div class="centered">
+					<input type="submit" name="submit" id="submit" value="Submit">
+				</div>
+			</form>
+		</div>
+		<div class="choose-secret centered hidden">
 			<button type="button">Choose card</button>
 		</div>
-		<h3>Players:</h3>
-		<div id="players">
-			<ul>
-			</ul>
+		</div>
+		<div id="right-column">
+			<div id="game-info">
+				<div id="players">
+					<h2 id="room-text"></h2>
+					<table>
+					</table>
+				</div>
+				<span id="cards-remaining"></span>
+			</div>
+			<div id="card-viewer">
+				<img />
+			</div>
 		</div>
 	</div>
-	<div id="admin_controls" class="module">
+	<div id="error" class="module centered">
+		<span id="error_text"></span>
+	</div>
+	<div id="notify" class="module centered">
+		<span id="notify_text"></span>
+	</div>
+	<div id="admin-controls" class="module">
+		<h4>Admin controls</h4>
 		<button type="button" id="show_all_users">Show list of all users</button>
 		<div id="all_users_list">
 			<table>
 			</table>
 		</div>
 		<button type="button" id="delete_all_users">Delete all users/rooms</button>
+	</div>
 	</div>
 </body>
 
