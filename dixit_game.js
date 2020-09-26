@@ -1,6 +1,6 @@
 
-//const SOCKETIO_URL = "https://dixit-for-bibas.herokuapp.com/";
-const SOCKETIO_URL = "http://localhost:3000";
+const SOCKETIO_URL = "https://dixit-for-bibas.herokuapp.com/";
+//const SOCKETIO_URL = "http://localhost:3000";
 
 const card_dir = "cards"
 
@@ -248,6 +248,7 @@ function register_card_listeners() {
 function game_started(data) {
 	turn_index = 0;
 	log("game start message received");
+	$("button#start_game").addClass("hidden");
 }
 
 function start_prompt_round(turn_data) {
@@ -463,9 +464,11 @@ function join_callback(res) {
 			show_error("There is already a user with the name '"+
 				res["username"] + "' in the game '" + res["game"] + "'.");
 		} else if (res["error"] == "in_progress") {
-			show_error("This game is already in progress.");
+			show_error("That game is in progress and isn't accepting new players.");
+		} else if(res.error == "user_connected") {
+			show_error("A player with that username is already playing in that game.");
 		} else {
-			show_error("There was a mysterious SQL error. Yell at Teddy to see if he'll fix it.");
+			show_error("There was a mysterious server error. Yell at Teddy to see if he'll fix it.");
 		}
 	}
 }
