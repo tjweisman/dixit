@@ -1,6 +1,6 @@
 
-//const SOCKETIO_URL = "https://dixit-for-bibas.herokuapp.com/";
-const SOCKETIO_URL = "http://localhost:3000";
+const SOCKETIO_URL = "https://dixit-for-bibas.herokuapp.com/";
+//const SOCKETIO_URL = "http://localhost:3000";
 
 const connectionOptions = {
 		"force new connection": true,
@@ -92,7 +92,7 @@ function reveal_guesses() {
 		card_elt = $("#revealed-cards li[cid='" + cid + "'] .card-owner");
 		card_elt.text(card_name);
 		if(card.uid == current_turn) {
-			card_elt.addClass("correct-uid");
+			$("#revealed-cards li[cid='" + cid + "']").addClass("correct-uid");
 		}
 	}
 	for (let [uid, guess] of player_guesses) {
@@ -100,6 +100,8 @@ function reveal_guesses() {
 			"<li>" + players.get(uid).name + "</li>"
 			);
 	}
+	$("#revealed-cards li").removeClass("local-card");
+
 }
 
 function clear_selection() {

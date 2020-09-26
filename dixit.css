@@ -60,7 +60,7 @@ h1 {
 }
 
 .card-list img {
-	width:100px;
+	height:160px;
 	display: inline-block;
 	vertical-align: top;
 }
@@ -90,19 +90,21 @@ h1 {
 }
 
 #gameplay {
-	float:left;
-	width:765px;
+	display: table-cell;
+	width:100%;
 }
 
 #right-column {
-	display: inline-block;
+	display: table-cell;
+	min-width: 300px;
+	width: 300px;
 }
 
 #game-info {
 	background-color: #ddedec;
 	padding: 15px;
 	vertical-align: top;
-	width: 200px;
+	width: 100%;
 }
 
 #players td {
@@ -124,10 +126,17 @@ h1 {
 	background-color: #ff8880;
 }
 
-#card-viewer img {
-	width: 200px;
+#card-viewer {
 	text-align: center;
-	margin-top: 10px;
+	width: 100%;
+	height: 380px;
+}
+
+#card-viewer img {
+	max-width: 100%;
+	max-height: 100%;
+	text-align: center;
+	margin: 10px 0px;
 }
 
 .guess-info {
@@ -147,9 +156,14 @@ h1 {
 	font-size: 110%;
 	text-decoration: underline;
 }
-.correct-uid {
+
+.correct-uid .card-owner {
 	font-weight: bold;
 }
+
+.correct-uid {
+	background-color: #8991fa;
+}	
 
 #error_text {
 	color: red;
