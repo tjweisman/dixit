@@ -1,6 +1,6 @@
 
-const SOCKETIO_URL = "https://dixit-for-bibas.herokuapp.com/";
-//const SOCKETIO_URL = "http://localhost:3000";
+//const SOCKETIO_URL = "https://dixit-for-bibas.herokuapp.com/";
+const SOCKETIO_URL = "http://localhost:3000";
 
 const card_dir = "cards"
 
@@ -191,7 +191,7 @@ function setup_game(game_data) {
 		}
 
 		if(game_state != 'pregame') {
-			$("button#start_game").addClass("hidden");
+			$("#game-start").addClass("hidden");
 			update_storyteller_text();
 			socket.emit("get cards", {
 				gid:gid
@@ -248,7 +248,7 @@ function register_card_listeners() {
 function game_started(data) {
 	turn_index = 0;
 	log("game start message received");
-	$("button#start_game").addClass("hidden");
+	$("#game-start").addClass("hidden");
 }
 
 function start_prompt_round(turn_data) {
@@ -500,8 +500,19 @@ $(document).ready(function() {
 		});
 	});
 
-	$("button#start_game").click(function(e) {
-		socket.emit("start game", gid);
+	$("#game-start form").submit(function(e) {
+		e.preventDefault();
+		socket.emit("start game", {
+			gid:gid,
+			options: {
+				hand_size:$("#options #hand-size").val()
+			}
+		});
+	});
+
+	$("#game-start #options-toggle").click(event => {
+		event.preventDefault();
+		$("#game-start #options").toggleClass("hidden");
 	});
 
 	$(".prompt form").submit(function (e) {

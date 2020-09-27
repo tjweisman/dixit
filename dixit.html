@@ -31,8 +31,24 @@
 		</form>
 	</div>
 	<div id="gameboard" class="hidden">
-		<div class="centered">
-			<button type="button" id="start_game">Start game!</button>
+		<div id="game-start" class="centered">
+			<form>
+				<div id="options-box">
+					<div class="centered">
+						<a href="#" id="options-toggle">Options</a>
+					</div>
+					<div id="options" class="hidden">
+						<div class="input-row">
+							<label for="hand-size">Hand size (1-10):</label>
+							<input type="number" value="5" name="hand-size" min="1" max="10" id="hand-size">
+						</div>
+					</div>
+
+					<div class="centered">
+					<input type="submit" name="submit" value="Start game!">
+				</div>
+				</div>
+			</form>
 		</div>
 		<div id="gameplay">
 		<h3 id="turn_text" class="hidden"></h3>
