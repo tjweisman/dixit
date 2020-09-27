@@ -1,6 +1,6 @@
 
-//const SOCKETIO_URL = "https://dixit-for-bibas.herokuapp.com/";
-const SOCKETIO_URL = "http://localhost:3000";
+const SOCKETIO_URL = "https://dixit-for-bibas.herokuapp.com/";
+//const SOCKETIO_URL = "http://localhost:3000";
 
 const card_dir = "cards"
 
@@ -171,7 +171,19 @@ function player_element(p_uid) {
 	return $(".player[uid=" + p_uid + "]");
 }
 
-function setup_game(game_data) {
+
+function setup_game(res) {
+	username = res.username;
+	game = res.game;
+	uid = res.uid;
+	gid = res.gid;
+
+	let game_data = res.game_data;
+
+	game_state = game_data.state;
+	turn_index = game_data.turn_index;
+	current_turn = game_data.turn;
+
 	$("#room-text").text(game);
 	$("#gameboard").removeClass("hidden");
 	$("#join-controls").addClass("hidden");
@@ -449,16 +461,8 @@ function join_callback(res) {
 	if(res.response == "success") {
 		log("join request accepted.");
 		clear_error();
-		username = res.username;
-		game = res.game;
-		uid = res.uid;
-		gid = res.gid;
-
-		game_state = res.game_data.state;
-		turn_index = res.game_data.turn_index;
-		current_turn = res.game_data.turn;
-
-		setup_game(res.game_data);
+		setup_game(res);
+		
 	} else if(res["response"] == "error") {
 		if(res["error"] == "user_in_game") {
 			show_error("There is already a user with the name '"+
