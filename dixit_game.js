@@ -1,6 +1,6 @@
 
-const SOCKETIO_URL = "https://dixit-for-bibas.herokuapp.com/";
-//const SOCKETIO_URL = "http://localhost:3000";
+//const SOCKETIO_URL = "https://dixit-for-bibas.herokuapp.com/";
+const SOCKETIO_URL = "http://localhost:3000";
 
 const card_dir = "cards"
 
@@ -256,6 +256,21 @@ function register_card_listeners() {
 
 
 //global game events
+function reset_game(data) {
+	$(".prompt").addClass("hidden");
+	$(".choose-secret").addClass("hidden");
+	$(".hint").addClass("hidden");
+	$("#turn_text").addClass("hidden");
+	$(".player").removeClass("waiting-move");
+	$("#guess-card").addClass("hidden");
+	$("#cards-remaining").text("");
+
+	$(".card-list li").remove();
+
+	$("#game-start").removeClass("hidden");
+
+	update_players();
+}
 
 function game_started(data) {
 	turn_index = 0;
@@ -532,6 +547,12 @@ $(document).ready(function() {
 		guess_card();
 	});
 
+	$("#reset-game button").click(event => {
+		socket.emit("reset game", {
+			gid:gid
+		});
+	});
+
 
 	socket.on("player join", update_players);
 	socket.on("card update", update_cards);
@@ -545,4 +566,6 @@ $(document).ready(function() {
 	socket.on("other prompt", other_player_prompt);
 	socket.on("other secret", other_player_secret);
 	socket.on("other guess", other_player_guess);
+
+	socket.on("reset game", reset_game);
 });
