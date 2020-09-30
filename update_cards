@@ -12,7 +12,7 @@ echo "copying processed images to local web directory"
 cp $CARD_DIRECTORY/* $WEBSITE_DIRECTORY
 
 echo "syncing local web directory to server"
-rsync -r --delete $WEBSITE_DIRECTORY $UT_MATH:~/public_html/dixit/cards
+rsync -r --delete $WEBSITE_DIRECTORY/ $UT_MATH:~/public_html/dixit/cards
 
 echo "updating local database"
 cat insert_cards.sql | psql -U dixit_user -d dixit
