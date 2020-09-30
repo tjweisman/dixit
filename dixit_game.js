@@ -167,7 +167,19 @@ function player_element(p_uid) {
 	return $(".player[uid=" + p_uid + "]");
 }
 
-function setup_game(game_data) {
+
+function setup_game(res) {
+	username = res.username;
+	game = res.game;
+	uid = res.uid;
+	gid = res.gid;
+
+	let game_data = res.game_data;
+
+	game_state = game_data.state;
+	turn_index = game_data.turn_index;
+	current_turn = game_data.turn;
+
 	$("#room-text").text(game);
 	$("#gameboard").removeClass("hidden");
 	$("#join-controls").addClass("hidden");
@@ -240,6 +252,21 @@ function register_card_listeners() {
 
 
 //global game events
+function reset_game(data) {
+	$(".prompt").addClass("hidden");
+	$(".choose-secret").addClass("hidden");
+	$(".hint").addClass("hidden");
+	$("#turn_text").addClass("hidden");
+	$(".player").removeClass("waiting-move");
+	$("#guess-card").addClass("hidden");
+	$("#cards-remaining").text("");
+
+	$(".card-list li").remove();
+
+	$("#game-start").removeClass("hidden");
+
+	update_players();
+}
 
 function game_started(data) {
 	turn_index = 0;
@@ -445,16 +472,8 @@ function join_callback(res) {
 	if(res.response == "success") {
 		log("join request accepted.");
 		clear_error();
-		username = res.username;
-		game = res.game;
-		uid = res.uid;
-		gid = res.gid;
-
-		game_state = res.game_data.state;
-		turn_index = res.game_data.turn_index;
-		current_turn = res.game_data.turn;
-
-		setup_game(res.game_data);
+		setup_game(res);
+		
 	} else if(res["response"] == "error") {
 		if(res["error"] == "user_in_game") {
 			show_error("There is already a user with the name '"+
@@ -524,6 +543,12 @@ $(document).ready(function() {
 		guess_card();
 	});
 
+	$("#reset-game button").click(event => {
+		socket.emit("reset game", {
+			gid:gid
+		});
+	});
+
 
 	socket.on("player join", update_players);
 	socket.on("card update", update_cards);
@@ -537,4 +562,6 @@ $(document).ready(function() {
 	socket.on("other prompt", other_player_prompt);
 	socket.on("other secret", other_player_secret);
 	socket.on("other guess", other_player_guess);
+
+	socket.on("reset game", reset_game);
 });
