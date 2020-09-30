@@ -1,7 +1,3 @@
-
-//const SOCKETIO_URL = "https://dixit-for-bibas.herokuapp.com/";
-const SOCKETIO_URL = "http://localhost:3000";
-
 const card_dir = "cards"
 
 const connectionOptions = {
