@@ -4,13 +4,15 @@ import sys
 import re
 import os
 import subprocess
+import shutil
 
 SCRIPT_DIR = "/home/teddy/projects/dixit/cards"
-BACKEND_DIR = "/home/teddy/projects/dixit/backend"
 FRONTEND_DIR = "/home/teddy/projects/dixit/frontend"
+BACKEND_DIR = "/home/teddy/projects/dixit/backend"
 
 FRONTEND_CARD_PATH = "cards"
-SQL_OUTPUT_FILE = "insert_cards.sql"
+SQL_FILENAME = "insert_cards.sql"
+SQL_OUTPUT = os.path.join(SCRIPT_DIR, SQL_FILENAME)
 
 OUTPUT_SIZE = "350x560^"
 
@@ -94,10 +96,14 @@ def process_dirs(directories):
 
             output_lines += addl_files
 
-    with open(os.path.join(BACKEND_DIR, SQL_OUTPUT_FILE), 'w') as sql_output:
-        sql_output.write("INSERT INTO default_cards(filenames) VALUES\n")
+    with open(SQL_OUTPUT, 'w') as sql_output:
+        sql_output.write("INSERT INTO default_cards(filename) VALUES\n")
         sql_output.write(",\n".join(output_lines))
         sql_output.write("\nON CONFLICT DO NOTHING;")
+
+    shutil.copyfile(SQL_OUTPUT, os.path.join(BACKEND_DIR, SQL_FILENAME))
+
+
 
 def main():
     if len(sys.argv) > 1:
