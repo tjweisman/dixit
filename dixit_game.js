@@ -552,6 +552,11 @@ $(document).ready(function() {
 			gid:gid
 		});
 	});
+	$("#shuffle-players").click(event => {
+		socket.emit("shuffle players", {
+			gid:gid
+		});
+	});
 
 
 	socket.on("player join", update_players);

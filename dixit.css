@@ -40,6 +40,9 @@ h1 {
 .input-row input {
 	display: table-cell;
 }
+.input-row button {
+	margin: 10px;
+}
 
 #join-controls input {
 	margin-top: 5px;
