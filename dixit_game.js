@@ -106,8 +106,8 @@ function update_cards(data) {
 	data.cards.forEach(function(card) {
 		if(card.uid == uid && card.state == 'hand') {
 			console.log("card "+ card.uid);
-			$("#hand ul").append("<li cid=" + card.cid +"><a href='#' class='card-link'><img src='"
-				+ card_dir + "/" + card.filename+"' /></a></li>");
+			$("#hand ul").append("<li cid=" + card.cid +"><a href='#' class='card-link'>" + 
+				"<img src='" + card_dir + "/" + card.filename+"' title='artist: " + card.artist +"' /></a></li>");
 		} else if (card.state == 'table') {
 			card.filename = card_dir + "/" + card.filename;
 			other_player_secret(card);
@@ -240,6 +240,7 @@ function card_listener(event, parent) {
 
 function image_hover_listener(event) {
 	$("#card-viewer img").attr("src", $(event.target).attr("src"));
+	$("#card-viewer img").attr("title", $(event.target).attr("title"));
 }
 
 function register_card_listeners() {
