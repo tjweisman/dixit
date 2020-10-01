@@ -60,9 +60,13 @@ function clear_notify() {
 function update_players(on_updated) {
 	socket.emit("get users", gid, function(data) {
 		log("Received updated list of users.");
+		sorted_users = data.sort((user1, user2) => {
+			return user1.turn_order >= user2.turn_order;
+		});
+
 		$("#players tr").remove();
 		players = new Map();
-		data.forEach(function(user) {
+		sorted_users.forEach(function(user) {
 			players.set(user.uid, user);
 			log(user);
 			user_class = "";
