@@ -11,8 +11,8 @@ from collections import defaultdict
 from natsort import natsorted
 
 SCRIPT_DIR = "/home/teddy/projects/dixit/cards"
-FRONTEND_DIR = "/home/teddy/projects/dixit/frontend"
-BACKEND_DIR = "/home/teddy/projects/dixit/backend"
+FRONTEND_DIR = "/home/teddy/projects/dixit/client"
+BACKEND_DIR = "/home/teddy/projects/dixit/server"
 
 FRONTEND_CARD_PATH = "cards"
 SQL_FILENAME = "insert_cards.sql"
