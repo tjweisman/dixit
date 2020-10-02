@@ -1,2 +1,2 @@
-cards/*
-server_address.js
+client/cards/*
+client/server_address.js

@@ -145,6 +145,7 @@ h1 {
 #card-viewer {
 	text-align: center;
 	width: 100%;
+	margin-top: 10px;
 	height: 500px;
 }
 
@@ -152,7 +153,6 @@ h1 {
 	max-width: 100%;
 	max-height: 100%;
 	text-align: center;
-	margin: 10px 0px;
 }
 
 .guess-info {
