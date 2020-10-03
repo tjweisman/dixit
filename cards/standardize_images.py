@@ -75,8 +75,7 @@ def build_indices(processed):
     return indices
 
 def run_standardize(directory, processed_files=None,
-                    processed_handle=None, process_images=True,
-                    file_indices=None):
+                    processed_handle=None, file_indices=None):
 
     if not processed_handle:
         log("No handle provided for processed files! The script will not"
@@ -95,13 +94,10 @@ def run_standardize(directory, processed_files=None,
         sort_files = natsorted(files)
         for filename in sort_files:
             output_filename = "{}_card{:02}.png".format(dir_key, index)
-            index += 1
-
             input_path = os.path.join(base, filename)
             output_path = os.path.join(output_directory, output_filename)
 
-            if (process_images and
-                (not processed_files or input_path not in processed_files)):
+            if not processed_files or input_path not in processed_files:
 
                 log("Processing file: {}. Output: {}".format(input_path, output_path))
 
@@ -114,6 +110,7 @@ def run_standardize(directory, processed_files=None,
                 if processed_handle:
                     processed_handle.write(input_path + ", " + output_filename + "\n")
 
+                index += 1
             else:
                 log("Skipping file: {}".format(input_path))
                 output_filename = processed_files[input_path]
