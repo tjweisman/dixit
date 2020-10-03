@@ -91,6 +91,7 @@ def run_standardize(directory, processed_files=None,
 
     output_lines = []
     for base, dirs, files in os.walk(directory):
+        dirs.sort()
         sort_files = natsorted(files)
         for filename in sort_files:
             output_filename = "{}_card{:02}.png".format(dir_key, index)
