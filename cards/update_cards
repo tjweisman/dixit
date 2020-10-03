@@ -1,9 +1,9 @@
 #! /bin/bash
 
 SCRIPT_DIRECTORY=/home/teddy/projects/dixit/cards
-CARD_DIRECTORY=/home/teddy/projects/dixit/frontend/cards
+CARD_DIRECTORY=/home/teddy/projects/dixit/client/cards
 WEBSITE_DIRECTORY=/home/teddy/math/web/personal/weisman/public_html/dixit/cards
-BACKEND_DIRECTORY=/home/teddy/projects/dixit/backend
+BACKEND_DIRECTORY=/home/teddy/projects/dixit/server
 
 echo "processing images."
 $SCRIPT_DIRECTORY/standardize_images
@@ -15,7 +15,7 @@ echo "syncing local web directory to server"
 rsync -r --delete $WEBSITE_DIRECTORY/ $UT_MATH:~/public_html/dixit/cards
 
 echo "updating local database"
-cat insert_cards.sql | psql -U dixit_user -d dixit
+cat $SCRIPT_DIRECTORY/insert_cards.sql | psql -U dixit_user -d dixit
 
 echo "updating remote database"
-cat insert_cards.sql | heroku pg:psql -a dixit-for-bibas
+cat $SCRIPT_DIRECTORY/insert_cards.sql | heroku pg:psql -a dixit-for-bibas
