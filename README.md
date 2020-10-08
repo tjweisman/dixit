@@ -24,6 +24,6 @@ The server is maintained as a separate git submodule, also hosted on GitHub (so 
 
 ## Card credits
 
-Card illustrators include Rok Gregoric, Casandra Monroe, Teddy Weisman, and Neža Žager Korenjak. I also shamelessly stole some images from Thurston's *Geometry and Topology of 3-manifolds* (and a rendering of one of these images by Jeff Brock and David Dumas) and Rolfsen's *Knots and Links.*
+Card illustrators include Rok Gregoric, Casandra Monroe, Teddy Weisman, and Neža Žager Korenjak. The cards also feature images from Thurston's *Geometry and Topology of 3-manifolds*, Dale Rolfsen's *Knots and Links,* and Fomenko and Fuchs' *Homotopical Topology*.
 
 If you'd like to submit cards for the game, email me at [tjweisman@gmail.com](mailto:tjweisman@gmail.com).
