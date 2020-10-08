@@ -7,7 +7,7 @@ This is the main repository for the web Dixit implementation I've built. The gam
 
 The game is built out of:
 
-1. A server, currently hosted by Heroku [https://dixit-for-bibas.herokuapp.com/](https://dixit-for-bibas.herokuapp.com/).
+1. A server, currently hosted by Heroku at [https://dixit-for-bibas.herokuapp.com/](https://dixit-for-bibas.herokuapp.com/).
 2. A web client, hosted at [https://web.ma.utexas.edu/users/weisman/dixit/dixit.html](https://web.ma.utexas.edu/users/weisman/dixit/dixit.html).
 3. Some scripts to automate the process of adding new cards to the game.
 
@@ -24,6 +24,20 @@ The server is maintained as a separate git submodule, also hosted on GitHub (so 
 
 ## Card credits
 
-Card illustrators include Rok Gregoric, Casandra Monroe, Teddy Weisman, and Neža Žager Korenjak. The cards also feature images from Thurston's *Geometry and Topology of 3-manifolds*, Dale Rolfsen's *Knots and Links,* and Fomenko and Fuchs' *Homotopical Topology*.
+Card illustrators:
+
+- Rok Gregoric
+- Casandra Monroe
+- Teddy Weisman
+- Neža Žager Korenjak
+
+Additional card image sources:
+
+- *Bug on notes of Thurston*, Jeff Brock and David Dumas
+- *Homotopical Topology*, Anatoly Fomenko and Dmitry Fuchs
+- the letters of Alexander Grothendieck
+- *Knots and Links*, Dale Rolfsen
+- *A Comprehensive Introduction to Differential Geometry*, Michael Spivak
+- *Geometry and Topology of 3-manifolds*, William Thurston
 
 If you'd like to submit cards for the game, email me at [tjweisman@gmail.com](mailto:tjweisman@gmail.com).
