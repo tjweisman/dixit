@@ -167,6 +167,11 @@ function filename_by_cid(cid) {
 	return $("li[cid=" + cid + "] img").attr("src");
 }
 
+function artist_by_cid(cid) {
+	let title = $("li[cid=" + cid + "] img").attr("title");
+	return title.substring(8);
+}
+
 function player_element(p_uid) {
 	return $(".player[uid=" + p_uid + "]");
 }
@@ -338,7 +343,8 @@ function start_guess_round(data) {
 		cid = sorted_cids[index];
 		log("inserting card " + cid);
 		$("#revealed-cards ul.card-list").append("<li cid=" + cid + "><a href='#'>" + 
-			"<img src='" + played_cards.get(cid).filename + "' /></a><div class='guess-info'>" +
+			"<img src='" + played_cards.get(cid).filename + "' title='artist: " + 
+			played_cards.get(cid).artist+ "' /></a><div class='guess-info'>" +
 			"<span class='card-owner'></span><ul></ul></div></li>");
 	});
 	$("#revealed-cards li[cid=" + local_card + "]").addClass("local-card");
@@ -404,6 +410,7 @@ function submit_prompt_card() {
 		uid:uid,
 		gid:gid,
 		filename: filename_by_cid(selected_card),
+		artist: artist_by_cid(selected_card),
 		cid:selected_card
 	}, function (data) {
 		$(".prompt").addClass("hidden");
@@ -418,6 +425,7 @@ function choose_secret_card() {
 		socket.emit("choose secret", {
 			cid:selected_card,
 			filename: filename_by_cid(selected_card),
+			artist: artist_by_cid(selected_card),
 			uid:uid,
 			turn:current_turn,
 			username:username,
@@ -461,7 +469,7 @@ function other_player_secret(data) {
 		local_card = data.cid;
 	}
 
-	played_cards.set(data.cid, {uid:data.uid, filename:data.filename});
+	played_cards.set(data.cid, {uid:data.uid, filename:data.filename, artist:data.artist});
 }
 
 function other_player_guess(data) {
