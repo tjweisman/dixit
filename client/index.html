@@ -35,9 +35,9 @@
 	<div id="gameboard" class="hidden">
 		<div id="game-start" class="centered">
 			<form>
-				<div id="options-box">
+				<div class="toggle-box" id="options-box">
 					<div class="centered">
-						<a href="#" id="options-toggle">Options</a>
+						<a href="#" class="toggle" id="options-toggle">Options</a>
 					</div>
 					<div id="options" class="hidden">
 						<div class="input-row">
@@ -124,6 +124,29 @@
 			</table>
 		</div>
 		<button type="button" id="delete_all_users">Delete all users/rooms</button>
+	</div>
+	<div class="toggle-box" class="module">
+		<a href="#" class="toggle" id="about">About</a>
+			<div id="about-content" class="hidden">
+				<p>Code: Teddy Weisman</p>
+				<p>Card illustrators:</p>
+				<ul>
+					<li>Rok Gregoric</li>
+					<li>Casandra Monroe</li>
+					<li>Teddy Weisman</li>
+					<li>Neža Žager Korenjak</li>
+				</ul>
+				<p>Additional card image sources:
+					<ul>
+						<li><i>Geometry and Topology of Three-Manifolds</i>, William Thurston</li>
+						<li><i>Knots and Links</i>, Dale Rolfsen</li>
+						<li><i>Homotopical Topology</i>, Anatoly Fomenko and Dmitry Fuchs</li>
+						<li><i>Bug on notes of Thurston</i>, Jeff Brock and David Dumas</li>
+						<li>The letters of Alexander Grothendieck</li>
+					</ul>
+				</p>
+				<p>Hover over a particular card to see the creator's name.</p>
+			</div>
 	</div>
 	</div>
 </body>

@@ -558,6 +558,10 @@ $(document).ready(function() {
 			gid:gid
 		});
 	});
+	$("a#about").click((event) => {
+		event.preventDefault();
+		$("#about-content").toggleClass("hidden");
+	});
 
 
 	socket.on("player join", update_players);
