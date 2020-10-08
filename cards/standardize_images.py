@@ -18,6 +18,9 @@ FRONTEND_CARD_PATH = "cards"
 SQL_FILENAME = "insert_cards.sql"
 SQL_OUTPUT = os.path.join(SCRIPT_DIR, SQL_FILENAME)
 
+TEMPLATE_FILENAME = "cards_template.html"
+HTML_OUTPUT = "index.html"
+
 OUTPUT_SIZE = "350x560^"
 
 PROCESSED_CARDS_LIST = "processed"
@@ -89,7 +92,7 @@ def run_standardize(directory, processed_files=None,
     else:
         index = 0
 
-    output_lines = []
+    card_data = []
     for base, dirs, files in os.walk(directory):
         dirs.sort()
         sort_files = natsorted(files)
@@ -116,32 +119,59 @@ def run_standardize(directory, processed_files=None,
                 log("Skipping file: {}".format(input_path))
                 output_filename = processed_files[input_path]
 
-            output_lines.append("('{}', '{}')".format(output_filename, dir_key))
-
-    return output_lines
+            card_data.append((output_filename, dir_key))
 
 
-def process_dirs(directories):
-    processed_files = load_processed()
-    indices = build_indices(processed_files)
-    output_lines = []
 
-    with open(get_processed_path(), 'a') as processed_handle:
-        for dirname in directories:
-            addl_files = run_standardize(
-                dirname,
-                processed_files, processed_handle,
-                file_indices=indices)
+    return card_data
 
-            output_lines += addl_files
+def build_sql_file(cards):
 
+    output_lines = ["('{}', '{}')".format(output_filename, artist)
+                    for output_filename, artist in cards]
     with open(SQL_OUTPUT, 'w') as sql_output:
         sql_output.write("INSERT INTO default_cards(filename, artist) VALUES\n")
         sql_output.write(",\n".join(output_lines))
         sql_output.write("\nON CONFLICT DO NOTHING;")
 
-    shutil.copyfile(SQL_OUTPUT, os.path.join(BACKEND_DIR, SQL_FILENAME))
+def card_html(card):
+    output_filename, artist = card
+    return ("<li><a href='{0}'><img src='{0}' /></a>"
+            "<div class='img-title'>{0}</div></li>\n").format(output_filename)
 
+
+def build_card_index(cards):
+    with open(os.path.join(SCRIPT_DIR, TEMPLATE_FILENAME), "r") as template:
+        with open(os.path.join(SCRIPT_DIR, HTML_OUTPUT), "w") as html_output:
+            for line in template:
+                if re.match(r"\s*\$\{card_list\}", line):
+                    for card in cards:
+                        html_output.write(card_html(card))
+                else:
+                    html_output.write(line)
+
+
+def process_dirs(directories):
+    processed_files = load_processed()
+    indices = build_indices(processed_files)
+    card_data = []
+
+    with open(get_processed_path(), 'a') as processed_handle:
+        for dirname in directories:
+            addl_cards = run_standardize(
+                dirname,
+                processed_files, processed_handle,
+                file_indices=indices)
+
+            card_data += addl_cards
+
+    build_sql_file(card_data)
+    shutil.copyfile(os.path.join(SCRIPT_DIR, SQL_FILENAME),
+                    os.path.join(BACKEND_DIR, SQL_FILENAME))
+
+    build_card_index(card_data)
+    shutil.copyfile(os.path.join(SCRIPT_DIR, HTML_OUTPUT),
+                    os.path.join(FRONTEND_DIR, FRONTEND_CARD_PATH, HTML_OUTPUT))
 
 
 def main():

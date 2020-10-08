@@ -2,3 +2,4 @@ client/cards/*
 client/server_address.js
 cards/processed
 cards/insert_cards.sql
+cards/index.html
