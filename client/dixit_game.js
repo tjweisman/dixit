@@ -288,8 +288,10 @@ function start_prompt_round(turn_data) {
 	log("begin new round. state: player_prompt");
 	log("turn_data:");
 	log(turn_data);
+
 	clear_selection();
 	clear_notify();
+
 	game_state = "prompt";
 	$("#hand a").removeClass("active");
 	current_turn = turn_data.uid;
@@ -569,6 +571,14 @@ $(document).ready(function() {
 	$("a#about").click((event) => {
 		event.preventDefault();
 		$("#about-content").toggleClass("hidden");
+	});
+	$("#leave-game button").click((event) => {
+		socket.emit("leave game", {
+			uid:uid,
+			gid:gid
+		});
+		$("#gameboard").addClass("hidden");
+		$("#join-controls").removeClass("hidden");
 	});
 
 
