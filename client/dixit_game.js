@@ -183,6 +183,10 @@ function setup_game(res) {
 	uid = res.uid;
 	gid = res.gid;
 
+	if(res.session_id) {
+		localStorage.setItem("dixit_id", res.session_id);
+	}
+
 	let game_data = res.game_data;
 
 	game_state = game_data.state;
@@ -512,9 +516,11 @@ $(document).ready(function() {
 		console.log("clicked submit");
 
 		e.preventDefault();
+
 		socket.emit("join game", {
-			"username":$("input#username").val(),
-			"game":$("input#game").val()
+			username:$("input#username").val(),
+			game:$("input#game").val(),
+			session_id:localStorage.getItem("dixit_id")
 		},
 		join_callback);
 		log("Sent join request.");
@@ -528,6 +534,9 @@ $(document).ready(function() {
 		socket.emit("get users", 0, function(data) {
 			update_player_table("#all_users_list table", data);
 		});
+	});
+	$("button#delete_local_data").click((event) => {
+		localStorage.clear();
 	});
 
 	$("#game-start form").submit(function(e) {
