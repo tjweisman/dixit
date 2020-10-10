@@ -544,7 +544,8 @@ $(document).ready(function() {
 		socket.emit("start game", {
 			gid:gid,
 			options: {
-				hand_size:$("#options #hand-size").val()
+				hand_size:$("#options #hand-size").val(),
+				equal_hands:$("#options #equal-hands").is(":checked")
 			}
 		});
 	});

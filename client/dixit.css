@@ -50,6 +50,10 @@ a {
 .input-row button {
 	margin: 10px;
 }
+.input-item {
+	text-align: left;
+	margin: 10px 0px;
+}
 
 .toggle-box {
 	background-color: #f2f2f2;
