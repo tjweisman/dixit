@@ -61,7 +61,7 @@ function update_players(on_updated) {
 	socket.emit("get users", gid, function(data) {
 		log("Received updated list of users.");
 		sorted_users = data.sort((user1, user2) => {
-			return user1.turn_order >= user2.turn_order;
+			return user1.turn_order <= user2.turn_order;
 		});
 
 		$("#players tr").remove();
@@ -127,16 +127,15 @@ function update_cards(data) {
 
 function reveal_guesses() {
 	for (let [cid, card] of played_cards) {
-		let card_name = players.get(card.uid).name;
 		card_elt = $("#revealed-cards li[cid='" + cid + "'] .card-owner");
-		card_elt.text(card_name);
+		card_elt.text(card.username);
 		if(card.uid == current_turn) {
 			$("#revealed-cards li[cid='" + cid + "']").addClass("correct-uid");
 		}
 	}
 	for (let [uid, guess] of player_guesses) {
 		$("#revealed-cards li[cid=" + guess.cid + "] .guess-info ul").append(
-			"<li>" + players.get(uid).name + "</li>"
+			"<li>" + guess.username + "</li>"
 			);
 	}
 	$("#revealed-cards li").removeClass("local-card");
@@ -193,10 +192,21 @@ function setup_game(res) {
 	turn_index = game_data.turn_index;
 	current_turn = game_data.turn;
 
+	if(game_state == "pregame") {
+		$(".prompt").addClass("hidden");
+		$(".hint").addClass("hidden");
+		$(".choose-secret").addClass("hidden");
+		$("#guess-card").addClass("hidden");
+		$("#turn_text").addClass("hidden");
+		$(".card-list li").remove();
+		$("#cards-remaining").text("");
+
+		$("#game-start").removeClass("hidden");
+	}
+
 	$("#room-text").text(game);
 	$("#gameboard").removeClass("hidden");
 	$("#join-controls").addClass("hidden");
-
 	
 	update_players(() => {
 		if(game_state == 'prompt') {
@@ -377,14 +387,20 @@ function end_turn() {
 		opp_uid = played_cards.get(data.cid).uid;
 		log("player " + uid + " guessed card of player " + opp_uid);
 		if(opp_uid == current_turn) {
-			point_changes.set(uid, point_changes.get(uid) + 3);
+			if(players.has(uid)) {
+				point_changes.set(uid, point_changes.get(uid) + 3);
+			}
 			all_incorrect = false;
 		} else {
-			players.get(opp_uid).score += 1;
+			if(players.has(opp_uid)) {
+				players.get(opp_uid).score += 1;
+			}
 			all_correct = false;
 		}
 	}
-	point_changes.set(current_turn, 3);
+	if(players.has(current_turn)) {
+		point_changes.set(current_turn, 3);
+	}
 	for (let [uid, player] of players) {
 		if(!all_correct && !all_incorrect) {
 			player.score += point_changes.get(uid);
@@ -416,6 +432,7 @@ function submit_prompt_card() {
 		uid:uid,
 		gid:gid,
 		filename: filename_by_cid(selected_card),
+		username: username,
 		artist: artist_by_cid(selected_card),
 		cid:selected_card
 	}, function (data) {
@@ -475,14 +492,14 @@ function other_player_secret(data) {
 		local_card = data.cid;
 	}
 
-	played_cards.set(data.cid, {uid:data.uid, filename:data.filename, artist:data.artist});
+	played_cards.set(data.cid, {uid:data.uid, username:data.username, filename:data.filename, artist:data.artist});
 }
 
 function other_player_guess(data) {
 	if(game_state == 'guess') {
 		player_element(data.uid).removeClass("waiting-move");
 	}	
-	player_guesses.set(data.uid, {cid:data.cid});
+	player_guesses.set(data.uid, {cid:data.cid, username:data.username});
 }
 
 
@@ -568,7 +585,7 @@ $(document).ready(function() {
 		guess_card();
 	});
 
-	$("#reset-game button").click(event => {
+	$("button#reset-game").click(event => {
 		socket.emit("reset game", {
 			gid:gid
 		});
@@ -582,7 +599,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#about-content").toggleClass("hidden");
 	});
-	$("#leave-game button").click((event) => {
+	$("button#leave-game").click((event) => {
 		socket.emit("leave game", {
 			uid:uid,
 			gid:gid

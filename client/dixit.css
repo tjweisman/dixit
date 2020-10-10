@@ -73,6 +73,10 @@ a {
 	margin: 5px auto;
 }
 
+.game-controls button {
+	margin: 5px 10px;
+}
+
 #gameboard {
 	margin:0px;
 	padding: 0px;
