@@ -16,7 +16,7 @@
 	<div id="game">
 	<h1 id="title">DIXIT</h1>
 	<div id="join-controls">
-		<form>
+		<form autocomplete="off">
 			<div class="input-row">
 				<label for="username">Username: </label>
 				<input type="text" name="username" id="username" required>
@@ -82,7 +82,7 @@
 			</ul>
 		</div>
 		<div class="prompt hidden">
-			<form>
+			<form autocomplete="off">
 				<div class="centered">
 					<label for="prompt">Your hint: </label>
 					<input type="text" name="prompt" id="prompt_inp">
@@ -106,8 +106,8 @@
 				</div>
 				<span id="cards-remaining"></span>
 				<div class="game-controls">
-					<button id="reset-game" type="button">Reset game</button>
 					<button id="leave-game" type="button">Leave game</button>
+					<button id="reset-game" type="button">Reset game</button>
 				</div>
 			</div>
 			<div id="card-viewer">
