@@ -1,14 +1,14 @@
 Dixit
 ======
 
-This is the main repository for the web Dixit implementation I've built. The game is (currently) playable at [https://web.ma.utexas.edu/users/weisman/dixit/dixit.html](https://web.ma.utexas.edu/users/weisman/dixit/dixit.html).
+This is the main repository for the web Dixit implementation I've built. The game is (currently) playable at [https://web.ma.utexas.edu/users/weisman/dixit/](https://web.ma.utexas.edu/users/weisman/dixit/).
 
 ## Components
 
 The game is built out of:
 
 1. A server, currently hosted by Heroku at [https://dixit-for-bibas.herokuapp.com/](https://dixit-for-bibas.herokuapp.com/).
-2. A web client, hosted at [https://web.ma.utexas.edu/users/weisman/dixit/dixit.html](https://web.ma.utexas.edu/users/weisman/dixit/dixit.html).
+2. A web client, hosted at [https://web.ma.utexas.edu/users/weisman/dixit/](https://web.ma.utexas.edu/users/weisman/dixit/).
 3. Some scripts to automate the process of adding new cards to the game.
 
 The server is maintained as a separate git submodule, also hosted on GitHub (so that it can easily be deployed to Heroku).
