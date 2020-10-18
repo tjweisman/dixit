@@ -33,6 +33,7 @@ Card illustrators:
 
 Additional card image sources:
 
+- *Topology and Geometry*, Glen Bredon
 - *Bug on notes of Thurston*, Jeff Brock and David Dumas
 - *Homotopical Topology*, Anatoly Fomenko and Dmitry Fuchs
 - the letters of Alexander Grothendieck
