@@ -190,16 +190,23 @@ function player_element(p_uid) {
 	return $(".player[uid=" + p_uid + "]");
 }
 
-function set_default_visibility() {
+function hide_interactives() {
 	$(".prompt").addClass("hidden");
 	$(".hint").addClass("hidden");
 	$(".choose-secret").addClass("hidden");
 	$("#guess-card").addClass("hidden");
 	$("#turn_text").addClass("hidden");
+}
+
+function set_default_visibility() {
+	hide_interactives();
+
+	$("#game-end").addClass("hidden");
 	$(".card-list li").remove();
 	$("#cards-remaining").text("");
 
 	$("#game-start").removeClass("hidden");
+
 }
 
 
@@ -442,6 +449,30 @@ function end_turn() {
 	});
 }
 
+function end_game(data) {
+	hide_interactives();
+	$("#game-end").removeClass("hidden");
+
+	if(data.winners.length > 1) {
+		$("#winner-announce").text("Winners: ");
+		$("#win-text").text("The game has ended. It's a tie!");
+	} else {
+		$("#winner-announce").text("Winner: ");
+		$("#win-text").text("The game has ended!");
+	}
+	
+	let winnerText = data.winners[0];
+
+	for(let i = 1;i<data.winners.length;i++) {
+		winnerText += ", " + data.winners[i];
+	}
+
+	$("#winner-names").text(winnerText);
+
+	$(".prompt").addClass("hidden");
+	$(".guess").addClass("hidden");
+}
+
 function handle_error(data) {
 	clear_error();
 	if(data.type == "SQL") {
@@ -609,11 +640,18 @@ $(document).ready(function() {
 		guess_card();
 	});
 
-	$("button#reset-game").click(event => {
+	$("button.reset-game").click(event => {
 		socket.emit("reset game", {
 			gid:gid
 		});
 	});
+
+	$("button.end-game").click(event => {
+		socket.emit("delete game", {
+			gid:gid
+		});
+	});
+
 	$("#shuffle-players").click(event => {
 		socket.emit("shuffle players", {
 			gid:gid
@@ -623,7 +661,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#about-content").toggleClass("hidden");
 	});
-	$("button#leave-game").click((event) => {
+	$("button.leave-game").click((event) => {
 		socket.emit("leave game", {
 			uid:uid,
 			gid:gid
@@ -647,6 +685,7 @@ $(document).ready(function() {
 	socket.on("other guess", other_player_guess);
 
 	socket.on("reset game", reset_game);
+	socket.on("end game", end_game);
 
 	socket.on("server error", handle_error);
 });
