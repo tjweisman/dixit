@@ -652,6 +652,6 @@ $(document).ready(function() {
 
 	socket.on("server error", handle_error);
 
-	socket.on("delete game", close_game());
+	socket.on("delete game", close_game);
 
 });
