@@ -135,6 +135,7 @@ function update_cards(data) {
 }
 
 function reveal_guesses() {
+	clear_selection();
 	for (let [cid, card] of played_cards) {
 		card_elt = $("#revealed-cards li[cid='" + cid + "'] .card-owner");
 		if(players.has(card.uid)) {
@@ -423,6 +424,13 @@ function end_game(data) {
 	$(".guess").addClass("hidden");
 }
 
+function close_game() {
+	$("#gameboard").addClass("hidden");
+	$("#join-controls").removeClass("hidden");
+	clear_error();
+	clear_notify();
+}
+
 function handle_error(data) {
 	clear_error();
 	if(data.type == "SQL") {
@@ -467,6 +475,7 @@ function choose_secret_card() {
 
 		remove_from_hand(selected_card);
 		$(".choose-secret").addClass("hidden");
+		clear_selection();
 	}
 }
 
@@ -478,6 +487,7 @@ function guess_card() {
 		gid:gid
 	});
 	$("#guess-card").addClass("hidden");
+	clear_selection();
 }
 
 //remote player actions
@@ -620,8 +630,7 @@ $(document).ready(function() {
 			uid:uid,
 			gid:gid
 		});
-		$("#gameboard").addClass("hidden");
-		$("#join-controls").removeClass("hidden");
+		close_game();
 	});
 
 
@@ -642,4 +651,7 @@ $(document).ready(function() {
 	socket.on("end game", end_game);
 
 	socket.on("server error", handle_error);
+
+	socket.on("delete game", close_game());
+
 });
