@@ -389,50 +389,14 @@ function start_guess_round(data) {
 	}
 }
 
-function end_turn() {
-	log("end of turn, computing new player scores");
-	let all_correct = true;
-	let all_incorrect = true;
-	let point_changes = new Map();
-	for (let [uid, player] of players) {
-		point_changes.set(uid, 0);
+function end_turn(data) {
+	log("end of turn, updating player scores");
+	for(let player of data) {
+		log("updating player " + player.name + " to have score " + player.score);
+		players.get(player.uid).score = player.score;
 	}
-	log("current turn player uid is " + current_turn);
-	for (let [uid, data] of player_guesses) {
-		opp_uid = played_cards.get(data.cid).uid;
-		log("player " + uid + " guessed card of player " + opp_uid);
-		if(opp_uid == current_turn) {
-			if(players.has(uid)) {
-				point_changes.set(uid, point_changes.get(uid) + 3);
-			}
-			all_incorrect = false;
-		} else {
-			if(players.has(opp_uid)) {
-				players.get(opp_uid).score += 1;
-			}
-			all_correct = false;
-		}
-	}
-	if(players.has(current_turn)) {
-		point_changes.set(current_turn, 3);
-	}
-	for (let [uid, player] of players) {
-		if(!all_correct && !all_incorrect) {
-			player.score += point_changes.get(uid);
-		} else if(uid != current_turn){
-			player.score += 2;
-		}
-		log(player.username + " now has score " + player.score);
-	}
-
 	update_player_scores();
-
 	reveal_guesses();
-
-	socket.emit("score update", {
-		uid:uid,
-		score:players.get(uid).score
-	});
 }
 
 function end_game(data) {
@@ -665,7 +629,7 @@ $(document).ready(function() {
 	socket.on("card update", update_cards);
 	socket.on("start game", game_started);
 
-	socket.on("reveal guess", end_turn);
+	socket.on("end turn", end_turn);
 
 	socket.on("round prompt", start_prompt_round);
 	socket.on("round guess", start_guess_round);
