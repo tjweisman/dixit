@@ -300,21 +300,7 @@ function register_card_listeners() {
 
 //global game events
 function reset_game(data) {
-	$(".prompt").addClass("hidden");
-	$(".choose-secret").addClass("hidden");
-	$(".hint").addClass("hidden");
-	$("#turn_text").addClass("hidden");
-	$(".player").removeClass("waiting-move");
-	$("#guess-card").addClass("hidden");
-	$("#cards-remaining").text("");
-
-	$(".card-list li").remove();
-
-	$("#game-start").removeClass("hidden");
-
-	
-
-
+	set_default_visibility();
 	update_players();
 }
 
@@ -461,10 +447,10 @@ function end_game(data) {
 		$("#win-text").text("The game has ended!");
 	}
 	
-	let winnerText = data.winners[0];
+	let winnerText = data.winners[0].name;
 
 	for(let i = 1;i<data.winners.length;i++) {
-		winnerText += ", " + data.winners[i];
+		winnerText += ", " + data.winners[i].name;
 	}
 
 	$("#winner-names").text(winnerText);
@@ -573,6 +559,8 @@ function join_callback(res) {
 			show_error("That game is in progress and isn't accepting new players.");
 		} else if(res.error == "user_connected") {
 			show_error("A player with that username is already playing in that game.");
+		} else if(res.error == "game_ended") {
+			show_error("That game has ended and isn't accepting new players.");
 		} else {
 			show_error("There was a mysterious server error. Yell at Teddy to see if he'll fix it.");
 		}
@@ -617,7 +605,9 @@ $(document).ready(function() {
 			gid:gid,
 			options: {
 				hand_size:$("#options #hand-size").val(),
-				equal_hands:$("#options #equal-hands").is(":checked")
+				equal_hands:$("#options #equal-hands").is(":checked"),
+				deck_limit:$("#options #deck-limit").val(),
+				deck_limit_on:$("#options #deck-limit-on").is(":checked")
 			}
 		});
 	});
