@@ -213,3 +213,10 @@ li.active {
 .waiting-move {
 	color: red;
 }
+
+hr {
+	width: 90%;
+	border: 0px;
+	background-color: gray;
+	height: 1px;
+}

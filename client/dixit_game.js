@@ -135,6 +135,7 @@ function update_cards(data) {
 }
 
 function reveal_guesses() {
+	clear_selection();
 	for (let [cid, card] of played_cards) {
 		card_elt = $("#revealed-cards li[cid='" + cid + "'] .card-owner");
 		if(players.has(card.uid)) {
@@ -190,16 +191,23 @@ function player_element(p_uid) {
 	return $(".player[uid=" + p_uid + "]");
 }
 
-function set_default_visibility() {
+function hide_interactives() {
 	$(".prompt").addClass("hidden");
 	$(".hint").addClass("hidden");
 	$(".choose-secret").addClass("hidden");
 	$("#guess-card").addClass("hidden");
 	$("#turn_text").addClass("hidden");
+}
+
+function set_default_visibility() {
+	hide_interactives();
+
+	$("#game-end").addClass("hidden");
 	$(".card-list li").remove();
 	$("#cards-remaining").text("");
 
 	$("#game-start").removeClass("hidden");
+
 }
 
 
@@ -293,21 +301,7 @@ function register_card_listeners() {
 
 //global game events
 function reset_game(data) {
-	$(".prompt").addClass("hidden");
-	$(".choose-secret").addClass("hidden");
-	$(".hint").addClass("hidden");
-	$("#turn_text").addClass("hidden");
-	$(".player").removeClass("waiting-move");
-	$("#guess-card").addClass("hidden");
-	$("#cards-remaining").text("");
-
-	$(".card-list li").remove();
-
-	$("#game-start").removeClass("hidden");
-
-	
-
-
+	set_default_visibility();
 	update_players();
 }
 
@@ -396,50 +390,45 @@ function start_guess_round(data) {
 	}
 }
 
-function end_turn() {
-	log("end of turn, computing new player scores");
-	let all_correct = true;
-	let all_incorrect = true;
-	let point_changes = new Map();
-	for (let [uid, player] of players) {
-		point_changes.set(uid, 0);
+function end_turn(data) {
+	log("end of turn, updating player scores");
+	for(let player of data) {
+		log("updating player " + player.name + " to have score " + player.score);
+		players.get(player.uid).score = player.score;
 	}
-	log("current turn player uid is " + current_turn);
-	for (let [uid, data] of player_guesses) {
-		opp_uid = played_cards.get(data.cid).uid;
-		log("player " + uid + " guessed card of player " + opp_uid);
-		if(opp_uid == current_turn) {
-			if(players.has(uid)) {
-				point_changes.set(uid, point_changes.get(uid) + 3);
-			}
-			all_incorrect = false;
-		} else {
-			if(players.has(opp_uid)) {
-				players.get(opp_uid).score += 1;
-			}
-			all_correct = false;
-		}
-	}
-	if(players.has(current_turn)) {
-		point_changes.set(current_turn, 3);
-	}
-	for (let [uid, player] of players) {
-		if(!all_correct && !all_incorrect) {
-			player.score += point_changes.get(uid);
-		} else if(uid != current_turn){
-			player.score += 2;
-		}
-		log(player.username + " now has score " + player.score);
-	}
-
 	update_player_scores();
-
 	reveal_guesses();
+}
 
-	socket.emit("score update", {
-		uid:uid,
-		score:players.get(uid).score
-	});
+function end_game(data) {
+	hide_interactives();
+	$("#game-end").removeClass("hidden");
+
+	if(data.winners.length > 1) {
+		$("#winner-announce").text("Winners: ");
+		$("#win-text").text("The game has ended. It's a tie!");
+	} else {
+		$("#winner-announce").text("Winner: ");
+		$("#win-text").text("The game has ended!");
+	}
+	
+	let winnerText = data.winners[0].name;
+
+	for(let i = 1;i<data.winners.length;i++) {
+		winnerText += ", " + data.winners[i].name;
+	}
+
+	$("#winner-names").text(winnerText);
+
+	$(".prompt").addClass("hidden");
+	$(".guess").addClass("hidden");
+}
+
+function close_game() {
+	$("#gameboard").addClass("hidden");
+	$("#join-controls").removeClass("hidden");
+	clear_error();
+	clear_notify();
 }
 
 function handle_error(data) {
@@ -486,6 +475,7 @@ function choose_secret_card() {
 
 		remove_from_hand(selected_card);
 		$(".choose-secret").addClass("hidden");
+		clear_selection();
 	}
 }
 
@@ -497,6 +487,7 @@ function guess_card() {
 		gid:gid
 	});
 	$("#guess-card").addClass("hidden");
+	clear_selection();
 }
 
 //remote player actions
@@ -542,6 +533,8 @@ function join_callback(res) {
 			show_error("That game is in progress and isn't accepting new players.");
 		} else if(res.error == "user_connected") {
 			show_error("A player with that username is already playing in that game.");
+		} else if(res.error == "game_ended") {
+			show_error("That game has ended and isn't accepting new players.");
 		} else {
 			show_error("There was a mysterious server error. Yell at Teddy to see if he'll fix it.");
 		}
@@ -586,7 +579,9 @@ $(document).ready(function() {
 			gid:gid,
 			options: {
 				hand_size:$("#options #hand-size").val(),
-				equal_hands:$("#options #equal-hands").is(":checked")
+				equal_hands:$("#options #equal-hands").is(":checked"),
+				deck_limit:$("#options #deck-limit").val(),
+				deck_limit_on:$("#options #deck-limit-on").is(":checked")
 			}
 		});
 	});
@@ -609,11 +604,18 @@ $(document).ready(function() {
 		guess_card();
 	});
 
-	$("button#reset-game").click(event => {
+	$("button.reset-game").click(event => {
 		socket.emit("reset game", {
 			gid:gid
 		});
 	});
+
+	$("button.end-game").click(event => {
+		socket.emit("delete game", {
+			gid:gid
+		});
+	});
+
 	$("#shuffle-players").click(event => {
 		socket.emit("shuffle players", {
 			gid:gid
@@ -623,13 +625,12 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#about-content").toggleClass("hidden");
 	});
-	$("button#leave-game").click((event) => {
+	$("button.leave-game").click((event) => {
 		socket.emit("leave game", {
 			uid:uid,
 			gid:gid
 		});
-		$("#gameboard").addClass("hidden");
-		$("#join-controls").removeClass("hidden");
+		close_game();
 	});
 
 
@@ -637,7 +638,7 @@ $(document).ready(function() {
 	socket.on("card update", update_cards);
 	socket.on("start game", game_started);
 
-	socket.on("reveal guess", end_turn);
+	socket.on("end turn", end_turn);
 
 	socket.on("round prompt", start_prompt_round);
 	socket.on("round guess", start_guess_round);
@@ -647,6 +648,10 @@ $(document).ready(function() {
 	socket.on("other guess", other_player_guess);
 
 	socket.on("reset game", reset_game);
+	socket.on("end game", end_game);
 
 	socket.on("server error", handle_error);
+
+	socket.on("delete game", close_game);
+
 });
