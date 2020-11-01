@@ -1,4 +1,7 @@
 
+html {
+	font-family: sans-serif;
+}
 #game {
 	max-width: 1000px;
 	margin: auto;
@@ -7,7 +10,19 @@ h1 {
 	text-align: center;
 }
 a {
-	color: #36c;;
+	color: #36c;
+}
+
+input[type=submit], button {
+	background-color: #487bab;
+	color: white;
+	padding: 8px;
+	border: 1px solid #8ebce8;
+	border-radius: 10px;
+}
+
+input[type=submit]:hover, button:hover {
+	background-color: #154e85;
 }
 
 .centered {
@@ -26,9 +41,19 @@ a {
 	color: black;
 }
 
+.toggle:hover {
+	color:#636363;
+}
+
+#title {
+	font-family: serif;
+}
+
 #admin-controls {
 	margin-top: 20px;
-	background-color: #e0dcd1;
+	background-color: #686c70;
+	color: white;
+	border-radius: 15px;
 }
 #admin-controls h4 {
 	margin:20px;
@@ -56,8 +81,9 @@ a {
 }
 
 .toggle-box {
-	background-color: #f2f2f2;
+	background-color: #d9d9d9;
 	padding: 10px;
+	border-radius: 15px;
 }
 
 #join-controls input {
@@ -69,8 +95,7 @@ a {
 	margin: 10px;
 }
 #options-box {
-	max-width: 500px;
-	margin: 5px auto;
+	margin: 20px auto;
 }
 
 .game-controls button {
@@ -134,10 +159,14 @@ a {
 }
 
 #game-info {
-	background-color: #ddedec;
+	background-color: #d9d9d9;
 	padding: 15px;
 	vertical-align: top;
-	width: 100%;
+	border-radius: 15px;
+}
+
+#players {
+	margin-left: 10px;
 }
 
 #players td {
@@ -148,7 +177,7 @@ a {
 }
 
 #cards-remaining {
-	margin-top: 10px;
+	margin: 10px;
 }
 
 .local-uid {

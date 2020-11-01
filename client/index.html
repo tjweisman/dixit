@@ -33,6 +33,12 @@
 			</div>
 		</form>
 	</div>
+	<div id="error" class="module centered">
+		<span id="error_text"></span>
+	</div>
+	<div id="notify" class="module centered">
+		<span id="notify_text"></span>
+	</div>
 	<div id="gameboard" class="hidden">
 		<div id="game-start" class="centered">
 			<form>
@@ -102,7 +108,7 @@
 		</div>
 		<div class="prompt hidden">
 			<form autocomplete="off">
-				<div class="centered">
+				<div class="centered input-item">
 					<label for="prompt">Your hint: </label>
 					<input type="text" name="prompt" id="prompt_inp">
 				</div>
@@ -123,7 +129,7 @@
 					<table>
 					</table>
 				</div>
-				<span id="cards-remaining"></span>
+				<div id="cards-remaining"></div>
 				<div class="game-controls">
 					<button class="leave-game" type="button">Leave game</button>
 					<button class="reset-game" type="button">Reset game</button>
@@ -134,12 +140,6 @@
 				<img />
 			</div>
 		</div>
-	</div>
-	<div id="error" class="module centered">
-		<span id="error_text"></span>
-	</div>
-	<div id="notify" class="module centered">
-		<span id="notify_text"></span>
 	</div>
 	<div id="admin-controls" class="module">
 		<h4>Admin controls</h4>
