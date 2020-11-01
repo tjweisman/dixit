@@ -60,12 +60,12 @@ function update_players(on_updated) {
 	socket.emit("get users", gid, function(data) {
 		log("Received updated list of users.");
 		sorted_users = data.sort((user1, user2) => {
-			return user1.turn_order >= user2.turn_order;
+			return user1.turn_order - user2.turn_order;
 		});
 
 		$("#players tr").remove();
 		players = new Map();
-		sorted_users.forEach(function(user) {
+		for (let user of sorted_users) {
 			players.set(user.uid, user);
 			log(user);
 			user_class = "";
@@ -81,7 +81,7 @@ function update_players(on_updated) {
 			if(game_state == "guess" && user.guess != null) {
 				other_player_guess({uid:user.uid, cid:user.guess});
 			}
-		});
+		} 
 		log(on_updated);
 		if(on_updated && typeof on_updated == "function") {
 			on_updated();
