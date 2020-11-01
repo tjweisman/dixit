@@ -19,10 +19,22 @@ input[type=submit], button {
 	padding: 8px;
 	border: 1px solid #8ebce8;
 	border-radius: 10px;
+	outline-style: none;
+	margin: 5px;
 }
 
 input[type=submit]:hover, button:hover {
+	background-color: #5497d6
+}
+
+button:active, input[type=submit]:active {
 	background-color: #154e85;
+}
+
+input[type=text] {
+	border: 2px solid LightGray;
+	border-radius: 5px;
+	padding: 3px 10px;
 }
 
 .centered {
