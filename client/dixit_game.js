@@ -279,6 +279,8 @@ function card_listener(event, parent) {
 		$(".choose-secret button").prop("disabled", false);
 		$(".prompt #submit").prop("disabled", false);
 	}
+	//fire the hover event too (for mobile users)
+	image_hover_listener(event);
 }
 
 function image_hover_listener(event) {
