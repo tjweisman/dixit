@@ -17,8 +17,10 @@ input[type=submit], button {
 	background-color: #487bab;
 	color: white;
 	padding: 8px;
-	border: 1px solid #8ebce8;
-	border-radius: 10px;
+	/*border: 1px solid;
+	border-color:  #8ebce8 gray gray #8ebce8;*/
+	border:none;
+	border-radius: 8px;
 	outline-style: none;
 	margin: 5px;
 }
