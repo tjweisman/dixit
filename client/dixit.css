@@ -112,6 +112,11 @@ input[type=text] {
 	margin: 20px auto;
 }
 
+#deck-items li {
+	display: inline-block;
+	margin: 10px;
+}
+
 .game-controls button {
 	margin: 5px 10px;
 }

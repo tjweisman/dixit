@@ -60,6 +60,17 @@
 							<label for="deck-limit-on">Maximum deck size: <input id="deck-limit" type="number" value="200" min="1"></label>
 						</div>
 						<div class="input-item">
+						<a href="#" class="toggle" id="deck-filter-toggle">Filter cards...</a>
+							<div id="deck-filter" class="hidden">
+								<div class="input-row">
+									<button id="select-all-artists" type="button">Select all</button>
+									<button id="deselect-all-artists" type="button">Deselect all</button>
+								</div>
+								<ul id="deck-items">
+								</ul>
+							</div>
+						</div>
+						<div class="input-item">
 							<button type="button" id="shuffle-players">Shuffle player order</button>
 						</div>
 

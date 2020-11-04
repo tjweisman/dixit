@@ -56,6 +56,15 @@ function clear_notify() {
 	$("#notify_text").text("");
 }
 
+function update_artists(artist_list) {
+	for(let artist of artist_list) {
+		$("#deck-items").append(
+			"<li><input type='checkbox' id='" + artist.artist + "-include' value = '" 
+			+ artist.artist + "' checked>" + "<label for='" + artist.artist + 
+			"-include'>" + artist.artist + "</label></li>");
+	}
+}
+
 function update_players(on_updated) {
 	socket.emit("get users", gid, function(data) {
 		log("Received updated list of users.");
@@ -231,6 +240,11 @@ function setup_game(res) {
 	$("#room-text").text(game);
 	$("#gameboard").removeClass("hidden");
 	$("#join-controls").addClass("hidden");
+
+	socket.emit("get artists", 
+		{gid:gid},
+		update_artists
+	);
 	
 	update_players(() => {
 		if(game_state == 'prompt') {
@@ -577,13 +591,19 @@ $(document).ready(function() {
 
 	$("#game-start form").submit(function(e) {
 		e.preventDefault();
+		let included_artists = new Array();
+		$("#deck-filter input:checked").each((index, element) => {
+			included_artists.push($(element).val());
+			console.log($(element).id);
+		});
 		socket.emit("start game", {
 			gid:gid,
 			options: {
 				hand_size:$("#options #hand-size").val(),
 				equal_hands:$("#options #equal-hands").is(":checked"),
 				deck_limit:$("#options #deck-limit").val(),
-				deck_limit_on:$("#options #deck-limit-on").is(":checked")
+				deck_limit_on:$("#options #deck-limit-on").is(":checked"),
+				artists:included_artists
 			}
 		});
 	});
@@ -591,6 +611,19 @@ $(document).ready(function() {
 	$("#game-start #options-toggle").click(event => {
 		event.preventDefault();
 		$("#game-start #options").toggleClass("hidden");
+	});
+
+	$("#options #deck-filter-toggle").click(event => {
+		event.preventDefault();
+		$("#deck-filter").toggleClass("hidden");
+	});
+
+	$("#select-all-artists").click(event => {
+		$("#deck-filter input").prop("checked", true);
+	});
+
+	$("#deselect-all-artists").click(event => {
+		$("#deck-filter input").prop("checked", false);
 	});
 
 	$(".prompt form").submit(function (e) {
