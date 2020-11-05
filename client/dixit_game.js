@@ -57,6 +57,7 @@ function clear_notify() {
 }
 
 function update_artists(artist_list) {
+	$("#deck-items li").remove();
 	for(let artist of artist_list) {
 		$("#deck-items").append(
 			"<li><input type='checkbox' id='" + artist.artist + "-include' value = '" 
@@ -208,8 +209,14 @@ function hide_interactives() {
 	$("#turn_text").addClass("hidden");
 }
 
+function clear_load_status() {
+	$(".loading").addClass("hidden");
+	$(".load").removeClass("hidden");
+}
+
 function set_default_visibility() {
 	hide_interactives();
+	clear_load_status();
 
 	$("#game-end").addClass("hidden");
 	$(".card-list li").remove();
@@ -441,8 +448,10 @@ function end_game(data) {
 }
 
 function close_game() {
+	clear_load_status();
 	$("#gameboard").addClass("hidden");
 	$("#join-controls").removeClass("hidden");
+
 	clear_error();
 	clear_notify();
 }
@@ -536,6 +545,7 @@ function other_player_guess(data) {
 
 //callbacks
 function join_callback(res) {
+	clear_load_status();
 	if(res.response == "success") {
 		log("join request accepted.");
 		clear_error();
@@ -566,6 +576,9 @@ $(document).ready(function() {
 		console.log("clicked submit");
 
 		e.preventDefault();
+
+		$("#join-controls input[type=submit]").addClass("hidden");
+		$("#join-controls .loading").removeClass("hidden");
 
 		socket.emit("join game", {
 			username:$("input#username").val(),
