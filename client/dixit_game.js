@@ -62,7 +62,7 @@ function update_artists(artist_list) {
 		$("#deck-items").append(
 			"<li><input type='checkbox' id='" + artist.artist + "-include' value = '" 
 			+ artist.artist + "' checked>" + "<label for='" + artist.artist + 
-			"-include'>" + artist.artist + "</label></li>");
+			"-include'>" + artist.artist + " (" + artist.count + ")</label></li>");
 	}
 }
 
@@ -221,6 +221,7 @@ function set_default_visibility() {
 	$("#game-end").addClass("hidden");
 	$(".card-list li").remove();
 	$("#cards-remaining").text("");
+	$("#win-score-display").text("");
 
 	$("#game-start").removeClass("hidden");
 
@@ -267,7 +268,8 @@ function setup_game(res) {
 		}
 
 		if(game_state != 'pregame') {
-			$("#game-start").addClass("hidden");
+			game_started(game_data);
+
 			update_storyteller_text();
 			socket.emit("get cards", {
 				gid:gid
@@ -331,6 +333,10 @@ function reset_game(data) {
 function game_started(data) {
 	log("game start message received");
 	$("#game-start").addClass("hidden");
+	log(data);
+	if(data.win_score > 0) {
+		$("#win-score-display").text("Winning score: " + data.win_score);
+	}
 }
 
 function start_prompt_round(turn_data) {
@@ -616,6 +622,8 @@ $(document).ready(function() {
 				equal_hands:$("#options #equal-hands").is(":checked"),
 				deck_limit:$("#options #deck-limit").val(),
 				deck_limit_on:$("#options #deck-limit-on").is(":checked"),
+				win_score_on:$("#options #win-score-on").is(":checked"),
+				win_score:$("#options #win-score").val(),
 				artists:included_artists
 			}
 		});

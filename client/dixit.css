@@ -195,7 +195,7 @@ input[type=text] {
 	text-align: right;
 }
 
-#cards-remaining {
+.game-stat {
 	margin: 10px;
 }
 
