@@ -180,7 +180,7 @@ def main():
     else:
         src_dirs = os.path.join(SCRIPT_DIR, IMAGE_DIRECTORY)
         directories = [os.path.join(src_dirs, im_dir)
-                                    for im_dir in os.listdir(src_dirs)]
+                       for im_dir in natsorted(os.listdir(src_dirs))]
 
     process_dirs(directories)
 
