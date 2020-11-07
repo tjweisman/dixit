@@ -27,9 +27,9 @@ The server is maintained as a separate git submodule, also hosted on GitHub (so 
 Card illustrators:
 
 - Rok Gregoric
-- Teddy Weisman
-- Neža Žager Korenjak
 - Casandra Monroe
+- Neža Žager Korenjak
+- Teddy Weisman
 - Arun Debray
 
 Additional card image sources:
