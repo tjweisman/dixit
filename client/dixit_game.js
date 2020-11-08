@@ -67,6 +67,21 @@ function update_artists(artist_list) {
 	}
 }
 
+function get_winners() {
+	if(players.size == 0) {
+		return;
+	}
+	let player_array = [...players.entries()].map(pair => pair[1]);
+	let sorted_players = player_array.sort((player1, player2) => {
+		return player2.score - player1.score;
+	});
+	log("sorted players:");
+	log(sorted_players);
+	return sorted_players.filter((player) => {
+		return player.score == sorted_players[0].score;
+	});
+}
+
 function update_players(on_updated) {
 	socket.emit("get users", gid, function(data) {
 		log("Received updated list of users.");
@@ -84,7 +99,8 @@ function update_players(on_updated) {
 				user_class += " local-uid";
 			}
 			if(user.state != 'left') {
-				$("#players table").append("<tr class='player" + user_class + "'uid='" + user.uid + "'><td>"+user.name+"</td><td class='score'>" + user.score + "</td></tr>");
+				$("#players table").append("<tr class='player" + user_class + "'uid='" + user.uid + 
+					"'><td class='winning'></td><td class='name'>" +user.name+"</td><td class='score'>" + user.score + "</td></tr>");
 			}
 			if(user.state == 'wait') {
 				player_element(user.uid).addClass("waiting-move");
@@ -92,12 +108,26 @@ function update_players(on_updated) {
 			if(game_state == "guess" && user.guess != null) {
 				other_player_guess({uid:user.uid, cid:user.guess});
 			}
-		} 
+		}
+		update_winners();
 		log(on_updated);
 		if(on_updated && typeof on_updated == "function") {
 			on_updated();
 		}
 	});
+}
+
+function update_winners() {
+	log("updating winners");
+	let winning_players = get_winners();
+	log("winning players:");
+	log(winning_players);
+	if(winning_players.length < players.size) {
+		for(let player of winning_players) {
+			log("#players tr[uid=" + player.uid + "] td.winning");
+			$("#players tr[uid=" + player.uid + "] td.winning").text("★");
+		}
+	}
 }
 
 function update_player_scores() {
@@ -106,6 +136,7 @@ function update_player_scores() {
 			$("#players tr[uid=" + uid + "] td.score").text(player.score);
 		}
 	}
+	update_winners();
 }
 
 function update_storyteller_text() {

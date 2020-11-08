@@ -234,10 +234,15 @@ input[type=text] {
 	margin-left: 10px;
 }
 
-#players td {
+#players td.winning {
+	width: 15px;
+}
+
+#players td.name {
 	min-width: 40px;
 }
 #players td.score {
+	min-width: 40px;
 	text-align: right;
 }
 
