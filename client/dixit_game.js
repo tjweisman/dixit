@@ -17,6 +17,7 @@ var game_state = "none";
 var played_cards;
 var local_card;
 var prompt;
+var select_allowed;
 
 var player_guesses;
 
@@ -280,6 +281,9 @@ function setup_game(res) {
 
 function card_listener(event, parent) {
 	event.preventDefault();
+	if(!select_allowed) {
+		return;
+	}
 	if((game_state == "prompt" && uid == current_turn && parent == "#hand") ||
 		(game_state == "secret" && uid != current_turn && parent == "#hand") ||
 		(game_state == "guess" && uid != current_turn && parent == "#table")) {
@@ -345,6 +349,7 @@ function start_prompt_round(turn_data) {
 	log(turn_data);
 
 	clear_selection();
+	select_allowed = true;
 	clear_notify();
 
 	$("#guess-card").addClass("hidden");
@@ -366,6 +371,7 @@ function start_secret_round(data) {
 	game_state = "secret";
 	log("game state changed to choose_secret");
 	clear_selection();
+	select_allowed = true;
 	clear_notify();
 	set_players_waiting(current_turn);
 
@@ -385,6 +391,7 @@ function start_guess_round(data) {
 	game_state = "guess";
 	log("game state changed to guesses");
 	clear_selection();
+	select_allowed = true;
 	clear_notify();
 
 	player_guesses = new Map();
@@ -507,6 +514,7 @@ function choose_secret_card() {
 		remove_from_hand(selected_card);
 		$(".choose-secret").addClass("hidden");
 		clear_selection();
+		select_allowed = false;
 	}
 }
 
@@ -518,7 +526,7 @@ function guess_card() {
 		gid:gid
 	});
 	$("#guess-card").addClass("hidden");
-	clear_selection();
+	select_allowed = false;
 }
 
 //remote player actions

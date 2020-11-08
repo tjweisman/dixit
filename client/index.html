@@ -15,7 +15,7 @@
 
 <body>
 	<div id="game">
-	<h1 id="title">DIXIT</h1>
+	<h1 id="title">dixit</h1>
 	<div id="join-controls">
 		<form autocomplete="off">
 			<div class="input-row">
@@ -88,74 +88,94 @@
 				</div>
 			</form>
 		</div>
-		<div id="gameplay">
-			<div id="game-end" class="hidden">
-				<h2 id="win-text"></h2>
-				<h3><span id="winner-announce"></span><span id="winner-names"></span></h3>
-				<div class="module game-controls">
-					<button class="end-game" type="button">Delete this game forever</button>
-					<button class="reset-game" type="button">Reset game</button>
+		<div id="gameplay-box">
+			<div id="info-container">
+				<div id="game-info" class="infobox">
+					<div id="players">
+						<h2 id="room-text"></h2>
+						<table>
+						</table>
+					</div>
+					<div class = "game-stat" id="cards-remaining"></div>
+					<div class = "game-stat" id="win-score-display"></div>
+					<div class="game-controls">
+						<button class="leave-game" type="button">Leave game</button>
+						<button class="reset-game" type="button">Reset game</button>
+						<button class="end-game" type="button">Delete this game forever</button>
+					</div>
 				</div>
-			</div>
-		<h3 id="turn_text" class="hidden"></h3>
-		<div class="hint centered hidden">
-			<h3>Hint:</h3>
-			<span id="prompt_text"></span>
-		</div>
-		<div id="table">
-			<div class="card-list" id="unrevealed-cards"><ul></ul></div>
-			<div class="card-list" id="revealed-cards"><ul class="card-list"></ul></div>
-			<div id="guess-card" class="hidden centered">
-				<button type="button">Guess card</button>
-			</div>
-		</div>
-
-		<hr />
-
-		<div class="prompt centered hidden">
-			<h4>Choose a card and pick a hint for it.</h4>
-		</div>
-
-		
-		
-		<div class="card-list" id="hand">
-			<h3>Your hand</h3>
-			<ul>
-			</ul>
-		</div>
-		<div class="prompt hidden">
-			<form autocomplete="off">
-				<div class="centered">
-					<label for="prompt">Your hint: </label>
-					<input type="text" name="prompt" id="prompt_inp">
-				</div>
-
-				<div class="centered">
-					<input type="submit" name="submit" id="submit" value="Submit">
-				</div>
-			</form>
-		</div>
-		<div class="choose-secret centered hidden">
-			<button type="button">Choose card</button>
-		</div>
-		</div>
-		<div id="right-column">
-			<div id="game-info">
-				<div id="players">
-					<h2 id="room-text"></h2>
+				<div class="infobox" id="rules">
+					<h2>Scoring</h2>
+					<h3>Storyteller</h3>
 					<table>
+						<tr><td class="rule">Everyone guesses:</td><td class="pts">0 points</td></tr>
+						<tr><td class="rule">Nobody guesses:</td><td class="pts">0 points</td></tr>
+						<tr><td class="rule">Some (not all) guess:</td><td class="pts">3 points</td></tr>
+					</table>
+					<h3>Everyone else</h3>
+					<table>
+						<tr><td class="rule">Everyone guesses:</td><td class="pts">2 points</td></tr>
+						<tr><td class="rule">Nobody guesses:</td><td class="pts">2 points</td></tr>
+						<tr><td class="rule">You guess, and someone else doesn't:</td><td class="pts">3 points</td></tr>
+						<tr><td class="rule">Someone guesses your card:</td><td class="pts">1 point / guess</td></tr>
 					</table>
 				</div>
-				<div class = "game-stat" id="cards-remaining"></div>
-				<div class = "game-stat" id="win-score-display"></div>
-				<div class="game-controls">
-					<button class="leave-game" type="button">Leave game</button>
-					<button class="reset-game" type="button">Reset game</button>
-					<button class="end-game" type="button">Delete this game forever</button>
+			</div>
+			<div id="cards-container" class="gameplay">
+				<div id="game-end" class="hidden">
+					<h2 id="win-text"></h2>
+					<h3><span id="winner-announce"></span><span id="winner-names"></span></h3>
+					<div class="module game-controls">
+						<button class="end-game" type="button">Delete this game forever</button>
+						<button class="reset-game" type="button">Reset game</button>
+					</div>
+				</div>
+				<h3 id="turn_text" class="hidden"></h3>
+				<div class="hint centered hidden">
+					<h3>Hint:</h3>
+					<span id="prompt_text"></span>
+				</div>
+				<div id="table">
+					<div class="card-list" id="unrevealed-cards"><ul></ul></div>
+					<div class="card-list" id="revealed-cards"><ul class="card-list"></ul></div>
+					<div id="guess-card" class="hidden centered">
+						<button type="button">Guess card</button>
+					</div>
+				</div>
+
+				<hr />
+
+				<div class="prompt centered hidden">
+					<h4>Choose a card and pick a hint for it.</h4>
+				</div>
+
+					
+					
+				<div class="card-list" id="hand">
+					<h3>Your hand</h3>
+					<ul>
+					</ul>
+				</div>
+				<div class="prompt hidden">
+					<form autocomplete="off">
+						<div class="centered">
+							<label for="prompt">Your hint: </label>
+							<input type="text" name="prompt" id="prompt_inp">
+						</div>
+
+						<div class="centered">
+							<input type="submit" name="submit" id="submit" value="Submit">
+						</div>
+					</form>
+				</div>
+				<div class="choose-secret centered hidden">
+					<button type="button">Choose card</button>
 				</div>
 			</div>
-			<div id="card-viewer">
-				<img />
+			<div id="viewer-container" class="gameplay">
+				<div id="card-viewer">
+					<img />
+				</div>
 			</div>
 		</div>
 	</div>
@@ -171,32 +191,32 @@
 	</div>
 	<div class="toggle-box" class="module">
 		<a href="#" class="toggle" id="about">About</a>
-			<div id="about-content" class="hidden">
-				<p>Code: Teddy Weisman</p>
-				<p>Card illustrators:</p>
+		<div id="about-content" class="hidden">
+			<p>Code: Teddy Weisman</p>
+			<p>Card illustrators:</p>
+			<ul>
+				<li>Rok Gregoric</li>
+				<li>Casandra Monroe</li>
+				<li>Neža Žager Korenjak</li>
+				<li>Teddy Weisman</li>					
+				<li>Arun Debray</li>
+			</ul>
+			<p>Additional card image sources:
 				<ul>
-					<li>Rok Gregoric</li>
-					<li>Casandra Monroe</li>
-					<li>Neža Žager Korenjak</li>
-					<li>Teddy Weisman</li>					
-					<li>Arun Debray</li>
+					<li><i>Geometry and Topology</i>, Glen Bredon</li>
+					<li><i>Bug on notes of Thurston</i>, Jeff Brock and David Dumas</li>
+					<li>Works of Salvador Dalí</li>
+					<li><i>Homotopical Topology</i>, Anatoly Fomenko and Dmitry Fuchs</li>
+					<li>The letters of Alexander Grothendieck</li>
+					<li><i>Knots and Links</i>, Dale Rolfsen</li>
+					<li><i>A Comprehensive Introduction to Differential Geometry</i>, Michael Spivak
+					<li><i>Geometry and Topology of Three-Manifolds</i>, William Thurston</li>
 				</ul>
-				<p>Additional card image sources:
-					<ul>
-						<li><i>Geometry and Topology</i>, Glen Bredon</li>
-						<li><i>Bug on notes of Thurston</i>, Jeff Brock and David Dumas</li>
-						<li>Works of Salvador Dalí</li>
-						<li><i>Homotopical Topology</i>, Anatoly Fomenko and Dmitry Fuchs</li>
-						<li>The letters of Alexander Grothendieck</li>
-						<li><i>Knots and Links</i>, Dale Rolfsen</li>
-						<li><i>A Comprehensive Introduction to Differential Geometry</i>, Michael Spivak
-						<li><i>Geometry and Topology of Three-Manifolds</i>, William Thurston</li>
-					</ul>
-				</p>
-				<p>Hover over a particular card to see the creator's name.</p>
-				<p><a href="cards">View all cards</a></p>
-				<p>If you'd like to submit a card for the game, email me at <a href="mailto:tjweisman@gmail.com">tjweisman@gmail.com</a>.</p>
-			</div>
+			</p>
+			<p>Hover over a particular card to see the creator's name.</p>
+			<p><a href="cards">View all cards</a></p>
+			<p>If you'd like to submit a card for the game, email me at <a href="mailto:tjweisman@gmail.com">tjweisman@gmail.com</a>.</p>
+		</div>
 	</div>
 	</div>
 </body>

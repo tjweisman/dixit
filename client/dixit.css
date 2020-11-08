@@ -3,7 +3,6 @@ html {
 	font-family: sans-serif;
 }
 #game {
-	max-width: 1000px;
 	margin: auto;
 }
 h1 {
@@ -48,7 +47,7 @@ input[type=text] {
 }
 
 .hidden {
-	display: none;
+	display: none !important;
 }
 
 .toggle {
@@ -60,11 +59,12 @@ input[type=text] {
 }
 
 #title {
-	font-family: serif;
+	font-family: "Luminari", serif;
+	letter-spacing: 15px;
 }
 
 #admin-controls {
-	margin-top: 20px;
+	margin: 20px 15px;
 	background-color: #686c70;
 	color: white;
 	border-radius: 15px;
@@ -74,6 +74,10 @@ input[type=text] {
 }
 #admin-controls button {
 	margin: 10px;
+}
+
+#about-content {
+	margin: 20px;
 }
 
 .input-row {
@@ -98,6 +102,13 @@ input[type=text] {
 	background-color: #d9d9d9;
 	padding: 10px;
 	border-radius: 15px;
+	margin: 20px 15px;
+}
+
+#join-controls {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 #join-controls input {
@@ -108,8 +119,15 @@ input[type=text] {
 	display: block;
 	margin: 10px;
 }
+
 #options-box {
-	margin: 20px auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#options {
+	width: 500px;
 }
 
 #deck-items li {
@@ -122,7 +140,8 @@ input[type=text] {
 }
 
 #gameboard {
-	margin:0px;
+	width: 100%;
+	margin: 0px;
 	padding: 0px;
 	overflow: hidden;
 }
@@ -166,22 +185,49 @@ input[type=text] {
 	height: 160px;
 }
 
-#gameplay {
-	display: table-cell;
-	width:100%;
+#gameplay-box {
+	display: flex;
 }
 
-#right-column {
-	display: table-cell;
-	min-width: 350px;
+#info-container {
 	width: 350px;
+	min-width: 350px;
+	display: flex;
+	flex-direction: column;
 }
 
-#game-info {
+#cards-container {
+	flex-grow: 1;
+}
+
+#viewer-container {
+	width: 350px;
+	min-width: 350px;
+}
+
+.infobox {
 	background-color: #d9d9d9;
 	padding: 15px;
-	vertical-align: top;
+	margin: 15px;
 	border-radius: 15px;
+}
+
+#rules table {
+	border-collapse: separate;
+	border-spacing: 0 10px;
+}
+
+#rules tr {
+	padding: 5px 0px;
+}
+
+#rules td.rule {
+	max-width: 180px;
+	padding-right: 10px;
+}
+
+#rules td.pts {
+	max-width: 70px;
 }
 
 #players {
@@ -270,7 +316,13 @@ hr {
 }
 
 @media (max-width: 768px) {
-	#right-column {
-		display: block;
+	#options {
+		width: auto;
+	}
+	#gameplay-box {
+		flex-direction: column;
+	}
+	#info-container {
+		flex-direction: column-reverse;
 	}
 }
