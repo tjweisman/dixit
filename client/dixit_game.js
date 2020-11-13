@@ -249,14 +249,29 @@ function clear_load_status() {
 function set_default_visibility() {
 	hide_interactives();
 	clear_load_status();
+	clear_notify();
+	clear_error();
 
 	$("#game-end").addClass("hidden");
 	$(".card-list li").remove();
 	$("#cards-remaining").text("");
 	$("#win-score-display").text("");
+	$("#round-number-display").text("");
 
 	$("#game-start").removeClass("hidden");
 
+}
+
+function update_game_data(game_data) {
+	if(game_data.round_limit > 0) {
+		$("#round-number-display").text("Round: " + (game_data.round_number + 1) + "/" + game_data.round_limit);	
+	} else {
+		$("#round-number-display").text("Round " + (game_data.round_number + 1));
+	}
+	
+	if(game_data.win_score > 0) {
+		$("#win-score-display").text("Winning score: " + data.win_score);
+	}
 }
 
 
@@ -289,7 +304,8 @@ function setup_game(res) {
 	update_players(() => {
 		if(game_state == 'prompt') {
 			start_prompt_round({
-				uid:game_data.turn
+				uid:game_data.turn,
+				game_data:game_data
 			});
 		} else if(game_state == 'secret') {
 			start_secret_round({
@@ -369,9 +385,7 @@ function game_started(data) {
 	log("game start message received");
 	$("#game-start").addClass("hidden");
 	log(data);
-	if(data.win_score > 0) {
-		$("#win-score-display").text("Winning score: " + data.win_score);
-	}
+	update_game_data(data);
 }
 
 function start_prompt_round(turn_data) {
@@ -396,6 +410,7 @@ function start_prompt_round(turn_data) {
 		$(".prompt").addClass("hidden");
 	}
 	update_storyteller_text();
+	update_game_data(turn_data.game_data);
 }
 
 function start_secret_round(data) {
@@ -663,6 +678,8 @@ $(document).ready(function() {
 				deck_limit_on:$("#options #deck-limit-on").is(":checked"),
 				win_score_on:$("#options #win-score-on").is(":checked"),
 				win_score:$("#options #win-score").val(),
+				round_limit_on:$("#options #round-limit-on").is(":checked"),
+				round_limit:$("#options #round-limit").val(),
 				artists:included_artists
 			}
 		});

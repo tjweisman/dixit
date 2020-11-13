@@ -66,6 +66,11 @@
 							<input id="win-score" type="number" value="30" min="1">
 						</div>
 						<div class="input-item">
+							<input type="checkbox" id="round-limit-on">
+							<label for="round-limit-on">Max number of rounds: </label>
+							<input id="round-limit" type="number" min="1" value="5">
+						</div>
+						<div class="input-item">
 						<a href="#" class="toggle" id="deck-filter-toggle">Filter cards...</a>
 							<div id="deck-filter" class="hidden">
 								<div class="input-row">
@@ -98,6 +103,7 @@
 					</div>
 					<div class = "game-stat" id="cards-remaining"></div>
 					<div class = "game-stat" id="win-score-display"></div>
+					<div class = "game-stat" id="round-number-display"></div>
 					<div class="game-controls">
 						<button class="leave-game" type="button">Leave game</button>
 						<button class="reset-game" type="button">Reset game</button>
