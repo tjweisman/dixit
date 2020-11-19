@@ -122,6 +122,9 @@ function update_winners() {
 	let winning_players = get_winners();
 	log("winning players:");
 	log(winning_players);
+	
+	$("#players td.winning").text("");
+
 	if(winning_players.length < players.size) {
 		for(let player of winning_players) {
 			log("#players tr[uid=" + player.uid + "] td.winning");
