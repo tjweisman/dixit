@@ -5,6 +5,7 @@ import re
 import os
 import subprocess
 import shutil
+import tempfile
 
 from collections import defaultdict
 
@@ -22,6 +23,7 @@ TEMPLATE_FILENAME = "cards_template.html"
 HTML_OUTPUT = "index.html"
 
 OUTPUT_SIZE = "350x560^"
+TMP_GIF_NAME = "tmp.gif"
 
 PROCESSED_CARDS_LIST = "processed"
 IMAGE_DIRECTORY = "src_images"
@@ -37,6 +39,23 @@ def change_ext(filename, new_ext):
     """return a new filename, with the extension changed.
     """
     return re.sub(r"\.\w+$", new_ext, filename)
+
+def map_img_extensions(extension):
+    #keep gif filetype, otherwise convert to png
+    if extension == ".gif":
+        return ".gif"
+
+    return ".png"
+
+def preprocess_gif(tmp_dir, input_path):
+    preprocess_output = os.path.join(tmp_dir, "tmp.gif")
+    subprocess.run([
+        "magick",
+        input_path,
+        "-coalesce",
+        preprocess_output
+    ])
+    return preprocess_output
 
 def get_processed_path():
     return os.path.join(SCRIPT_DIR, PROCESSED_CARDS_LIST)
@@ -93,15 +112,27 @@ def run_standardize(directory, processed_files=None,
         index = 0
 
     card_data = []
+
+    #create a temporary directory for preprocessing gifs
+    processing_dir = tempfile.TemporaryDirectory()
+
     for base, dirs, files in os.walk(directory):
         dirs.sort()
         sort_files = natsorted(files)
         for filename in sort_files:
-            output_filename = "{}_card{:02}.png".format(dir_key, index)
+            _, extension = os.path.splitext(filename)
+            new_extension = map_img_extensions(extension)
+
+            output_filename = "{}_card{:02}{}".format(dir_key, index, new_extension)
             input_path = os.path.join(base, filename)
             output_path = os.path.join(output_directory, output_filename)
 
-            if not processed_files or input_path not in processed_files:
+            processed_key = input_path
+            if not processed_files or processed_key not in processed_files:
+                if extension == ".gif":
+                    log("Preprocessing gif file: {}.".format(input_path))
+                    input_path = preprocess_gif(processing_dir.name, input_path)
+                    log("Produced temporary gif file: {}".format(input_path))
 
                 log("Processing file: {}. Output: {}".format(input_path, output_path))
 
@@ -109,19 +140,21 @@ def run_standardize(directory, processed_files=None,
                                 input_path,
                                 "-resize",
                                 OUTPUT_SIZE,
+                                "-layers",
+                                "optimize",
                                 output_path])
 
                 if processed_handle:
-                    processed_handle.write(input_path + ", " + output_filename + "\n")
+                    processed_handle.write(processed_key + ", " + output_filename + "\n")
 
                 index += 1
             else:
                 log("Skipping file: {}".format(input_path))
-                output_filename = processed_files[input_path]
+                output_filename = processed_files[processed_key]
 
             card_data.append((output_filename, dir_key))
 
-
+    processing_dir.cleanup()
 
     return card_data
 
