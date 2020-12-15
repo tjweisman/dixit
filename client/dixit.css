@@ -32,6 +32,11 @@ button:active, input[type=submit]:active {
 	background-color: #154e85;
 }
 
+input[type=submit]:disabled, button:disabled {
+	background-color:#dfe3eb;
+	color: #a6a6a6;
+}
+
 input[type=text] {
 	border: 2px solid LightGray;
 	border-radius: 5px;
