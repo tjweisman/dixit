@@ -6,7 +6,7 @@ WEBSITE_DIRECTORY=/home/teddy/math/web/personal/weisman/public_html/dixit/cards
 BACKEND_DIRECTORY=/home/teddy/projects/dixit/server
 
 echo "processing images."
-$SCRIPT_DIRECTORY/standardize_images
+$SCRIPT_DIRECTORY/process_images
 
 echo "copying processed images to local web directory"
 cp $CARD_DIRECTORY/* $WEBSITE_DIRECTORY

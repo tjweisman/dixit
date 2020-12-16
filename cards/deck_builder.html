@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head>
+	<title>Dixit deck customizer</title>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="deck_builder.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="cards.css" />
+	<link rel="stylesheet" type="text/css" href="builder.css" />
+	<link rel="stylesheet" type="text/css" href="../dixit.css" />
+
+</head>
+<body>
+	<div id="page-container">
+	<div class="card-column">
+		<div id="card-view-controls"><button id="expand-all">Expand all</button><button id="collapse-all">Collapse all</button></div>
+<div id='arun-cards' class='infobox'><h3 class='artist-title'><a href='' id='arun'>arun (<span class='card-counter'>0/10</span>)</a></h3> <div class='select-buttons'><button class='select-all'>Select all</button><button class='deselect-all'>Deselect all</button></div><ul class='card-hide card-list'>
+<li><a href='arun_card00.png'><img src='arun_card00.png' /></a><div class='img-title'>arun_card00.png</div></li>
+<li><a href='arun_card01.png'><img src='arun_card01.png' /></a><div class='img-title'>arun_card01.png</div></li>
+<li><a href='arun_card02.png'><img src='arun_card02.png' /></a><div class='img-title'>arun_card02.png</div></li>
+<li><a href='arun_card03.png'><img src='arun_card03.png' /></a><div class='img-title'>arun_card03.png</div></li>
+<li><a href='arun_card04.png'><img src='arun_card04.png' /></a><div class='img-title'>arun_card04.png</div></li>
+<li><a href='arun_card05.png'><img src='arun_card05.png' /></a><div class='img-title'>arun_card05.png</div></li>
+<li><a href='arun_card06.png'><img src='arun_card06.png' /></a><div class='img-title'>arun_card06.png</div></li>
+<li><a href='arun_card07.png'><img src='arun_card07.png' /></a><div class='img-title'>arun_card07.png</div></li>
+<li><a href='arun_card08.png'><img src='arun_card08.png' /></a><div class='img-title'>arun_card08.png</div></li>
+<li><a href='arun_card09.png'><img src='arun_card09.png' /></a><div class='img-title'>arun_card09.png</div></li>
+</ul></div>
+<div id='bredon-cards' class='infobox'><h3 class='artist-title'><a href='' id='bredon'>bredon (<span class='card-counter'>0/1</span>)</a></h3> <div class='select-buttons'><button class='select-all'>Select all</button><button class='deselect-all'>Deselect all</button></div><ul class='card-hide card-list'>
+<li><a href='bredon_card00.png'><img src='bredon_card00.png' /></a><div class='img-title'>bredon_card00.png</div></li>
+</ul></div>
+<div id='brock_dumas-cards' class='infobox'><h3 class='artist-title'><a href='' id='brock_dumas'>brock_dumas (<span class='card-counter'>0/1</span>)</a></h3> <div class='select-buttons'><button class='select-all'>Select all</button><button class='deselect-all'>Deselect all</button></div><ul class='card-hide card-list'>
+<li><a href='brock_dumas_card00.png'><img src='brock_dumas_card00.png' /></a><div class='img-title'>brock_dumas_card00.png</div></li>
+</ul></div>
+<div id='cas-cards' class='infobox'><h3 class='artist-title'><a href='' id='cas'>cas (<span class='card-counter'>0/59</span>)</a></h3> <div class='select-buttons'><button class='select-all'>Select all</button><button class='deselect-all'>Deselect all</button></div><ul class='card-hide card-list'>
+<li><a href='cas_card00.png'><img src='cas_card00.png' /></a><div class='img-title'>cas_card00.png</div></li>
+<li><a href='cas_card01.png'><img src='cas_card01.png' /></a><div class='img-title'>cas_card01.png</div></li>
+<li><a href='cas_card02.png'><img src='cas_card02.png' /></a><div class='img-title'>cas_card02.png</div></li>
+<li><a href='cas_card03.png'><img src='cas_card03.png' /></a><div class='img-title'>cas_card03.png</div></li>
+<li><a href='cas_card04.png'><img src='cas_card04.png' /></a><div class='img-title'>cas_card04.png</div></li>
+<li><a href='cas_card05.png'><img src='cas_card05.png' /></a><div class='img-title'>cas_card05.png</div></li>
+<li><a href='cas_card06.png'><img src='cas_card06.png' /></a><div class='img-title'>cas_card06.png</div></li>
+<li><a href='cas_card07.png'><img src='cas_card07.png' /></a><div class='img-title'>cas_card07.png</div></li>
+<li><a href='cas_card08.png'><img src='cas_card08.png' /></a><div class='img-title'>cas_card08.png</div></li>
+<li><a href='cas_card09.png'><img src='cas_card09.png' /></a><div class='img-title'>cas_card09.png</div></li>
+<li><a href='cas_card10.png'><img src='cas_card10.png' /></a><div class='img-title'>cas_card10.png</div></li>
+<li><a href='cas_card11.png'><img src='cas_card11.png' /></a><div class='img-title'>cas_card11.png</div></li>
+<li><a href='cas_card12.png'><img src='cas_card12.png' /></a><div class='img-title'>cas_card12.png</div></li>
+<li><a href='cas_card13.png'><img src='cas_card13.png' /></a><div class='img-title'>cas_card13.png</div></li>
+<li><a href='cas_card14.png'><img src='cas_card14.png' /></a><div class='img-title'>cas_card14.png</div></li>
+<li><a href='cas_card15.png'><img src='cas_card15.png' /></a><div class='img-title'>cas_card15.png</div></li>
+<li><a href='cas_card16.png'><img src='cas_card16.png' /></a><div class='img-title'>cas_card16.png</div></li>
+<li><a href='cas_card17.png'><img src='cas_card17.png' /></a><div class='img-title'>cas_card17.png</div></li>
+<li><a href='cas_card18.png'><img src='cas_card18.png' /></a><div class='img-title'>cas_card18.png</div></li>
+<li><a href='cas_card19.png'><img src='cas_card19.png' /></a><div class='img-title'>cas_card19.png</div></li>
+<li><a href='cas_card20.png'><img src='cas_card20.png' /></a><div class='img-title'>cas_card20.png</div></li>
+<li><a href='cas_card21.png'><img src='cas_card21.png' /></a><div class='img-title'>cas_card21.png</div></li>
+<li><a href='cas_card22.png'><img src='cas_card22.png' /></a><div class='img-title'>cas_card22.png</div></li>
+<li><a href='cas_card23.png'><img src='cas_card23.png' /></a><div class='img-title'>cas_card23.png</div></li>
+<li><a href='cas_card24.png'><img src='cas_card24.png' /></a><div class='img-title'>cas_card24.png</div></li>
+<li><a href='cas_card25.png'><img src='cas_card25.png' /></a><div class='img-title'>cas_card25.png</div></li>
+<li><a href='cas_card26.png'><img src='cas_card26.png' /></a><div class='img-title'>cas_card26.png</div></li>
+<li><a href='cas_card27.png'><img src='cas_card27.png' /></a><div class='img-title'>cas_card27.png</div></li>
+<li><a href='cas_card28.png'><img src='cas_card28.png' /></a><div class='img-title'>cas_card28.png</div></li>
+<li><a href='cas_card29.png'><img src='cas_card29.png' /></a><div class='img-title'>cas_card29.png</div></li>
+<li><a href='cas_card30.png'><img src='cas_card30.png' /></a><div class='img-title'>cas_card30.png</div></li>
+<li><a href='cas_card31.png'><img src='cas_card31.png' /></a><div class='img-title'>cas_card31.png</div></li>
+<li><a href='cas_card32.png'><img src='cas_card32.png' /></a><div class='img-title'>cas_card32.png</div></li>
+<li><a href='cas_card33.png'><img src='cas_card33.png' /></a><div class='img-title'>cas_card33.png</div></li>
+<li><a href='cas_card34.png'><img src='cas_card34.png' /></a><div class='img-title'>cas_card34.png</div></li>
+<li><a href='cas_card35.png'><img src='cas_card35.png' /></a><div class='img-title'>cas_card35.png</div></li>
+<li><a href='cas_card36.png'><img src='cas_card36.png' /></a><div class='img-title'>cas_card36.png</div></li>
+<li><a href='cas_card37.png'><img src='cas_card37.png' /></a><div class='img-title'>cas_card37.png</div></li>
+<li><a href='cas_card38.png'><img src='cas_card38.png' /></a><div class='img-title'>cas_card38.png</div></li>
+<li><a href='cas_card39.png'><img src='cas_card39.png' /></a><div class='img-title'>cas_card39.png</div></li>
+<li><a href='cas_card40.png'><img src='cas_card40.png' /></a><div class='img-title'>cas_card40.png</div></li>
+<li><a href='cas_card41.png'><img src='cas_card41.png' /></a><div class='img-title'>cas_card41.png</div></li>
+<li><a href='cas_card42.png'><img src='cas_card42.png' /></a><div class='img-title'>cas_card42.png</div></li>
+<li><a href='cas_card43.png'><img src='cas_card43.png' /></a><div class='img-title'>cas_card43.png</div></li>
+<li><a href='cas_card44.png'><img src='cas_card44.png' /></a><div class='img-title'>cas_card44.png</div></li>
+<li><a href='cas_card45.png'><img src='cas_card45.png' /></a><div class='img-title'>cas_card45.png</div></li>
+<li><a href='cas_card46.png'><img src='cas_card46.png' /></a><div class='img-title'>cas_card46.png</div></li>
+<li><a href='cas_card47.png'><img src='cas_card47.png' /></a><div class='img-title'>cas_card47.png</div></li>
+<li><a href='cas_card48.png'><img src='cas_card48.png' /></a><div class='img-title'>cas_card48.png</div></li>
+<li><a href='cas_card49.png'><img src='cas_card49.png' /></a><div class='img-title'>cas_card49.png</div></li>
+<li><a href='cas_card50.png'><img src='cas_card50.png' /></a><div class='img-title'>cas_card50.png</div></li>
+<li><a href='cas_card51.png'><img src='cas_card51.png' /></a><div class='img-title'>cas_card51.png</div></li>
+<li><a href='cas_card52.png'><img src='cas_card52.png' /></a><div class='img-title'>cas_card52.png</div></li>
+<li><a href='cas_card53.png'><img src='cas_card53.png' /></a><div class='img-title'>cas_card53.png</div></li>
+<li><a href='cas_card54.png'><img src='cas_card54.png' /></a><div class='img-title'>cas_card54.png</div></li>
+<li><a href='cas_card55.png'><img src='cas_card55.png' /></a><div class='img-title'>cas_card55.png</div></li>
+<li><a href='cas_card56.png'><img src='cas_card56.png' /></a><div class='img-title'>cas_card56.png</div></li>
+<li><a href='cas_card57.png'><img src='cas_card57.png' /></a><div class='img-title'>cas_card57.png</div></li>
+<li><a href='cas_card58.gif'><img src='cas_card58.gif' /></a><div class='img-title'>cas_card58.gif</div></li>
+</ul></div>
+<div id='dali-cards' class='infobox'><h3 class='artist-title'><a href='' id='dali'>dali (<span class='card-counter'>0/6</span>)</a></h3> <div class='select-buttons'><button class='select-all'>Select all</button><button class='deselect-all'>Deselect all</button></div><ul class='card-hide card-list'>
+<li><a href='dali_card00.png'><img src='dali_card00.png' /></a><div class='img-title'>dali_card00.png</div></li>
+<li><a href='dali_card01.png'><img src='dali_card01.png' /></a><div class='img-title'>dali_card01.png</div></li>
+<li><a href='dali_card02.png'><img src='dali_card02.png' /></a><div class='img-title'>dali_card02.png</div></li>
+<li><a href='dali_card03.png'><img src='dali_card03.png' /></a><div class='img-title'>dali_card03.png</div></li>
+<li><a href='dali_card04.png'><img src='dali_card04.png' /></a><div class='img-title'>dali_card04.png</div></li>
+<li><a href='dali_card05.png'><img src='dali_card05.png' /></a><div class='img-title'>dali_card05.png</div></li>
+</ul></div>
+<div id='fomenko-cards' class='infobox'><h3 class='artist-title'><a href='' id='fomenko'>fomenko (<span class='card-counter'>0/9</span>)</a></h3> <div class='select-buttons'><button class='select-all'>Select all</button><button class='deselect-all'>Deselect all</button></div><ul class='card-hide card-list'>
+<li><a href='fomenko_card00.png'><img src='fomenko_card00.png' /></a><div class='img-title'>fomenko_card00.png</div></li>
+<li><a href='fomenko_card01.png'><img src='fomenko_card01.png' /></a><div class='img-title'>fomenko_card01.png</div></li>
+<li><a href='fomenko_card02.png'><img src='fomenko_card02.png' /></a><div class='img-title'>fomenko_card02.png</div></li>
+<li><a href='fomenko_card03.png'><img src='fomenko_card03.png' /></a><div class='img-title'>fomenko_card03.png</div></li>
+<li><a href='fomenko_card04.png'><img src='fomenko_card04.png' /></a><div class='img-title'>fomenko_card04.png</div></li>
+<li><a href='fomenko_card05.png'><img src='fomenko_card05.png' /></a><div class='img-title'>fomenko_card05.png</div></li>
+<li><a href='fomenko_card06.png'><img src='fomenko_card06.png' /></a><div class='img-title'>fomenko_card06.png</div></li>
+<li><a href='fomenko_card07.png'><img src='fomenko_card07.png' /></a><div class='img-title'>fomenko_card07.png</div></li>
+<li><a href='fomenko_card08.png'><img src='fomenko_card08.png' /></a><div class='img-title'>fomenko_card08.png</div></li>
+</ul></div>
+<div id='grothendieck-cards' class='infobox'><h3 class='artist-title'><a href='' id='grothendieck'>grothendieck (<span class='card-counter'>0/1</span>)</a></h3> <div class='select-buttons'><button class='select-all'>Select all</button><button class='deselect-all'>Deselect all</button></div><ul class='card-hide card-list'>
+<li><a href='grothendieck_card00.png'><img src='grothendieck_card00.png' /></a><div class='img-title'>grothendieck_card00.png</div></li>
+</ul></div>
+<div id='neza-cards' class='infobox'><h3 class='artist-title'><a href='' id='neza'>neza (<span class='card-counter'>0/44</span>)</a></h3> <div class='select-buttons'><button class='select-all'>Select all</button><button class='deselect-all'>Deselect all</button></div><ul class='card-hide card-list'>
+<li><a href='neza_card00.png'><img src='neza_card00.png' /></a><div class='img-title'>neza_card00.png</div></li>
+<li><a href='neza_card01.png'><img src='neza_card01.png' /></a><div class='img-title'>neza_card01.png</div></li>
+<li><a href='neza_card02.png'><img src='neza_card02.png' /></a><div class='img-title'>neza_card02.png</div></li>
+<li><a href='neza_card03.png'><img src='neza_card03.png' /></a><div class='img-title'>neza_card03.png</div></li>
+<li><a href='neza_card04.png'><img src='neza_card04.png' /></a><div class='img-title'>neza_card04.png</div></li>
+<li><a href='neza_card05.png'><img src='neza_card05.png' /></a><div class='img-title'>neza_card05.png</div></li>
+<li><a href='neza_card06.png'><img src='neza_card06.png' /></a><div class='img-title'>neza_card06.png</div></li>
+<li><a href='neza_card07.png'><img src='neza_card07.png' /></a><div class='img-title'>neza_card07.png</div></li>
+<li><a href='neza_card08.png'><img src='neza_card08.png' /></a><div class='img-title'>neza_card08.png</div></li>
+<li><a href='neza_card09.png'><img src='neza_card09.png' /></a><div class='img-title'>neza_card09.png</div></li>
+<li><a href='neza_card10.png'><img src='neza_card10.png' /></a><div class='img-title'>neza_card10.png</div></li>
+<li><a href='neza_card11.png'><img src='neza_card11.png' /></a><div class='img-title'>neza_card11.png</div></li>
+<li><a href='neza_card12.png'><img src='neza_card12.png' /></a><div class='img-title'>neza_card12.png</div></li>
+<li><a href='neza_card13.png'><img src='neza_card13.png' /></a><div class='img-title'>neza_card13.png</div></li>
+<li><a href='neza_card14.png'><img src='neza_card14.png' /></a><div class='img-title'>neza_card14.png</div></li>
+<li><a href='neza_card15.png'><img src='neza_card15.png' /></a><div class='img-title'>neza_card15.png</div></li>
+<li><a href='neza_card16.png'><img src='neza_card16.png' /></a><div class='img-title'>neza_card16.png</div></li>
+<li><a href='neza_card17.png'><img src='neza_card17.png' /></a><div class='img-title'>neza_card17.png</div></li>
+<li><a href='neza_card18.png'><img src='neza_card18.png' /></a><div class='img-title'>neza_card18.png</div></li>
+<li><a href='neza_card19.png'><img src='neza_card19.png' /></a><div class='img-title'>neza_card19.png</div></li>
+<li><a href='neza_card20.png'><img src='neza_card20.png' /></a><div class='img-title'>neza_card20.png</div></li>
+<li><a href='neza_card21.png'><img src='neza_card21.png' /></a><div class='img-title'>neza_card21.png</div></li>
+<li><a href='neza_card22.png'><img src='neza_card22.png' /></a><div class='img-title'>neza_card22.png</div></li>
+<li><a href='neza_card23.png'><img src='neza_card23.png' /></a><div class='img-title'>neza_card23.png</div></li>
+<li><a href='neza_card24.png'><img src='neza_card24.png' /></a><div class='img-title'>neza_card24.png</div></li>
+<li><a href='neza_card25.png'><img src='neza_card25.png' /></a><div class='img-title'>neza_card25.png</div></li>
+<li><a href='neza_card26.png'><img src='neza_card26.png' /></a><div class='img-title'>neza_card26.png</div></li>
+<li><a href='neza_card27.png'><img src='neza_card27.png' /></a><div class='img-title'>neza_card27.png</div></li>
+<li><a href='neza_card28.png'><img src='neza_card28.png' /></a><div class='img-title'>neza_card28.png</div></li>
+<li><a href='neza_card29.png'><img src='neza_card29.png' /></a><div class='img-title'>neza_card29.png</div></li>
+<li><a href='neza_card30.png'><img src='neza_card30.png' /></a><div class='img-title'>neza_card30.png</div></li>
+<li><a href='neza_card31.png'><img src='neza_card31.png' /></a><div class='img-title'>neza_card31.png</div></li>
+<li><a href='neza_card32.png'><img src='neza_card32.png' /></a><div class='img-title'>neza_card32.png</div></li>
+<li><a href='neza_card33.png'><img src='neza_card33.png' /></a><div class='img-title'>neza_card33.png</div></li>
+<li><a href='neza_card34.png'><img src='neza_card34.png' /></a><div class='img-title'>neza_card34.png</div></li>
+<li><a href='neza_card35.png'><img src='neza_card35.png' /></a><div class='img-title'>neza_card35.png</div></li>
+<li><a href='neza_card36.png'><img src='neza_card36.png' /></a><div class='img-title'>neza_card36.png</div></li>
+<li><a href='neza_card37.png'><img src='neza_card37.png' /></a><div class='img-title'>neza_card37.png</div></li>
+<li><a href='neza_card38.png'><img src='neza_card38.png' /></a><div class='img-title'>neza_card38.png</div></li>
+<li><a href='neza_card39.png'><img src='neza_card39.png' /></a><div class='img-title'>neza_card39.png</div></li>
+<li><a href='neza_card40.png'><img src='neza_card40.png' /></a><div class='img-title'>neza_card40.png</div></li>
+<li><a href='neza_card41.png'><img src='neza_card41.png' /></a><div class='img-title'>neza_card41.png</div></li>
+<li><a href='neza_card42.png'><img src='neza_card42.png' /></a><div class='img-title'>neza_card42.png</div></li>
+<li><a href='neza_card43.png'><img src='neza_card43.png' /></a><div class='img-title'>neza_card43.png</div></li>
+</ul></div>
+<div id='rok-cards' class='infobox'><h3 class='artist-title'><a href='' id='rok'>rok (<span class='card-counter'>0/185</span>)</a></h3> <div class='select-buttons'><button class='select-all'>Select all</button><button class='deselect-all'>Deselect all</button></div><ul class='card-hide card-list'>
+<li><a href='rok_card00.png'><img src='rok_card00.png' /></a><div class='img-title'>rok_card00.png</div></li>
+<li><a href='rok_card01.png'><img src='rok_card01.png' /></a><div class='img-title'>rok_card01.png</div></li>
+<li><a href='rok_card02.png'><img src='rok_card02.png' /></a><div class='img-title'>rok_card02.png</div></li>
+<li><a href='rok_card03.png'><img src='rok_card03.png' /></a><div class='img-title'>rok_card03.png</div></li>
+<li><a href='rok_card04.png'><img src='rok_card04.png' /></a><div class='img-title'>rok_card04.png</div></li>
+<li><a href='rok_card05.png'><img src='rok_card05.png' /></a><div class='img-title'>rok_card05.png</div></li>
+<li><a href='rok_card06.png'><img src='rok_card06.png' /></a><div class='img-title'>rok_card06.png</div></li>
+<li><a href='rok_card07.png'><img src='rok_card07.png' /></a><div class='img-title'>rok_card07.png</div></li>
+<li><a href='rok_card08.png'><img src='rok_card08.png' /></a><div class='img-title'>rok_card08.png</div></li>
+<li><a href='rok_card09.png'><img src='rok_card09.png' /></a><div class='img-title'>rok_card09.png</div></li>
+<li><a href='rok_card10.png'><img src='rok_card10.png' /></a><div class='img-title'>rok_card10.png</div></li>
+<li><a href='rok_card11.png'><img src='rok_card11.png' /></a><div class='img-title'>rok_card11.png</div></li>
+<li><a href='rok_card12.png'><img src='rok_card12.png' /></a><div class='img-title'>rok_card12.png</div></li>
+<li><a href='rok_card13.png'><img src='rok_card13.png' /></a><div class='img-title'>rok_card13.png</div></li>
+<li><a href='rok_card14.png'><img src='rok_card14.png' /></a><div class='img-title'>rok_card14.png</div></li>
+<li><a href='rok_card15.png'><img src='rok_card15.png' /></a><div class='img-title'>rok_card15.png</div></li>
+<li><a href='rok_card16.png'><img src='rok_card16.png' /></a><div class='img-title'>rok_card16.png</div></li>
+<li><a href='rok_card17.png'><img src='rok_card17.png' /></a><div class='img-title'>rok_card17.png</div></li>
+<li><a href='rok_card18.png'><img src='rok_card18.png' /></a><div class='img-title'>rok_card18.png</div></li>
+<li><a href='rok_card19.png'><img src='rok_card19.png' /></a><div class='img-title'>rok_card19.png</div></li>
+<li><a href='rok_card20.png'><img src='rok_card20.png' /></a><div class='img-title'>rok_card20.png</div></li>
+<li><a href='rok_card21.png'><img src='rok_card21.png' /></a><div class='img-title'>rok_card21.png</div></li>
+<li><a href='rok_card22.png'><img src='rok_card22.png' /></a><div class='img-title'>rok_card22.png</div></li>
+<li><a href='rok_card23.png'><img src='rok_card23.png' /></a><div class='img-title'>rok_card23.png</div></li>
+<li><a href='rok_card24.png'><img src='rok_card24.png' /></a><div class='img-title'>rok_card24.png</div></li>
+<li><a href='rok_card25.png'><img src='rok_card25.png' /></a><div class='img-title'>rok_card25.png</div></li>
+<li><a href='rok_card26.png'><img src='rok_card26.png' /></a><div class='img-title'>rok_card26.png</div></li>
+<li><a href='rok_card27.png'><img src='rok_card27.png' /></a><div class='img-title'>rok_card27.png</div></li>
+<li><a href='rok_card28.png'><img src='rok_card28.png' /></a><div class='img-title'>rok_card28.png</div></li>
+<li><a href='rok_card29.png'><img src='rok_card29.png' /></a><div class='img-title'>rok_card29.png</div></li>
+<li><a href='rok_card30.png'><img src='rok_card30.png' /></a><div class='img-title'>rok_card30.png</div></li>
+<li><a href='rok_card31.png'><img src='rok_card31.png' /></a><div class='img-title'>rok_card31.png</div></li>
+<li><a href='rok_card32.png'><img src='rok_card32.png' /></a><div class='img-title'>rok_card32.png</div></li>
+<li><a href='rok_card33.png'><img src='rok_card33.png' /></a><div class='img-title'>rok_card33.png</div></li>
+<li><a href='rok_card34.png'><img src='rok_card34.png' /></a><div class='img-title'>rok_card34.png</div></li>
+<li><a href='rok_card35.png'><img src='rok_card35.png' /></a><div class='img-title'>rok_card35.png</div></li>
+<li><a href='rok_card36.png'><img src='rok_card36.png' /></a><div class='img-title'>rok_card36.png</div></li>
+<li><a href='rok_card37.png'><img src='rok_card37.png' /></a><div class='img-title'>rok_card37.png</div></li>
+<li><a href='rok_card38.png'><img src='rok_card38.png' /></a><div class='img-title'>rok_card38.png</div></li>
+<li><a href='rok_card39.png'><img src='rok_card39.png' /></a><div class='img-title'>rok_card39.png</div></li>
+<li><a href='rok_card40.png'><img src='rok_card40.png' /></a><div class='img-title'>rok_card40.png</div></li>
+<li><a href='rok_card41.png'><img src='rok_card41.png' /></a><div class='img-title'>rok_card41.png</div></li>
+<li><a href='rok_card42.png'><img src='rok_card42.png' /></a><div class='img-title'>rok_card42.png</div></li>
+<li><a href='rok_card43.png'><img src='rok_card43.png' /></a><div class='img-title'>rok_card43.png</div></li>
+<li><a href='rok_card44.png'><img src='rok_card44.png' /></a><div class='img-title'>rok_card44.png</div></li>
+<li><a href='rok_card45.png'><img src='rok_card45.png' /></a><div class='img-title'>rok_card45.png</div></li>
+<li><a href='rok_card46.png'><img src='rok_card46.png' /></a><div class='img-title'>rok_card46.png</div></li>
+<li><a href='rok_card47.png'><img src='rok_card47.png' /></a><div class='img-title'>rok_card47.png</div></li>
+<li><a href='rok_card48.png'><img src='rok_card48.png' /></a><div class='img-title'>rok_card48.png</div></li>
+<li><a href='rok_card49.png'><img src='rok_card49.png' /></a><div class='img-title'>rok_card49.png</div></li>
+<li><a href='rok_card50.png'><img src='rok_card50.png' /></a><div class='img-title'>rok_card50.png</div></li>
+<li><a href='rok_card51.png'><img src='rok_card51.png' /></a><div class='img-title'>rok_card51.png</div></li>
+<li><a href='rok_card52.png'><img src='rok_card52.png' /></a><div class='img-title'>rok_card52.png</div></li>
+<li><a href='rok_card53.png'><img src='rok_card53.png' /></a><div class='img-title'>rok_card53.png</div></li>
+<li><a href='rok_card54.png'><img src='rok_card54.png' /></a><div class='img-title'>rok_card54.png</div></li>
+<li><a href='rok_card55.png'><img src='rok_card55.png' /></a><div class='img-title'>rok_card55.png</div></li>
+<li><a href='rok_card56.png'><img src='rok_card56.png' /></a><div class='img-title'>rok_card56.png</div></li>
+<li><a href='rok_card57.png'><img src='rok_card57.png' /></a><div class='img-title'>rok_card57.png</div></li>
+<li><a href='rok_card58.png'><img src='rok_card58.png' /></a><div class='img-title'>rok_card58.png</div></li>
+<li><a href='rok_card59.png'><img src='rok_card59.png' /></a><div class='img-title'>rok_card59.png</div></li>
+<li><a href='rok_card60.png'><img src='rok_card60.png' /></a><div class='img-title'>rok_card60.png</div></li>
+<li><a href='rok_card61.png'><img src='rok_card61.png' /></a><div class='img-title'>rok_card61.png</div></li>
+<li><a href='rok_card62.png'><img src='rok_card62.png' /></a><div class='img-title'>rok_card62.png</div></li>
+<li><a href='rok_card63.png'><img src='rok_card63.png' /></a><div class='img-title'>rok_card63.png</div></li>
+<li><a href='rok_card64.png'><img src='rok_card64.png' /></a><div class='img-title'>rok_card64.png</div></li>
+<li><a href='rok_card65.png'><img src='rok_card65.png' /></a><div class='img-title'>rok_card65.png</div></li>
+<li><a href='rok_card66.png'><img src='rok_card66.png' /></a><div class='img-title'>rok_card66.png</div></li>
+<li><a href='rok_card67.png'><img src='rok_card67.png' /></a><div class='img-title'>rok_card67.png</div></li>
+<li><a href='rok_card68.png'><img src='rok_card68.png' /></a><div class='img-title'>rok_card68.png</div></li>
+<li><a href='rok_card69.png'><img src='rok_card69.png' /></a><div class='img-title'>rok_card69.png</div></li>
+<li><a href='rok_card70.png'><img src='rok_card70.png' /></a><div class='img-title'>rok_card70.png</div></li>
+<li><a href='rok_card71.png'><img src='rok_card71.png' /></a><div class='img-title'>rok_card71.png</div></li>
+<li><a href='rok_card72.png'><img src='rok_card72.png' /></a><div class='img-title'>rok_card72.png</div></li>
+<li><a href='rok_card73.png'><img src='rok_card73.png' /></a><div class='img-title'>rok_card73.png</div></li>
+<li><a href='rok_card74.png'><img src='rok_card74.png' /></a><div class='img-title'>rok_card74.png</div></li>
+<li><a href='rok_card75.png'><img src='rok_card75.png' /></a><div class='img-title'>rok_card75.png</div></li>
+<li><a href='rok_card76.png'><img src='rok_card76.png' /></a><div class='img-title'>rok_card76.png</div></li>
+<li><a href='rok_card77.png'><img src='rok_card77.png' /></a><div class='img-title'>rok_card77.png</div></li>
+<li><a href='rok_card78.png'><img src='rok_card78.png' /></a><div class='img-title'>rok_card78.png</div></li>
+<li><a href='rok_card79.png'><img src='rok_card79.png' /></a><div class='img-title'>rok_card79.png</div></li>
+<li><a href='rok_card80.png'><img src='rok_card80.png' /></a><div class='img-title'>rok_card80.png</div></li>
+<li><a href='rok_card81.png'><img src='rok_card81.png' /></a><div class='img-title'>rok_card81.png</div></li>
+<li><a href='rok_card82.png'><img src='rok_card82.png' /></a><div class='img-title'>rok_card82.png</div></li>
+<li><a href='rok_card83.png'><img src='rok_card83.png' /></a><div class='img-title'>rok_card83.png</div></li>
+<li><a href='rok_card84.png'><img src='rok_card84.png' /></a><div class='img-title'>rok_card84.png</div></li>
+<li><a href='rok_card85.png'><img src='rok_card85.png' /></a><div class='img-title'>rok_card85.png</div></li>
+<li><a href='rok_card86.png'><img src='rok_card86.png' /></a><div class='img-title'>rok_card86.png</div></li>
+<li><a href='rok_card87.png'><img src='rok_card87.png' /></a><div class='img-title'>rok_card87.png</div></li>
+<li><a href='rok_card88.png'><img src='rok_card88.png' /></a><div class='img-title'>rok_card88.png</div></li>
+<li><a href='rok_card89.png'><img src='rok_card89.png' /></a><div class='img-title'>rok_card89.png</div></li>
+<li><a href='rok_card90.png'><img src='rok_card90.png' /></a><div class='img-title'>rok_card90.png</div></li>
+<li><a href='rok_card91.png'><img src='rok_card91.png' /></a><div class='img-title'>rok_card91.png</div></li>
+<li><a href='rok_card92.png'><img src='rok_card92.png' /></a><div class='img-title'>rok_card92.png</div></li>
+<li><a href='rok_card93.png'><img src='rok_card93.png' /></a><div class='img-title'>rok_card93.png</div></li>
+<li><a href='rok_card94.png'><img src='rok_card94.png' /></a><div class='img-title'>rok_card94.png</div></li>
+<li><a href='rok_card95.png'><img src='rok_card95.png' /></a><div class='img-title'>rok_card95.png</div></li>
+<li><a href='rok_card96.png'><img src='rok_card96.png' /></a><div class='img-title'>rok_card96.png</div></li>
+<li><a href='rok_card97.png'><img src='rok_card97.png' /></a><div class='img-title'>rok_card97.png</div></li>
+<li><a href='rok_card98.png'><img src='rok_card98.png' /></a><div class='img-title'>rok_card98.png</div></li>
+<li><a href='rok_card99.png'><img src='rok_card99.png' /></a><div class='img-title'>rok_card99.png</div></li>
+<li><a href='rok_card100.png'><img src='rok_card100.png' /></a><div class='img-title'>rok_card100.png</div></li>
+<li><a href='rok_card101.png'><img src='rok_card101.png' /></a><div class='img-title'>rok_card101.png</div></li>
+<li><a href='rok_card102.png'><img src='rok_card102.png' /></a><div class='img-title'>rok_card102.png</div></li>
+<li><a href='rok_card103.png'><img src='rok_card103.png' /></a><div class='img-title'>rok_card103.png</div></li>
+<li><a href='rok_card104.png'><img src='rok_card104.png' /></a><div class='img-title'>rok_card104.png</div></li>
+<li><a href='rok_card105.png'><img src='rok_card105.png' /></a><div class='img-title'>rok_card105.png</div></li>
+<li><a href='rok_card106.png'><img src='rok_card106.png' /></a><div class='img-title'>rok_card106.png</div></li>
+<li><a href='rok_card107.png'><img src='rok_card107.png' /></a><div class='img-title'>rok_card107.png</div></li>
+<li><a href='rok_card108.png'><img src='rok_card108.png' /></a><div class='img-title'>rok_card108.png</div></li>
+<li><a href='rok_card109.png'><img src='rok_card109.png' /></a><div class='img-title'>rok_card109.png</div></li>
+<li><a href='rok_card110.png'><img src='rok_card110.png' /></a><div class='img-title'>rok_card110.png</div></li>
+<li><a href='rok_card111.png'><img src='rok_card111.png' /></a><div class='img-title'>rok_card111.png</div></li>
+<li><a href='rok_card112.png'><img src='rok_card112.png' /></a><div class='img-title'>rok_card112.png</div></li>
+<li><a href='rok_card113.png'><img src='rok_card113.png' /></a><div class='img-title'>rok_card113.png</div></li>
+<li><a href='rok_card114.png'><img src='rok_card114.png' /></a><div class='img-title'>rok_card114.png</div></li>
+<li><a href='rok_card115.png'><img src='rok_card115.png' /></a><div class='img-title'>rok_card115.png</div></li>
+<li><a href='rok_card116.png'><img src='rok_card116.png' /></a><div class='img-title'>rok_card116.png</div></li>
+<li><a href='rok_card117.png'><img src='rok_card117.png' /></a><div class='img-title'>rok_card117.png</div></li>
+<li><a href='rok_card118.png'><img src='rok_card118.png' /></a><div class='img-title'>rok_card118.png</div></li>
+<li><a href='rok_card119.png'><img src='rok_card119.png' /></a><div class='img-title'>rok_card119.png</div></li>
+<li><a href='rok_card120.png'><img src='rok_card120.png' /></a><div class='img-title'>rok_card120.png</div></li>
+<li><a href='rok_card121.png'><img src='rok_card121.png' /></a><div class='img-title'>rok_card121.png</div></li>
+<li><a href='rok_card122.png'><img src='rok_card122.png' /></a><div class='img-title'>rok_card122.png</div></li>
+<li><a href='rok_card123.png'><img src='rok_card123.png' /></a><div class='img-title'>rok_card123.png</div></li>
+<li><a href='rok_card124.png'><img src='rok_card124.png' /></a><div class='img-title'>rok_card124.png</div></li>
+<li><a href='rok_card125.png'><img src='rok_card125.png' /></a><div class='img-title'>rok_card125.png</div></li>
+<li><a href='rok_card126.png'><img src='rok_card126.png' /></a><div class='img-title'>rok_card126.png</div></li>
+<li><a href='rok_card127.png'><img src='rok_card127.png' /></a><div class='img-title'>rok_card127.png</div></li>
+<li><a href='rok_card128.png'><img src='rok_card128.png' /></a><div class='img-title'>rok_card128.png</div></li>
+<li><a href='rok_card129.png'><img src='rok_card129.png' /></a><div class='img-title'>rok_card129.png</div></li>
+<li><a href='rok_card130.png'><img src='rok_card130.png' /></a><div class='img-title'>rok_card130.png</div></li>
+<li><a href='rok_card131.png'><img src='rok_card131.png' /></a><div class='img-title'>rok_card131.png</div></li>
+<li><a href='rok_card132.png'><img src='rok_card132.png' /></a><div class='img-title'>rok_card132.png</div></li>
+<li><a href='rok_card133.png'><img src='rok_card133.png' /></a><div class='img-title'>rok_card133.png</div></li>
+<li><a href='rok_card134.png'><img src='rok_card134.png' /></a><div class='img-title'>rok_card134.png</div></li>
+<li><a href='rok_card135.png'><img src='rok_card135.png' /></a><div class='img-title'>rok_card135.png</div></li>
+<li><a href='rok_card136.png'><img src='rok_card136.png' /></a><div class='img-title'>rok_card136.png</div></li>
+<li><a href='rok_card137.png'><img src='rok_card137.png' /></a><div class='img-title'>rok_card137.png</div></li>
+<li><a href='rok_card138.png'><img src='rok_card138.png' /></a><div class='img-title'>rok_card138.png</div></li>
+<li><a href='rok_card139.png'><img src='rok_card139.png' /></a><div class='img-title'>rok_card139.png</div></li>
+<li><a href='rok_card140.png'><img src='rok_card140.png' /></a><div class='img-title'>rok_card140.png</div></li>
+<li><a href='rok_card141.png'><img src='rok_card141.png' /></a><div class='img-title'>rok_card141.png</div></li>
+<li><a href='rok_card142.png'><img src='rok_card142.png' /></a><div class='img-title'>rok_card142.png</div></li>
+<li><a href='rok_card143.png'><img src='rok_card143.png' /></a><div class='img-title'>rok_card143.png</div></li>
+<li><a href='rok_card144.png'><img src='rok_card144.png' /></a><div class='img-title'>rok_card144.png</div></li>
+<li><a href='rok_card145.png'><img src='rok_card145.png' /></a><div class='img-title'>rok_card145.png</div></li>
+<li><a href='rok_card146.png'><img src='rok_card146.png' /></a><div class='img-title'>rok_card146.png</div></li>
+<li><a href='rok_card147.png'><img src='rok_card147.png' /></a><div class='img-title'>rok_card147.png</div></li>
+<li><a href='rok_card148.png'><img src='rok_card148.png' /></a><div class='img-title'>rok_card148.png</div></li>
+<li><a href='rok_card149.png'><img src='rok_card149.png' /></a><div class='img-title'>rok_card149.png</div></li>
+<li><a href='rok_card150.png'><img src='rok_card150.png' /></a><div class='img-title'>rok_card150.png</div></li>
+<li><a href='rok_card151.png'><img src='rok_card151.png' /></a><div class='img-title'>rok_card151.png</div></li>
+<li><a href='rok_card152.png'><img src='rok_card152.png' /></a><div class='img-title'>rok_card152.png</div></li>
+<li><a href='rok_card153.png'><img src='rok_card153.png' /></a><div class='img-title'>rok_card153.png</div></li>
+<li><a href='rok_card154.png'><img src='rok_card154.png' /></a><div class='img-title'>rok_card154.png</div></li>
+<li><a href='rok_card155.png'><img src='rok_card155.png' /></a><div class='img-title'>rok_card155.png</div></li>
+<li><a href='rok_card156.png'><img src='rok_card156.png' /></a><div class='img-title'>rok_card156.png</div></li>
+<li><a href='rok_card157.png'><img src='rok_card157.png' /></a><div class='img-title'>rok_card157.png</div></li>
+<li><a href='rok_card158.png'><img src='rok_card158.png' /></a><div class='img-title'>rok_card158.png</div></li>
+<li><a href='rok_card159.png'><img src='rok_card159.png' /></a><div class='img-title'>rok_card159.png</div></li>
+<li><a href='rok_card160.png'><img src='rok_card160.png' /></a><div class='img-title'>rok_card160.png</div></li>
+<li><a href='rok_card161.png'><img src='rok_card161.png' /></a><div class='img-title'>rok_card161.png</div></li>
+<li><a href='rok_card162.png'><img src='rok_card162.png' /></a><div class='img-title'>rok_card162.png</div></li>
+<li><a href='rok_card163.png'><img src='rok_card163.png' /></a><div class='img-title'>rok_card163.png</div></li>
+<li><a href='rok_card164.png'><img src='rok_card164.png' /></a><div class='img-title'>rok_card164.png</div></li>
+<li><a href='rok_card165.png'><img src='rok_card165.png' /></a><div class='img-title'>rok_card165.png</div></li>
+<li><a href='rok_card166.png'><img src='rok_card166.png' /></a><div class='img-title'>rok_card166.png</div></li>
+<li><a href='rok_card167.png'><img src='rok_card167.png' /></a><div class='img-title'>rok_card167.png</div></li>
+<li><a href='rok_card168.png'><img src='rok_card168.png' /></a><div class='img-title'>rok_card168.png</div></li>
+<li><a href='rok_card169.png'><img src='rok_card169.png' /></a><div class='img-title'>rok_card169.png</div></li>
+<li><a href='rok_card170.png'><img src='rok_card170.png' /></a><div class='img-title'>rok_card170.png</div></li>
+<li><a href='rok_card171.png'><img src='rok_card171.png' /></a><div class='img-title'>rok_card171.png</div></li>
+<li><a href='rok_card172.png'><img src='rok_card172.png' /></a><div class='img-title'>rok_card172.png</div></li>
+<li><a href='rok_card173.png'><img src='rok_card173.png' /></a><div class='img-title'>rok_card173.png</div></li>
+<li><a href='rok_card174.png'><img src='rok_card174.png' /></a><div class='img-title'>rok_card174.png</div></li>
+<li><a href='rok_card175.png'><img src='rok_card175.png' /></a><div class='img-title'>rok_card175.png</div></li>
+<li><a href='rok_card176.png'><img src='rok_card176.png' /></a><div class='img-title'>rok_card176.png</div></li>
+<li><a href='rok_card177.png'><img src='rok_card177.png' /></a><div class='img-title'>rok_card177.png</div></li>
+<li><a href='rok_card178.png'><img src='rok_card178.png' /></a><div class='img-title'>rok_card178.png</div></li>
+<li><a href='rok_card179.png'><img src='rok_card179.png' /></a><div class='img-title'>rok_card179.png</div></li>
+<li><a href='rok_card180.png'><img src='rok_card180.png' /></a><div class='img-title'>rok_card180.png</div></li>
+<li><a href='rok_card181.png'><img src='rok_card181.png' /></a><div class='img-title'>rok_card181.png</div></li>
+<li><a href='rok_card182.png'><img src='rok_card182.png' /></a><div class='img-title'>rok_card182.png</div></li>
+<li><a href='rok_card183.png'><img src='rok_card183.png' /></a><div class='img-title'>rok_card183.png</div></li>
+<li><a href='rok_card184.png'><img src='rok_card184.png' /></a><div class='img-title'>rok_card184.png</div></li>
+</ul></div>
+<div id='rolfsen-cards' class='infobox'><h3 class='artist-title'><a href='' id='rolfsen'>rolfsen (<span class='card-counter'>0/1</span>)</a></h3> <div class='select-buttons'><button class='select-all'>Select all</button><button class='deselect-all'>Deselect all</button></div><ul class='card-hide card-list'>
+<li><a href='rolfsen_card00.png'><img src='rolfsen_card00.png' /></a><div class='img-title'>rolfsen_card00.png</div></li>
+</ul></div>
+<div id='spivak-cards' class='infobox'><h3 class='artist-title'><a href='' id='spivak'>spivak (<span class='card-counter'>0/5</span>)</a></h3> <div class='select-buttons'><button class='select-all'>Select all</button><button class='deselect-all'>Deselect all</button></div><ul class='card-hide card-list'>
+<li><a href='spivak_card00.png'><img src='spivak_card00.png' /></a><div class='img-title'>spivak_card00.png</div></li>
+<li><a href='spivak_card01.png'><img src='spivak_card01.png' /></a><div class='img-title'>spivak_card01.png</div></li>
+<li><a href='spivak_card02.png'><img src='spivak_card02.png' /></a><div class='img-title'>spivak_card02.png</div></li>
+<li><a href='spivak_card03.png'><img src='spivak_card03.png' /></a><div class='img-title'>spivak_card03.png</div></li>
+<li><a href='spivak_card04.png'><img src='spivak_card04.png' /></a><div class='img-title'>spivak_card04.png</div></li>
+</ul></div>
+<div id='teddy-cards' class='infobox'><h3 class='artist-title'><a href='' id='teddy'>teddy (<span class='card-counter'>0/35</span>)</a></h3> <div class='select-buttons'><button class='select-all'>Select all</button><button class='deselect-all'>Deselect all</button></div><ul class='card-hide card-list'>
+<li><a href='teddy_card00.png'><img src='teddy_card00.png' /></a><div class='img-title'>teddy_card00.png</div></li>
+<li><a href='teddy_card01.png'><img src='teddy_card01.png' /></a><div class='img-title'>teddy_card01.png</div></li>
+<li><a href='teddy_card02.png'><img src='teddy_card02.png' /></a><div class='img-title'>teddy_card02.png</div></li>
+<li><a href='teddy_card03.png'><img src='teddy_card03.png' /></a><div class='img-title'>teddy_card03.png</div></li>
+<li><a href='teddy_card04.png'><img src='teddy_card04.png' /></a><div class='img-title'>teddy_card04.png</div></li>
+<li><a href='teddy_card05.png'><img src='teddy_card05.png' /></a><div class='img-title'>teddy_card05.png</div></li>
+<li><a href='teddy_card06.png'><img src='teddy_card06.png' /></a><div class='img-title'>teddy_card06.png</div></li>
+<li><a href='teddy_card07.png'><img src='teddy_card07.png' /></a><div class='img-title'>teddy_card07.png</div></li>
+<li><a href='teddy_card08.png'><img src='teddy_card08.png' /></a><div class='img-title'>teddy_card08.png</div></li>
+<li><a href='teddy_card09.png'><img src='teddy_card09.png' /></a><div class='img-title'>teddy_card09.png</div></li>
+<li><a href='teddy_card10.png'><img src='teddy_card10.png' /></a><div class='img-title'>teddy_card10.png</div></li>
+<li><a href='teddy_card11.png'><img src='teddy_card11.png' /></a><div class='img-title'>teddy_card11.png</div></li>
+<li><a href='teddy_card12.png'><img src='teddy_card12.png' /></a><div class='img-title'>teddy_card12.png</div></li>
+<li><a href='teddy_card13.png'><img src='teddy_card13.png' /></a><div class='img-title'>teddy_card13.png</div></li>
+<li><a href='teddy_card14.png'><img src='teddy_card14.png' /></a><div class='img-title'>teddy_card14.png</div></li>
+<li><a href='teddy_card15.png'><img src='teddy_card15.png' /></a><div class='img-title'>teddy_card15.png</div></li>
+<li><a href='teddy_card16.png'><img src='teddy_card16.png' /></a><div class='img-title'>teddy_card16.png</div></li>
+<li><a href='teddy_card17.png'><img src='teddy_card17.png' /></a><div class='img-title'>teddy_card17.png</div></li>
+<li><a href='teddy_card18.png'><img src='teddy_card18.png' /></a><div class='img-title'>teddy_card18.png</div></li>
+<li><a href='teddy_card19.png'><img src='teddy_card19.png' /></a><div class='img-title'>teddy_card19.png</div></li>
+<li><a href='teddy_card20.png'><img src='teddy_card20.png' /></a><div class='img-title'>teddy_card20.png</div></li>
+<li><a href='teddy_card21.png'><img src='teddy_card21.png' /></a><div class='img-title'>teddy_card21.png</div></li>
+<li><a href='teddy_card22.png'><img src='teddy_card22.png' /></a><div class='img-title'>teddy_card22.png</div></li>
+<li><a href='teddy_card23.png'><img src='teddy_card23.png' /></a><div class='img-title'>teddy_card23.png</div></li>
+<li><a href='teddy_card24.png'><img src='teddy_card24.png' /></a><div class='img-title'>teddy_card24.png</div></li>
+<li><a href='teddy_card25.png'><img src='teddy_card25.png' /></a><div class='img-title'>teddy_card25.png</div></li>
+<li><a href='teddy_card26.png'><img src='teddy_card26.png' /></a><div class='img-title'>teddy_card26.png</div></li>
+<li><a href='teddy_card27.png'><img src='teddy_card27.png' /></a><div class='img-title'>teddy_card27.png</div></li>
+<li><a href='teddy_card28.png'><img src='teddy_card28.png' /></a><div class='img-title'>teddy_card28.png</div></li>
+<li><a href='teddy_card29.png'><img src='teddy_card29.png' /></a><div class='img-title'>teddy_card29.png</div></li>
+<li><a href='teddy_card30.png'><img src='teddy_card30.png' /></a><div class='img-title'>teddy_card30.png</div></li>
+<li><a href='teddy_card31.png'><img src='teddy_card31.png' /></a><div class='img-title'>teddy_card31.png</div></li>
+<li><a href='teddy_card32.png'><img src='teddy_card32.png' /></a><div class='img-title'>teddy_card32.png</div></li>
+<li><a href='teddy_card33.png'><img src='teddy_card33.png' /></a><div class='img-title'>teddy_card33.png</div></li>
+<li><a href='teddy_card34.png'><img src='teddy_card34.png' /></a><div class='img-title'>teddy_card34.png</div></li>
+</ul></div>
+<div id='thurston-cards' class='infobox'><h3 class='artist-title'><a href='' id='thurston'>thurston (<span class='card-counter'>0/8</span>)</a></h3> <div class='select-buttons'><button class='select-all'>Select all</button><button class='deselect-all'>Deselect all</button></div><ul class='card-hide card-list'>
+<li><a href='thurston_card00.png'><img src='thurston_card00.png' /></a><div class='img-title'>thurston_card00.png</div></li>
+<li><a href='thurston_card01.png'><img src='thurston_card01.png' /></a><div class='img-title'>thurston_card01.png</div></li>
+<li><a href='thurston_card03.png'><img src='thurston_card03.png' /></a><div class='img-title'>thurston_card03.png</div></li>
+<li><a href='thurston_card04.png'><img src='thurston_card04.png' /></a><div class='img-title'>thurston_card04.png</div></li>
+<li><a href='thurston_card05.png'><img src='thurston_card05.png' /></a><div class='img-title'>thurston_card05.png</div></li>
+<li><a href='thurston_card06.png'><img src='thurston_card06.png' /></a><div class='img-title'>thurston_card06.png</div></li>
+<li><a href='thurston_card07.png'><img src='thurston_card07.png' /></a><div class='img-title'>thurston_card07.png</div></li>
+<li><a href='thurston_card02.png'><img src='thurston_card02.png' /></a><div class='img-title'>thurston_card02.png</div></li>
+</ul></div>
+<div id='tom-cards' class='infobox'><h3 class='artist-title'><a href='' id='tom'>tom (<span class='card-counter'>0/2</span>)</a></h3> <div class='select-buttons'><button class='select-all'>Select all</button><button class='deselect-all'>Deselect all</button></div><ul class='card-hide card-list'>
+<li><a href='tom_card00.png'><img src='tom_card00.png' /></a><div class='img-title'>tom_card00.png</div></li>
+<li><a href='tom_card01.png'><img src='tom_card01.png' /></a><div class='img-title'>tom_card01.png</div></li>
+</ul></div>
+	</div>
+	<div class="builder-column">
+		<div class="builder-controls">
+			<div class="controls-box">
+				<button id="select-all">Select all</button>
+				<button id="deselect-all">Deselect all</button>
+				<h3>Deck code:</h3>
+				<textarea id="hex-code" rows='5' cols='8'></textarea>
+				<div id="card-viewer"><img /></div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+
+</html>

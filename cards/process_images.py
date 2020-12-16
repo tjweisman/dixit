@@ -12,6 +12,8 @@ from collections import defaultdict
 
 from natsort import natsorted
 
+from file_builders import build_card_files
+
 SCRIPT_DIR = "/home/teddy/projects/dixit/cards"
 FRONTEND_DIR = "/home/teddy/projects/dixit/client"
 BACKEND_DIR = "/home/teddy/projects/dixit/server"
@@ -22,6 +24,9 @@ SQL_OUTPUT = os.path.join(SCRIPT_DIR, SQL_FILENAME)
 
 TEMPLATE_FILENAME = "cards_template.html"
 HTML_OUTPUT = "index.html"
+
+BUILDER_TEMPLATE = "builder_template.html"
+BUILDER_OUTPUT = "deck_builder.html"
 
 OUTPUT_SIZE = "350x560^"
 TMP_GIF_NAME = "tmp.gif"
@@ -97,6 +102,14 @@ def build_indices(processed):
 
     return indices
 
+def make_sorted_card_list(card_data):
+    card_list = []
+    for _, dir_cards in card_data:
+        card_list += [(date_added, filename)
+                      for filename, date_added in dir_cards]
+
+    return sorted(cardlist)
+
 def run_standardize(directory, processed_files=None,
                     processed_handle=None, file_indices=None):
 
@@ -159,59 +172,28 @@ def run_standardize(directory, processed_files=None,
                 output_filename = processed_files[processed_key]["name"]
                 date_added = processed_files[processed_key]["date"]
 
-            card_data.append((output_filename, dir_key, date_added))
+            card_data.append((output_filename, date_added))
 
     processing_dir.cleanup()
 
     return card_data
 
-def build_sql_file(cards):
-
-    output_lines = ["('{}', '{}', '{}')".format(output_filename, artist, date_added)
-                    for output_filename, artist, date_added in cards]
-    with open(SQL_OUTPUT, 'w') as sql_output:
-        sql_output.write("INSERT INTO default_cards(filename, artist, date_added) VALUES\n")
-        sql_output.write(",\n".join(output_lines))
-        sql_output.write("\nON CONFLICT DO NOTHING;")
-
-def card_html(card):
-    output_filename, artist, _ = card
-    return ("<li><a href='{0}'><img src='{0}' /></a>"
-            "<div class='img-title'>{0}</div></li>\n").format(output_filename)
-
-
-def build_card_index(cards):
-    with open(os.path.join(SCRIPT_DIR, TEMPLATE_FILENAME), "r") as template:
-        with open(os.path.join(SCRIPT_DIR, HTML_OUTPUT), "w") as html_output:
-            for line in template:
-                if re.match(r"\s*\$\{card_list\}", line):
-                    for card in cards:
-                        html_output.write(card_html(card))
-                else:
-                    html_output.write(line)
-
 
 def process_dirs(directories):
     processed_files = load_processed()
     indices = build_indices(processed_files)
-    card_data = []
+    card_data = {}
 
     with open(get_processed_path(), 'a') as processed_handle:
         for dirname in directories:
-            addl_cards = run_standardize(
+            dir_cards = run_standardize(
                 dirname,
                 processed_files, processed_handle,
                 file_indices=indices)
 
-            card_data += addl_cards
+            card_data[os.path.basename(dirname)] = dir_cards
 
-    build_sql_file(card_data)
-    shutil.copyfile(os.path.join(SCRIPT_DIR, SQL_FILENAME),
-                    os.path.join(BACKEND_DIR, SQL_FILENAME))
-
-    build_card_index(card_data)
-    shutil.copyfile(os.path.join(SCRIPT_DIR, HTML_OUTPUT),
-                    os.path.join(FRONTEND_DIR, FRONTEND_CARD_PATH, HTML_OUTPUT))
+    build_card_files(card_data)
 
 
 def main():
