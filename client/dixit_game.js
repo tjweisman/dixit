@@ -320,7 +320,7 @@ function update_game_data(game_data) {
 	}
 	
 	if(game_data.win_score > 0) {
-		$("#win-score-display").text("Winning score: " + data.win_score);
+		$("#win-score-display").text("First to " + game_data.win_score + " points wins");
 	}
 }
 
