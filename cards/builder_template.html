@@ -14,14 +14,15 @@
 <body>
 	<div id="page-container">
 	<div class="card-column">
-		<div id="card-view-controls"><button id="expand-all">Expand all</button><button id="collapse-all">Collapse all</button></div>
+		<div id="card-view-controls"><button id="expand-all">Expand all</button><button id="collapse-all">Collapse all</button> 
+			<button id="select-all">Select all</button>
+			<button id="deselect-all">Deselect all</button>
+		</div>
 		${cards}
 	</div>
 	<div class="builder-column">
 		<div class="builder-controls">
 			<div class="controls-box">
-				<button id="select-all">Select all</button>
-				<button id="deselect-all">Deselect all</button>
 				<h3>Deck code:</h3>
 				<textarea id="hex-code" rows='5' cols='8'></textarea>
 				<div id="card-viewer"><img /></div>

@@ -1,4 +1,6 @@
-
+h3 {
+	margin: 5px;
+}
 #page-container {
 	display: flex;
 }
@@ -9,12 +11,20 @@
 
 .builder-controls {
 	position: fixed;
-	margin: 10px 0px;
+	margin: 5px 0px;
 	width: 350px;
 }
 
 .controls-box {
 	padding: 10px;
+}
+
+#card-view-controls {
+	position: -webkit-sticky;
+  	position: sticky;
+  	width: 100%;
+  	background-color: white;
+  	top: 0;
 }
 
 .builder-controls button {
