@@ -27,13 +27,16 @@ def build_sql_file(cards):
         sql_output.write(",\n".join(output_lines))
         sql_output.write("\nON CONFLICT DO NOTHING;")
 
-def card_html(card):
+def card_html(card, global_indices, artist):
     output_filename, _ = card
-    return ("<li><a href='{0}'><img src='{0}' /></a>"
-            "<div class='img-title'>{0}</div></li>\n").format(output_filename)
+    global_index = global_indices[output_filename]
+    return ("<li gid='{1}' artist='{2}'><a href='{0}'><img src='{0}' /></a>"
+            "<div class='img-title'>{0}</div></li>\n").format(output_filename,
+                                                              global_index,
+                                                              artist)
 
 def artist_header(artist_name, num_cards):
-    return ("<div id='{0}-cards' class='infobox'><h3 class='artist-title'>"
+    return ("<div id='{0}-cards' class='infobox artist-section'><h3 class='artist-title'>"
             "<a href='' id='{0}'>{0} (<span class='card-counter'>0/{1}</span>)</a>"
             "</h3> <div class='select-buttons'>"
             "<button class='select-all'>Select all</button>"
@@ -44,18 +47,18 @@ def artist_header(artist_name, num_cards):
 def artist_close(artist_name):
     return "</ul></div>\n"
 
-def build_card_index(cards):
+def build_card_index(cards, global_indices):
     with open(os.path.join(SCRIPT_DIR, TEMPLATE_FILENAME), "r") as template:
         with open(os.path.join(SCRIPT_DIR, HTML_OUTPUT), "w") as html_output:
             for line in template:
                 if re.match(r"\s*\$\{card_list\}", line):
                     for dirname, dir_cards in cards.items():
                         for card in dir_cards:
-                            html_output.write(card_html(card))
+                            html_output.write(card_html(card, global_indices, dirname))
                 else:
                     html_output.write(line)
 
-def build_card_customizer(cards):
+def build_card_customizer(cards, global_indices):
     with open(os.path.join(SCRIPT_DIR, BUILDER_TEMPLATE), "r") as template:
         with open(os.path.join(SCRIPT_DIR, BUILDER_OUTPUT), "w") as output:
             for line in template:
@@ -65,21 +68,21 @@ def build_card_customizer(cards):
                         output.write(artist_header(dirname, len(dir_cards)))
 
                         for card in dir_cards:
-                            output.write(card_html(card))
+                            output.write(card_html(card, global_indices, dirname))
 
                         output.write(artist_close(dirname))
                 else:
                     output.write(line)
 
-def build_card_files(card_data):
+def build_card_files(card_data, global_indices):
     build_sql_file(card_data)
     shutil.copyfile(os.path.join(SCRIPT_DIR, SQL_FILENAME),
                     os.path.join(BACKEND_DIR, SQL_FILENAME))
 
-    build_card_index(card_data)
+    build_card_index(card_data, global_indices)
     shutil.copyfile(os.path.join(SCRIPT_DIR, HTML_OUTPUT),
                     os.path.join(FRONTEND_DIR, FRONTEND_CARD_PATH, HTML_OUTPUT))
 
-    build_card_customizer(card_data)
+    build_card_customizer(card_data, global_indices)
     shutil.copyfile(os.path.join(SCRIPT_DIR, BUILDER_OUTPUT),
                     os.path.join(FRONTEND_DIR, FRONTEND_CARD_PATH, BUILDER_OUTPUT))

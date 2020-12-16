@@ -104,11 +104,16 @@ def build_indices(processed):
 
 def make_sorted_card_list(card_data):
     card_list = []
-    for _, dir_cards in card_data:
+    for _, dir_cards in card_data.items():
         card_list += [(date_added, filename)
                       for filename, date_added in dir_cards]
 
-    return sorted(cardlist)
+    return sorted(card_list)
+
+def invert_card_list(card_list):
+    return {
+        filename:i for i, (_, filename) in enumerate(card_list)
+    }
 
 def run_standardize(directory, processed_files=None,
                     processed_handle=None, file_indices=None):
@@ -193,7 +198,8 @@ def process_dirs(directories):
 
             card_data[os.path.basename(dirname)] = dir_cards
 
-    build_card_files(card_data)
+    global_indices = invert_card_list(make_sorted_card_list(card_data))
+    build_card_files(card_data, global_indices)
 
 
 def main():

@@ -1,5 +1,8 @@
-client/cards/*
+client/cards/*.html
+client/cards/*.png
+client/cards/*.gif
 client/server_address.js
 cards/processed
 cards/insert_cards.sql
 cards/index.html
+cards/deck_builder.html

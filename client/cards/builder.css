@@ -1,0 +1,85 @@
+
+#page-container {
+	display: flex;
+}
+
+.builder-column {
+	flex: 0 0 350px;
+}
+
+.builder-controls {
+	position: fixed;
+	margin: 10px 0px;
+	width: 350px;
+}
+
+.controls-box {
+	padding: 10px;
+}
+
+.builder-controls button {
+	margin-left: 0px;
+	margin-right: 10px;
+}
+
+.placeholder-viewer {
+	width: 350px;
+	height: 500px;
+	background-color: pink;
+}
+
+.artist-title {
+	display: inline-block;
+	font-size: 22px;
+	margin: 5px 5px;
+}
+
+.artist-title a {
+	color: black;
+	text-decoration: none;
+}
+
+.artist-title a:hover {
+	color: gray;
+}
+
+.select-buttons {
+	display: inline-block;
+	float: right;
+}
+
+.select-buttons a {
+	color: black;
+	margin: 5px 10px;
+	text-decoration: none;
+}
+
+.select-buttons a:hover {
+	color:gray;
+}
+
+.card-subset {
+	background-color: #d9d9d9;
+	padding: 15px;
+	margin: 15px;
+	border-radius: 15px;
+}
+
+.card-hide {
+	visibility: hidden;
+	height: 0px;
+	margin: 0px;
+}
+
+#hex-code {
+	display: block;
+	width: 100%;
+}
+
+.card-list li.selected {
+	background-color: #8991fa;;
+}
+
+.card-list li {
+	margin: 4px;
+}
