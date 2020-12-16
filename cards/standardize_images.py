@@ -7,6 +7,7 @@ import subprocess
 import shutil
 import tempfile
 
+from datetime import date
 from collections import defaultdict
 
 from natsort import natsorted
@@ -67,11 +68,11 @@ def load_processed():
         with open(process_path, 'r') as processed:
             for line in processed:
                 entries = re.split(r",\s*", line.strip())
-                if len(entries) != 2:
+                if len(entries) != 3:
                     log("Malformed processed file entry: {}".format(line))
                     continue
-                inp_name, out_name = entries
-                processed_dict[inp_name] = out_name
+                inp_name, out_name, date = entries
+                processed_dict[inp_name] = {"name":out_name, "date":date}
             return processed_dict
     except FileNotFoundError:
         log("No list of processed files found, skipping.")
@@ -84,7 +85,7 @@ def build_indices(processed):
 
     indices = defaultdict(int)
     for key, value in processed.items():
-        base_filename = os.path.basename(value)
+        base_filename = os.path.basename(value["name"])
         match = re.match(r"[^_]+(?=_)", base_filename)
 
         if not match:
@@ -136,6 +137,8 @@ def run_standardize(directory, processed_files=None,
 
                 log("Processing file: {}. Output: {}".format(input_path, output_path))
 
+                date_added = date.today().isoformat()
+
                 subprocess.run(["magick",
                                 input_path,
                                 "-resize",
@@ -145,14 +148,18 @@ def run_standardize(directory, processed_files=None,
                                 output_path])
 
                 if processed_handle:
-                    processed_handle.write(processed_key + ", " + output_filename + "\n")
+                    processed_handle.write("{}, {}, {}\n".format(processed_key,
+                                                                 output_filename,
+                                                                 date_added))
+
 
                 index += 1
             else:
                 log("Skipping file: {}".format(input_path))
-                output_filename = processed_files[processed_key]
+                output_filename = processed_files[processed_key]["name"]
+                date_added = processed_files[processed_key]["date"]
 
-            card_data.append((output_filename, dir_key))
+            card_data.append((output_filename, dir_key, date_added))
 
     processing_dir.cleanup()
 
@@ -160,15 +167,15 @@ def run_standardize(directory, processed_files=None,
 
 def build_sql_file(cards):
 
-    output_lines = ["('{}', '{}')".format(output_filename, artist)
-                    for output_filename, artist in cards]
+    output_lines = ["('{}', '{}', '{}')".format(output_filename, artist, date_added)
+                    for output_filename, artist, date_added in cards]
     with open(SQL_OUTPUT, 'w') as sql_output:
-        sql_output.write("INSERT INTO default_cards(filename, artist) VALUES\n")
+        sql_output.write("INSERT INTO default_cards(filename, artist, date_added) VALUES\n")
         sql_output.write(",\n".join(output_lines))
         sql_output.write("\nON CONFLICT DO NOTHING;")
 
 def card_html(card):
-    output_filename, artist = card
+    output_filename, artist, _ = card
     return ("<li><a href='{0}'><img src='{0}' /></a>"
             "<div class='img-title'>{0}</div></li>\n").format(output_filename)
 

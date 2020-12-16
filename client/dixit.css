@@ -43,6 +43,10 @@ input[type=text] {
 	padding: 3px 10px;
 }
 
+#options textarea {
+	width:100%;
+}
+
 .centered {
 	text-align: center;
 }
@@ -57,6 +61,8 @@ input[type=text] {
 
 .toggle {
 	color: black;
+	display: block;
+	margin: 10px;
 }
 
 .toggle:hover {
@@ -118,11 +124,6 @@ input[type=text] {
 
 #join-controls input {
 	margin-top: 5px;
-}
-
-#game-start a {
-	display: block;
-	margin: 10px;
 }
 
 #options-box {

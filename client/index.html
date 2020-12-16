@@ -71,7 +71,7 @@
 							<input id="round-limit" type="number" min="1" value="5">
 						</div>
 						<div class="input-item">
-						<a href="#" class="toggle" id="deck-filter-toggle">Filter cards...</a>
+						<a href="#" class="toggle" id="deck-filter-toggle">Customize cards...</a>
 							<div id="deck-filter" class="hidden">
 								<div class="input-row">
 									<button id="select-all-artists" type="button">Select all</button>
@@ -79,6 +79,11 @@
 								</div>
 								<ul id="deck-items">
 								</ul>
+								<div class="input-item">
+									<input type="checkbox" id="custom-deck-on">
+									<label for="custom-deck-on">Use a <a href="">custom deck code</a> (overrides artist selection): </label>
+								</div>
+								<textarea id="custom-deck" rows="5"></textarea>
 							</div>
 						</div>
 						<div class="input-item">
