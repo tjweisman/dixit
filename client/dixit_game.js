@@ -65,6 +65,7 @@ function update_artists(artist_list) {
 			+ artist.artist + "' checked>" + "<label for='" + artist.artist + 
 			"-include'>" + artist.artist + " (" + artist.count + ")</label></li>");
 	}
+	$("#deck-items").change(form_change_event);
 }
 
 function get_winners() {
@@ -131,6 +132,52 @@ function update_winners() {
 			$("#players tr[uid=" + player.uid + "] td.winning").text("★");
 		}
 	}
+}
+
+function match_remote_form(data) {
+	let form_selector = "form#" + data.form_id;
+	for (let input_elt of data.input_elements) {
+		let local_elt = $(form_selector + " input#"+input_elt.id);
+		if(input_elt.type == "checkbox") {
+			local_elt.prop("checked", input_elt.checked);	
+		} else {
+			local_elt.val(input_elt.val);
+		}
+	}
+}
+
+function broadcast_form_status(form_id) {
+	let form_elements = new Array();
+	$("form#"+form_id).find("input").each((index, element) => {
+		form_elements.push({
+			id:$(element).attr("id"),
+			type:$(element).attr("type"),
+			checked:$(element).is(":checked"),
+			val:$(element).val()
+		});
+	});
+	socket.emit("form sync", {
+		gid:gid,
+		form_id:form_id,
+		input_elements: form_elements
+	});
+}
+
+function form_change_event(event) {
+	console.log("Form changed!");
+	let form = $(event.target).closest("form");
+
+	let target_obj = $(event.target);
+	let change_data = {
+		id:target_obj.attr("id"),
+		type:target_obj.attr("type"),
+		checked:target_obj.is(":checked"),
+		val:target_obj.val()
+	};
+	socket.emit("form sync", {
+		gid:gid,
+		form_id:form.attr("id"), 
+		input_elements: [change_data]});
 }
 
 function update_player_scores() {
@@ -324,6 +371,11 @@ function setup_game(res) {
 			update_storyteller_text();
 			socket.emit("get cards", {
 				gid:gid
+			});
+		} else {
+			socket.emit("form request", {
+				gid:gid,
+				form_id:"options-form"
 			});
 		}
 	});
@@ -665,6 +717,8 @@ $(document).ready(function() {
 		localStorage.clear();
 	});
 
+	$("#game-start form input").change(form_change_event);
+
 	$("#game-start form").submit(function(e) {
 		e.preventDefault();
 		let included_artists = new Array();
@@ -752,6 +806,9 @@ $(document).ready(function() {
 	socket.on("player update", update_players);
 	socket.on("card update", update_cards);
 	socket.on("start game", game_started);
+
+	socket.on("form request", broadcast_form_status);
+	socket.on("form sync", match_remote_form);
 
 	socket.on("end turn", end_turn);
 
