@@ -38,8 +38,13 @@ h3 {
 	background-color: pink;
 }
 
+.artist-titlebox {
+	display: flex;
+	justify-content: space-between;
+}
+
 .artist-title {
-	display: inline-block;
+	min-width: 300px;
 	font-size: 22px;
 	margin: 5px 5px;
 }
@@ -54,8 +59,11 @@ h3 {
 }
 
 .select-buttons {
-	display: inline-block;
-	float: right;
+	text-align: right;
+}
+
+.select-buttons button {
+	min-width: 100px;
 }
 
 .select-buttons a {
@@ -66,6 +74,14 @@ h3 {
 
 .select-buttons a:hover {
 	color:gray;
+}
+
+.clearfix:after {
+	display: block;
+	height: 0;
+	content: "_";
+	clear: both;
+	visibility: hidden;
 }
 
 .card-subset {
@@ -92,4 +108,24 @@ h3 {
 
 .card-list li {
 	margin: 4px;
+}
+
+@media (max-width: 700px) {
+	.builder-controls {
+		position: static;
+	}
+
+	#page-container {
+		flex-direction: column-reverse;
+	}
+	
+	.artist-title {
+		min-width: 0px;	
+	}
+
+	.select-buttons {
+		max-width: 100px;
+	}
+
+	
 }
