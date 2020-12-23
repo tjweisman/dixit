@@ -36,11 +36,12 @@ def card_html(card, global_indices, artist):
                                                               artist)
 
 def artist_header(artist_name, num_cards):
-    return ("<div id='{0}-cards' class='infobox artist-section'><h3 class='artist-title'>"
-            "<a href='' id='{0}'>{0} (<span class='card-counter'>0/{1}</span>)</a>"
+    return ("<div id='{0}-cards' class='infobox artist-section'><div class='artist-titlebox'>"
+            "<h3 class='artist-title'><a href='' id='{0}'>{0}"
+            " (<span class='card-counter'>0/{1}</span>)</a>"
             "</h3> <div class='select-buttons'>"
             "<button class='select-all'>Select all</button>"
-            "<button class='deselect-all'>Deselect all</button></div>"
+            "<button class='deselect-all'>Deselect all</button></div></div>"
             "<ul class='card-hide card-list'>\n").format(
                 artist_name, num_cards)
 
