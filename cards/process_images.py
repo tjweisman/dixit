@@ -37,6 +37,8 @@ IMAGE_DIRECTORY = "src_images"
 DEFAULT_VERBOSITY = 1
 PROG_NAME = "standardize_images"
 
+PREPROCESS_GIFS = False
+
 def log(text, verbosity=1):
     if verbosity <= DEFAULT_VERBOSITY:
         print("{}: {}".format(PROG_NAME, text))
@@ -148,8 +150,8 @@ def run_standardize(directory, processed_files=None,
 
             processed_key = input_path
             if not processed_files or processed_key not in processed_files:
-                if extension == ".gif":
-                    log("Preprocessing gif file: {}.".format(input_path))
+                if PREPROCESS_GIFS and extension == ".gif":
+                    log("Preprocessing gif file: {}".format(input_path))
                     input_path = preprocess_gif(processing_dir.name, input_path)
                     log("Produced temporary gif file: {}".format(input_path))
 
