@@ -29,6 +29,9 @@ class StartPage(DixitPage):
         return self.driver.find_element_by_css_selector("#join-controls #game")
 
     def join_game(self, username, room):
+        self.get_username_field().clear()
+        self.get_room_field().clear()
+
         self.get_username_field().send_keys(username)
         self.get_room_field().send_keys(room)
 
@@ -36,7 +39,14 @@ class StartPage(DixitPage):
 
         return PregamePage(self.driver)
 
-class PregamePage(DixitPage):
+class ControlPage(DixitPage):
+    def leave_game(self):
+        self.driver.find_element_by_css_selector(".game-controls .leave-game").click()
+
+    def reset_game(self):
+        self.driver.find_element_by_css_selector(".game-controls .reset-game").click()
+
+class PregamePage(ControlPage):
     def __init__(self, driver):
         super().__init__(driver)
 
@@ -56,7 +66,7 @@ class PregamePage(DixitPage):
         self.driver.find_element_by_css_selector(
             "#options-form input[type='submit']").click()
 
-class GameplayPage(DixitPage):
+class GameplayPage(ControlPage):
     def click_hand_card(self, index):
         hand_cards = self.driver.find_elements_by_css_selector("#hand li")
         hand_cards[index].click()
@@ -80,7 +90,10 @@ class GameplayPage(DixitPage):
         self.driver.find_element_by_css_selector(selector).click()
 
     def set_hint_text(self, text):
-        self.driver.find_element_by_id("prompt_inp").send_keys(text)
+        hint_elt = self.driver.find_element_by_id("prompt_inp")
+        hint_elt.clear()
+
+        hint_elt.send_keys(text)
 
     def submit_hint(self):
         self.driver.find_element_by_css_selector("#hint #submit").click()
@@ -102,6 +115,9 @@ class GameplayPage(DixitPage):
         xpath = ("//span[@class='card-owner' and text() = '{}']"
                  "//ancestor::li").format(player)
         return self.driver.find_element_by_xpath(xpath)
+
+    def card_by_cid(self, cid):
+        return self.driver.find_element_by_css_selector("li[cid='{}']".format(cid))
 
     def card_state(self, card):
         recognized = ["correct-uid", "active", "local-card"]
@@ -134,11 +150,7 @@ class GameplayPage(DixitPage):
     def get_player_choices(self, players):
         return [self.players_choosing_card(player) for player in players]
 
-    def leave_game(self):
-        self.driver.find_element_by_css_selector(".game-controls .leave-game").click()
 
-    def reset_game(self):
-        self.driver.find_element_by_css_selector(".game-controls .reset-game").click()
 
 
 class DixitSession:
@@ -166,8 +178,14 @@ class DixitSession:
         PregamePage(self.driver).start_game()
         return GameplayPage(self.driver)
 
+    def login_page(self):
+        return StartPage(self.driver)
+
+    def pregame_page(self):
+        return PregamePage(self.driver)
+
     def refresh(self):
-        self.driver.navigate().refresh()
+        self.driver.refresh()
 
 def create_game_session(driver, usernames, room):
     session = DixitSession(driver, len(usernames))
