@@ -84,6 +84,7 @@ function get_winners() {
 }
 
 function update_players(on_updated) {
+	log("Received signal to update player list");
 	socket.emit("get users", gid, function(data) {
 		log("Received updated list of users.");
 		sorted_users = data.sort((user1, user2) => {
@@ -92,6 +93,7 @@ function update_players(on_updated) {
 
 		$("#players tr").remove();
 		players = new Map();
+		player_guesses = new Map();
 		for (let user of sorted_users) {
 			players.set(user.uid, user);
 			log(user);
@@ -217,14 +219,14 @@ function update_cards(data) {
 		}
 	});
 
-	log("remaining cards: ")
+	log("remaining cards: ");
 	log(data.remaining);
 	$("#cards-remaining").text("Cards in deck: " + data.remaining);
 
 	register_card_listeners();
 
 	if(game_state == "guess") {
-		start_guess_round({order:[]});
+		make_guess_cards();
 	}
 }
 
@@ -352,25 +354,27 @@ function setup_game(res) {
 		{gid:gid},
 		update_artists
 	);
-	
-	update_players(() => {
-		if(game_state == 'prompt') {
+
+
+	if(game_state == 'prompt') {
 			start_prompt_round({
 				uid:game_data.turn,
 				game_data:game_data
 			});
-		} else if(game_state == 'secret') {
-			start_secret_round({
-				prompt:game_data.prompt
-			});
-		} else if(game_state == 'guess') {
-			played_cards = new Map();
-		}
+	} else if(game_state == 'secret') {
+		start_secret_round({
+			prompt:game_data.prompt
+		});
+	} else if(game_state == 'guess') {
+		played_cards = new Map();
+		$(".hint").removeClass("hidden");
 
+	}
+	update_players(() => {
 		if(game_state != 'pregame') {
 			game_started(game_data);
-
 			update_storyteller_text();
+
 			socket.emit("get cards", {
 				gid:gid
 			});
@@ -490,27 +494,19 @@ function start_secret_round(data) {
 	played_cards = new Map();
 }
 
-function start_guess_round(data) {
-	game_state = "guess";
-	log("game state changed to guesses");
-	clear_selection();
-	select_allowed = true;
-	clear_notify();
-
-	player_guesses = new Map();
-	set_players_waiting(current_turn);
+function make_guess_cards(order) {
 	sorted_cids = Array.from(played_cards.keys()).sort();
 	log("sorted cids:");
 	log(sorted_cids);
-	log(data.order);
 
-	//if we rejoin in the middle of a guess round, then the cards are in a different order
-	if(data.order.length != sorted_cids.length) {
-		data.order = shuffle([...Array(sorted_cids.length).keys()]);
+	if(order == undefined) {
+		order = new Array(sorted_cids.length);
+		for(let i = 0;i < sorted_cids.length;i++) {
+			order[played_cards.get(sorted_cids[i]).order] = i;
+		}
 	}
-	log(data.order);
 
-	data.order.forEach(index => {
+	order.forEach(index => {
 		cid = sorted_cids[index];
 		log("inserting card " + cid);
 		$("#revealed-cards ul.card-list").append("<li cid=" + cid + "><a href='#'>" + 
@@ -521,12 +517,30 @@ function start_guess_round(data) {
 	$("#revealed-cards li[cid=" + local_card + "]").addClass("local-card");
 	register_card_listeners();
 	$("#unrevealed-cards li").remove();
+}
+
+function reset_player_guesses() {
+	clear_selection();
+	select_allowed = true;
+	clear_notify();
+
+	player_guesses = new Map();
+	set_players_waiting(current_turn);
+
 	if(uid == current_turn) {
 		$("#guess-card").addClass("hidden");
 		notify("Wait for the other players to make their guesses.");
 	} else {
 		$("#guess-card").removeClass("hidden");
 	}
+}
+
+function start_guess_round(data) {
+	game_state = "guess";
+	log("game state changed to guesses");
+	
+	make_guess_cards(data.order);
+	reset_player_guesses();
 }
 
 function end_turn(data) {
@@ -628,8 +642,7 @@ function guess_card() {
 		uid:uid,
 		gid:gid
 	});
-	$("#guess-card").addClass("hidden");
-	select_allowed = false;
+	
 }
 
 //remote player actions
@@ -658,6 +671,10 @@ function other_player_guess(data) {
 		player_element(data.uid).removeClass("waiting-move");
 	}
 	player_guesses.set(data.uid, {cid:data.cid});
+	if(data.uid == uid) {
+		$("#guess-card").addClass("hidden");
+		select_allowed = false;	
+	}
 }
 
 //callbacks
