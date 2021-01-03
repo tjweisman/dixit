@@ -195,7 +195,10 @@ function update_player_scores() {
 
 function update_storyteller_text() {
 	$("#turn_text").removeClass("hidden");
-	$("#turn_text").text("Storyteller: " + players.get(current_turn).name);
+
+	if(players.has(current_turn)) {
+		$("#turn_text").text("Storyteller: " + players.get(current_turn).name);	
+	}
 }
 
 function update_cards(data) {
@@ -355,6 +358,8 @@ function setup_game(res) {
 		update_artists
 	);
 
+	played_cards = new Map();
+	players = new Map();
 
 	if(game_state == 'prompt') {
 			start_prompt_round({
@@ -366,9 +371,7 @@ function setup_game(res) {
 			prompt:game_data.prompt
 		});
 	} else if(game_state == 'guess') {
-		played_cards = new Map();
-		$(".hint").removeClass("hidden");
-
+		reset_player_guesses();
 	}
 	update_players(() => {
 		if(game_state != 'pregame') {
@@ -500,11 +503,15 @@ function make_guess_cards(order) {
 	log(sorted_cids);
 
 	if(order == undefined) {
+		log("Inferring order from cards");
 		order = new Array(sorted_cids.length);
 		for(let i = 0;i < sorted_cids.length;i++) {
-			order[played_cards.get(sorted_cids[i]).order] = i;
+			order[played_cards.get(sorted_cids[i]).display_order] = i;
 		}
 	}
+
+
+	log(order);
 
 	order.forEach(index => {
 		cid = sorted_cids[index];
@@ -663,7 +670,11 @@ function other_player_secret(data) {
 		local_card = data.cid;
 	}
 
-	played_cards.set(data.cid, {uid:data.uid, filename:data.filename, artist:data.artist});
+	played_cards.set(data.cid, {
+		uid:data.uid, 
+		filename:data.filename, 
+		artist:data.artist,
+		display_order:data.display_order});
 }
 
 function other_player_guess(data) {
