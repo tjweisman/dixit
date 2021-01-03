@@ -331,7 +331,6 @@ function update_game_data(game_data) {
 	}
 }
 
-
 function setup_game(res) {
 	username = res.username;
 	game = res.game;
@@ -350,6 +349,10 @@ function setup_game(res) {
 	set_default_visibility();
 
 	$("#room-text").text(game);
+
+	invite_link = window.location.href.split('?')[0] + "?room=" + encodeURIComponent(game);
+
+	$("#invite-link").val(invite_link);
 	$("#gameboard").removeClass("hidden");
 	$("#join-controls").addClass("hidden");
 
@@ -717,6 +720,20 @@ function log(text) {
 }
 
 $(document).ready(function() {
+	let url_params = new URLSearchParams(window.location.search);
+	room = url_params.get('room');
+	if(room != null) {
+		$("input#game").val(decodeURIComponent(room));
+	}
+
+	$("#copy-invite-link").click((event) => {
+		event.preventDefault();
+		$("#invite-link").focus();
+		let linkDOM = $("#invite-link")[0];
+		linkDOM.setSelectionRange(0, linkDOM.value.length);
+		document.execCommand("copy");
+	})
+
 	$("#join-controls form").submit(function(e) {
 		console.log("clicked submit");
 
