@@ -608,7 +608,7 @@ def rejoin_after_guess():
         p2_card = gameplay.click_hand_card(0)
         gameplay.submit_secret()
 
-        gameplay.click_cid(correct_cid)
+        gameplay.click_cid(p1_card)
         gameplay.submit_guess()
 
         session.activate(3)
@@ -619,10 +619,6 @@ def rejoin_after_guess():
 
         session.activate(1)
         gameplay.click_cid(p2_card)
-        gameplay.submit_guess()
-
-        session.activate(2)
-        gameplay.click_cid(p1_card)
         gameplay.submit_guess()
 
         scores_correct = (gameplay.get_scores(users) == ['3', '1', '1', '3'])
