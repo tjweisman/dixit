@@ -53,15 +53,7 @@
 							<input type="number" value="5" name="hand-size" min="1" max="10" id="hand-size">
 						</div>
 						<div class="input-item">
-							<input type="checkbox" id="equal-hands" checked>
-							<label for="equal-hands">Keep hand sizes equal at game end</label>
-						</div>
-						<div class="input-item">
-							<input type="checkbox" id="deck-limit-on">
-							<label for="deck-limit-on">Maximum deck size: <input id="deck-limit" type="number" value="200" min="1"></label>
-						</div>
-						<div class="input-item">
-							<input type="checkbox" id="win-score-on">
+							<input type="checkbox" id="win-score-on" checked>
 							<label for="win-score-on">Winning score: </label>
 							<input id="win-score" type="number" value="30" min="1">
 						</div>
@@ -69,6 +61,14 @@
 							<input type="checkbox" id="round-limit-on">
 							<label for="round-limit-on">Max number of rounds: </label>
 							<input id="round-limit" type="number" min="1" value="5">
+						</div>
+						<div class="input-item">
+							<input type="checkbox" id="deck-limit-on">
+							<label for="deck-limit-on">Maximum deck size: <input id="deck-limit" type="number" value="200" min="1"></label>
+						</div>
+						<div class="input-item">
+							<input type="checkbox" id="equal-hands" checked>
+							<label for="equal-hands">Keep hand sizes equal at game end</label>
 						</div>
 						<div class="input-item">
 						<a href="#" class="toggle" id="deck-filter-toggle">Customize cards...</a>
@@ -99,41 +99,46 @@
 			</form>
 		</div>
 		<div id="gameplay-box">
-			<div id="info-container">
+			<div id="info-container" class="info-container-show">
 				<div id="game-info" class="infobox">
-					<div id="players">
-						<h2 id="room-text"></h2>
-						<table>
-						</table>
-					</div>
-					<div class = "game-stat" id="cards-remaining"></div>
-					<div class = "game-stat" id="win-score-display"></div>
-					<div class = "game-stat" id="round-number-display"></div>
-					<div class="game-controls">
-						<button class="leave-game" type="button">Leave game</button>
-						<button class="reset-game" type="button">Reset game</button>
-						<button class="end-game" type="button">Delete this game forever</button>
-					</div>
-					<div class = "game-stat">
-					<label for="invite-link">Invite link <a href="#" id="copy-invite-link">(copy)</a></label>
-					<input id="invite-link" type="text" readonly="true">
+					<a id="toggle-infobox" class="small-toggle" href="#">▼</a>
+					<div class="infobox-content">
+						<div id="players">
+							<h2 id="room-text"></h2>
+							<table>
+							</table>
+						</div>
+						<div class = "game-stat" id="cards-remaining"></div>
+						<div class = "game-stat" id="win-score-display"></div>
+						<div class = "game-stat" id="round-number-display"></div>
+						<div class="game-controls">
+							<button class="leave-game" type="button">Leave game</button>
+							<button class="reset-game" type="button">Reset game</button>
+							<button class="end-game" type="button">Delete this game forever</button>
+						</div>
+						<div class = "game-stat">
+						<label for="invite-link">Invite link <a href="#" id="copy-invite-link">(copy)</a></label>
+						<input id="invite-link" type="text" readonly="true">
+						</div>
 					</div>
 				</div>
 				<div class="infobox" id="rules">
-					<h2>Scoring</h2>
-					<h3>Storyteller</h3>
-					<table>
-						<tr><td class="rule">Everyone guesses:</td><td class="pts">0 points</td></tr>
-						<tr><td class="rule">Nobody guesses:</td><td class="pts">0 points</td></tr>
-						<tr><td class="rule">Some (not all) guess:</td><td class="pts">3 points</td></tr>
-					</table>
-					<h3>Everyone else</h3>
-					<table>
-						<tr><td class="rule">Everyone guesses:</td><td class="pts">2 points</td></tr>
-						<tr><td class="rule">Nobody guesses:</td><td class="pts">2 points</td></tr>
-						<tr><td class="rule">You guess, and someone else doesn't:</td><td class="pts">3 points</td></tr>
-						<tr><td class="rule">Someone guesses your card:</td><td class="pts">1 point / guess</td></tr>
-					</table>
+					<div class="infobox-content">
+						<h2>Scoring</h2>
+						<h3>Storyteller</h3>
+						<table>
+							<tr><td class="rule">Everyone guesses:</td><td class="pts">0 points</td></tr>
+							<tr><td class="rule">Nobody guesses:</td><td class="pts">0 points</td></tr>
+							<tr><td class="rule">Some (not all) guess:</td><td class="pts">3 points</td></tr>
+						</table>
+						<h3>Everyone else</h3>
+						<table>
+							<tr><td class="rule">Everyone guesses:</td><td class="pts">2 points</td></tr>
+							<tr><td class="rule">Nobody guesses:</td><td class="pts">2 points</td></tr>
+							<tr><td class="rule">You guess, and someone else doesn't:</td><td class="pts">3 points</td></tr>
+							<tr><td class="rule">Someone guesses your card:</td><td class="pts">1 point / guess</td></tr>
+						</table>
+					</div>
 				</div>
 			</div>
 			<div id="cards-container" class="gameplay">

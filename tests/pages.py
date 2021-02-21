@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 DIXIT_URL = "localhost:8000/users/weisman/dixit/"
+#DIXIT_URL = "https://web.ma.utexas.edu/users/weisman/dixit/"
 
 class DixitPage:
     def __init__(self, driver, window_handle=None):

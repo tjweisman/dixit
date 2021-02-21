@@ -842,6 +842,21 @@ $(document).ready(function() {
 	$("a#about").click((event) => {
 		event.preventDefault();
 		$("#about-content").toggleClass("hidden");
+
+	});
+	$("a#toggle-infobox").click((event) => {
+		event.preventDefault();
+		$(".infobox-content").toggleClass("hidden");
+		$("#info-container").toggleClass("info-container-show");
+		$("#info-container").toggleClass("info-container-hide");
+		$("a#toggle-infobox").toggleClass("small-toggle-hide");
+
+		if($("a#toggle-infobox").text() == "▶") {
+			$("a#toggle-infobox").text("▼");
+		} else {
+			$("a#toggle-infobox").text("▶");
+		}
+		
 	});
 	$("button.leave-game").click((event) => {
 		socket.emit("leave game", {

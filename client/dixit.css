@@ -69,6 +69,19 @@ input[type=text] {
 	color:#636363;
 }
 
+.small-toggle {
+	display: inline-block;
+	text-decoration: none;
+	font-weight: bold;
+	color: #686c70;
+	font-size: 110%;
+	margin: 10px 0px 0px 10px;
+}
+
+.small-toggle-hide {
+	margin: 10px !important;
+}
+
 #title {
 	font-family: "Luminari", serif;
 	letter-spacing: 15px;
@@ -197,10 +210,16 @@ input[type=text] {
 }
 
 #info-container {
-	width: 350px;
-	min-width: 350px;
 	display: flex;
 	flex-direction: column;
+}
+
+.info-container-show {
+	width: 350px;
+	min-width: 350px;
+}
+
+.info-container-hide {
 }
 
 #cards-container {
@@ -214,9 +233,12 @@ input[type=text] {
 
 .infobox {
 	background-color: #d9d9d9;
-	padding: 15px;
+	padding: 0px;
 	margin: 15px;
 	border-radius: 15px;
+}
+.infobox-content {
+	padding: 15px;
 }
 
 #rules table {

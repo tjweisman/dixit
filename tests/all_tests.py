@@ -7,7 +7,7 @@ import subtests
 
 def login():
     with webdriver.Firefox() as driver:
-        driver.get("localhost:8000/users/weisman/dixit/")
+        driver.get(pages.DIXIT_URL)
 
         start_page = pages.StartPage(driver)
         start_page.delete_users()
