@@ -856,7 +856,6 @@ $(document).ready(function() {
 		} else {
 			$("a#toggle-infobox").text("▶");
 		}
-		
 	});
 	$("button.leave-game").click((event) => {
 		socket.emit("leave game", {

@@ -78,6 +78,10 @@ input[type=text] {
 	margin: 10px 0px 0px 10px;
 }
 
+.small-toggle:hover {
+	color:#9e9e9e;
+}
+
 .small-toggle-hide {
 	margin: 10px !important;
 }
